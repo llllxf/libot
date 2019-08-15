@@ -91,7 +91,7 @@ class rdfPrepare():
                     second_entity_list = entity[sheetname].col_values(r)[j].strip().split('，')
                     for sec_entity in second_entity_list:
                         if sec_entity in key.keys():
-                            print()
+                            #print()
                             g.add((key[entity[sheetname].col_values(0)[j]], relation[col_names[sheetname][r]],
                                    key[sec_entity]))
 

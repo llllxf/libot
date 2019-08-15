@@ -507,7 +507,7 @@
     <category>
         <pattern>#ROOM#怎么走#</pattern>
         <template>
-           task_room_pos
+           task_navi
         </template>
     </category>
 

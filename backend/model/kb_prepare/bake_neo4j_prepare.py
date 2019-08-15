@@ -23,20 +23,17 @@ class Neo4jPrepare(object):
         cls.room = '馆室'
         cls.floor = '楼层'
         cls.resource = "资源"
-        cls.mark = "标志点"
+
         cls.graph.delete_all()
 
         """建图"""
-        workbook = xlrd.open_workbook(r'../../resource/neo4j2.xlsx')
-
+        workbook = xlrd.open_workbook(r'../../resource/neo4j_libot.xlsx')
         cls.create_node(workbook)
         cls.create_relation(workbook)
-        '''
         cls.room_list,cls.room_variant_list,cls.floor_list,cls.floor_variant_list,cls.area_list,cls.area_variant_list,cls.resource_list,cls.resource_variant_list=cls.get_all_varname()
         jieba.load_userdict("../../resource/guotu_dict.txt")
-        '''
         #print(cls.room_list,cls.area_variant_list,cls.resource_variant_list)
-
+        cls.stopwords = ['什么','哪里','怎么','有','走','去','可以','如何','怎样','的','地','得']
 
     '''
     属性查询
@@ -45,7 +42,7 @@ class Neo4jPrepare(object):
     def get_property(cls,entity):
 
         cursor = cls.graph.run("match(n {office_name:{a}})return n",a=entity)
-        #print(cursor)
+        print(cursor)
         cursor.forward()
         record = cursor.current()
         return (dict(record['n']))
@@ -64,7 +61,7 @@ class Neo4jPrepare(object):
 
             record = cursor.current()
             ans.append(dict(record['b']))
-            #print(dict(record['b']))
+            print(dict(record['b']))
         return ans
 
     '''
@@ -80,7 +77,7 @@ class Neo4jPrepare(object):
 
             record = cursor.current()
             ans.append(dict(record['b']))
-            #print(dict(record['b']))
+            print(dict(record['b']))
         return ans
 
 
@@ -98,7 +95,7 @@ class Neo4jPrepare(object):
 
             record = cursor.current()
             ans.append(dict(record['b']))
-            #print(dict(record['b']))
+            print(dict(record['b']))
         return ans
 
     '''
@@ -245,7 +242,7 @@ class Neo4jPrepare(object):
         entity_dict['res'] = resource_temp
         entity_dict['floor'] = floor_temp
         entity_dict['area'] = area_temp
-        #print(entity_dict['room'])
+        print(entity_dict['room'])
         return question, entity_dict
 
     '''
@@ -304,24 +301,9 @@ class Neo4jPrepare(object):
 
     @classmethod
     def create_node(cls, workbook):
-        '''
-        values = cls.data.values
-
-        for value in values[:9]:
-            room_node = Node(cls.room2, name=value[0], des_x=value[3], des_y=value[4])
-            cls.graph.create(room_node)
-
-        for value in values[9:]:
-            mark_node = Node(cls.mark, name=value[0], self_site=value[2])
-            cls.graph.create(mark_node)
-
-        cls.graph.create(Node(cls.building2, name="总馆北区"))
-        cls.graph.create(Node(cls.floor2, name="总馆北区一层"))
-        '''
-
         """建立馆室节点"""
         room_sheet = workbook.sheet_by_index(0)
-        for i in range(1,room_sheet.nrows-6):
+        for i in range(1,room_sheet.nrows):
             row = room_sheet.row_values(i)
             name=row[0]
             if row[0].find("_") != -1:
@@ -340,16 +322,9 @@ class Neo4jPrepare(object):
                              saturday_open=row[16], saturday_borrow=row[17],
                              sunday_open=row[18], sunday_borrow=row[19],
                              #area=row[20],floor=row[21],
-                             certification=row[22],
-                             des_x=row[25],
-                             des_y=row[26]
-
-                             )
+                             certification=row[22])
             cls.graph.create(room_node)
-        for i in range(room_sheet.nrows-6,room_sheet.nrows):
-            row = room_sheet.row_values(i)
-            mark_node = Node(cls.mark, type=cls.mark,name=row[0], office_name=row[0],self_site=row[24])
-            cls.graph.create(mark_node)
+
 
 
         """建立馆区节点"""
@@ -360,8 +335,7 @@ class Neo4jPrepare(object):
             #print(name)
             building_node = Node(cls.building, type=cls.building,name=name,
                                  office_name=row[0],
-                                 variant_name=row[1],
-                                 position=row[2])
+                                 variant_name=row[1])
             cls.graph.create(building_node)
 
         """建立楼层节点"""
@@ -391,11 +365,10 @@ class Neo4jPrepare(object):
 
     @classmethod
     def create_relation(cls, workbook):
-
         """建立馆室联系"""
 
         room_sheet = workbook.sheet_by_index(0)
-        for i in range(1, room_sheet.nrows-5-8):
+        for i in range(1, room_sheet.nrows-5):
             try:
                 row = room_sheet.row_values(i)
                 #print(self.graph.find_one(label=self.building, property_key='area', property_value=row[20]),row[20])
@@ -415,7 +388,7 @@ class Neo4jPrepare(object):
                 print("1",row[0],e,row[20])
                 print(cls.graph.find_one(label=cls.room, property_key='office_name',
                                                    property_value=row[0]))
-        for i in range(room_sheet.nrows - 5-8, room_sheet.nrows-8):
+        for i in range(room_sheet.nrows - 5, room_sheet.nrows):
             try:
                 row = room_sheet.row_values(i)
                 #print(self.graph.find_one(label=self.building, property_key='area', property_value=row[20]),row[20])
@@ -474,81 +447,6 @@ class Neo4jPrepare(object):
                 #print(cls.graph.find_one(label=cls.room, property_key='office_name', property_value=row[4]))
                 #print(self.graph.find_one(label=self.room, property_key='room', property_value=row[4]))
 
-        for i in range(room_sheet.nrows-8, room_sheet.nrows-6):
-            try:
-                row = room_sheet.row_values(i)
-                mark_list = row[28].split("，")
-                dis_list = str(row[23]).split("_")
-                dir_list = str(row[27]).split("；")
-                #print("marklist==================================",mark_list,row[0])
-                for i in range(len(mark_list)):
-                    mark = mark_list[i]
-                    dis = dis_list[i]
-                    dir = dir_list[i]
-                    rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
-                                                          property_value=row[0]), "相邻",
-                                       cls.graph.find_one(label=cls.mark, property_key='office_name', property_value=mark),
-                                       dis=dis, dir=dir)
-                    #print(rel)
-                    cls.graph.create(rel)
-                #print(self.graph.find_one(label=self.building, property_key='area', property_value=row[20]),row[20])
-                rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
-                                                   property_value=row[0]), "处于",
-                               cls.graph.find_one(label=cls.building, property_key='office_name', property_value=row[20]))
-                cls.graph.create(rel)
-                rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
-                                                      property_value=row[0]), "位于",
-                                   cls.graph.find_one(label=cls.floor, property_key='office_name',
-                                                      property_value=row[21]))
-                cls.graph.create(rel)
-
-            except AttributeError as e:
-                print("1",row[0],e,row[20])
-                print(cls.graph.find_one(label=cls.room, property_key='office_name',
-                                                   property_value=row[0]))
-
-        for i in range(room_sheet.nrows-6, room_sheet.nrows):
-            try:
-                row = room_sheet.row_values(i)
-                mark_list = row[28].split("，")
-                dis_list = str(row[23]).split("_")
-                dir_list = str(row[27]).split("；")
-                x_list = row[25].split("；")
-                y_list = row[26].split("；")
-                for i in range(len(mark_list)):
-                    mark = mark_list[i]
-                    dis = dis_list[i]
-                    dir = dir_list[i]
-                    if len(x_list) > 0 and len(y_list) > 0:
-                        x = x_list[i]
-                        y = y_list[i]
-                    rel = Relationship(cls.graph.find_one(label=cls.mark, property_key='office_name',
-                                                          property_value=row[0]),
-                                       "互连",
-                                       cls.graph.find_one(label=cls.mark, property_key='office_name',
-                                                          property_value=mark), dis=dis, dir=dir, x=x, y=y)
-
-                    cls.graph.create(rel)
-                #print(self.graph.find_one(label=self.building, property_key='area', property_value=row[20]),row[20])
-                rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
-                                                   property_value=row[0]), "处于",
-                               cls.graph.find_one(label=cls.building, property_key='office_name', property_value=row[20]))
-                cls.graph.create(rel)
-                rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
-                                                      property_value=row[0]), "位于",
-                                   cls.graph.find_one(label=cls.floor, property_key='office_name',
-                                                      property_value=row[21]))
-                cls.graph.create(rel)
-
-            except AttributeError as e:
-                print("1",row[0],e,row[20])
-                print(cls.graph.find_one(label=cls.room, property_key='office_name',
-                                                   property_value=row[0]))
-        
-
-        
-
-
 
 
 
@@ -556,7 +454,7 @@ class Neo4jPrepare(object):
 if __name__ == '__main__':
 
     a = Neo4jPrepare().get_relation('总馆北区一层','馆区')
-    #print(a)
+    print(a)
     #print(q,e)
     #prepare.repalce_question("数字共享空间在总馆北区一层吗")
 

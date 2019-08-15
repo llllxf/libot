@@ -61,18 +61,21 @@ class GeneralHub():
         '''
         #aiml_respons = self._aiml_kernal.respond(question_replaced)
         aiml_respons = self._aiml_kernal.respond(question_replaced)
-
+        print(aiml_respons)
+        '''
         if 'multiwheeltask_'in aiml_respons:
             print("aiml_respons: ", str(aiml_respons))
             graph_respons = rdfBotMul.task_response(aiml_respons, entity_dict, question_str, g)
             return graph_respons
-        elif 'task_' in aiml_respons:
-            if aiml_respons == 'task_room_pos':
-                return
+        '''
+        if 'task_' in aiml_respons:
+            #if aiml_respons == 'task_room_pos':
+
+            #    return
                 #graph_respons = rdfBot.task_response(aiml_respons, navi_entity_dict, question_str, navi_g)
                 #graph_respons = rdfBot.task_response(aiml_respons, test_entity_dict, question_str, test_g)
-            else:
-                graph_respons = rdfBot.task_response(aiml_respons,entity_dict,question_str,g)
+            #else:
+            graph_respons = rdfBot.task_response(aiml_respons,entity_dict,question_str,g)
 
             return graph_respons
         else:

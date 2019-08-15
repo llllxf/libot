@@ -315,13 +315,13 @@
             task_res_res_a
         </template>
     </category>
+
     <category>
-        <pattern>#RES#含#</pattern>
+        <pattern>A怎么走</pattern>
         <template>
-            task_res_res_a
+            task_navi
         </template>
     </category>
-
 
 
 </aiml>

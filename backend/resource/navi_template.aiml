@@ -1,0 +1,77 @@
+<aiml version="1.0.1" encoding="UTF-8">
+
+    <category>
+        <pattern>再见</pattern>
+        <template>再见</template>
+    </category>
+
+    <category>
+        <pattern>再见*</pattern>
+            <template><srai>再 见</srai></template>
+    </category>
+    <!--
+
+
+    <category>
+        <pattern>RES#哪#看#</pattern>
+
+        <template>
+            task_res_pos
+        </template>
+    </category>
+
+    <category>
+        <pattern>你好，我心情*</pattern>
+        <template>
+           你好<think><set name="STATE">不错</set></think>
+        <condition>
+        <li name="STATE" value="不错">我也不错</li><li name="STATE" value="不好">我也不好</li>
+        </condition>
+        </template>
+
+    </category>
+
+
+    <category>
+        <template>
+            <condition>
+                <li name="stat" value="不错">我也不错</li>
+                <li name="stat" value="不好">我也不好</li>
+            </condition>
+        </template>
+    </category>
+
+
+    <category>
+        <pattern>#ROOM_有#看#</pattern>
+        <template>
+           task_room_res
+        </template>
+    </category>
+
+    <category>
+        <pattern>#附近#RES#吗</pattern>
+        <template>
+           task_res_pos
+        </template>
+    </category>
+    <category>
+        <pattern>RES#哪#看#</pattern>
+        <template>
+           task_res_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#在#</pattern>
+        <template>
+           task_room_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#走#</pattern>
+        <template>
+           task_room_pos
+        </template>
+    </category>
+    -->
+</aiml>
