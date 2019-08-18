@@ -8,6 +8,7 @@ from model.kb_prepare.neo4j_prepare import Neo4jPrepare
 from model.grapg_QA.Task_time import Task_time
 from model.grapg_QA.Task_contain import Task_contain
 from model.grapg_QA.Task_information import Task_information
+from model.grapg_QA.Task_condition import Task_condition
 import time
 import datetime
 import matplotlib.pyplot as plt
@@ -68,6 +69,8 @@ class Bot():
             answer = cls.answer_res_res_a(entity_dict)
         elif task == "task_res_res_t":
             answer = cls.answer_res_res_t(entity_dict)
+        elif task == "task_room_card_a":
+            answer = cls.answer_room_card_a(entity_dict)
 
         return answer
 
@@ -184,6 +187,12 @@ class Bot():
     def answer_res_res_t(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_res_res_t(entity_dict)
+        return res
+
+    @classmethod
+    def answer_room_card_a(cls, entity_dict):
+        task_condition = Task_condition()
+        res = task_condition.solve_room_card_a(entity_dict)
         return res
 
 

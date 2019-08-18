@@ -15,7 +15,7 @@ import tornado.ioloop
 import tornado.escape
 import json
 from tornado.httpserver import HTTPServer
-from model.robot_hub.general_hub_1 import GeneralHub
+from model.robot_hub.general_hub_2 import GeneralHub
 from model.search_QA.similar_question_bot import similarQuestionBot
 from model.log.simple_log import simpleLog
 

@@ -132,6 +132,8 @@ class Neo4jPrepare(object):
         resource_variant_list=[]
         restype_list=[]
         restype_variant_list=[]
+        card_list=[]
+        card_variant_list=[]
 
 
         '''
@@ -208,8 +210,14 @@ class Neo4jPrepare(object):
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             restype_variant_list.append(temp)
 
-
-        return room_list,room_variant_list,floor_list,floor_variant_list,area_list,area_variant_list,resource_list,resource_variant_list,restype_list,restype_variant_list
+        cursor = cls.graph.run("match(n:`证件`)return n.office_name as card ,n.variant_name as variant_name")
+        while cursor.forward():
+            record = dict(cursor.current())
+            card_list.append(record['card'])
+            temp = record['variant_name'].split("，")
+            temp = sorted(temp, key=lambda i: len(i), reverse=True)
+            card_variant_list.append(temp)
+        return room_list,room_variant_list,floor_list,floor_variant_list,area_list,area_variant_list,resource_list,resource_variant_list,restype_list,restype_variant_list,card_list,card_variant_list
 
     @classmethod
     def create_node(cls, workbook):
@@ -234,8 +242,8 @@ class Neo4jPrepare(object):
                              friday_open=row[14], friday_borrow=row[15],
                              saturday_open=row[16], saturday_borrow=row[17],
                              sunday_open=row[18], sunday_borrow=row[19],
-                             #area=row[20],floor=row[21],
-                             certification=row[22],
+                             area=row[20],floor=row[21],
+                             card=row[22],
                              des_x=row[25],
                              des_y=row[26],
                              borrow=row[29]

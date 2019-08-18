@@ -30,7 +30,7 @@ class GeneralHub():
         cls._aiml_kernal.learn('../../resource/contain_template.aiml')
         cls._aiml_kernal.learn('../../resource/condition.aiml')
         cls._aiml_kernal.learn('../../resource/information.aiml')
-        cls.room_list, cls.room_variant_list, cls.floor_list, cls.floor_variant_list, cls.area_list, cls.area_variant_list, cls.resource_list, cls.resource_variant_list,cls.restype_list,cls.restype_variant_list = Neo4jPrepare.get_all_varname()
+        cls.room_list, cls.room_variant_list, cls.floor_list, cls.floor_variant_list, cls.area_list, cls.area_variant_list, cls.resource_list, cls.resource_variant_list,cls.restype_list,cls.restype_variant_list,cls.card_list,cls.card_variant_list = Neo4jPrepare.get_all_varname()
         jieba.load_userdict("../../resource/guotu_dict.txt")
         cls.stopwords = ['什么', '哪里', '怎么', '有', '走', '去', '可以', '如何', '怎样', '的', '地', '得']
         #self._aiml_kernal.learn('../../resource/contain_template.aiml')
@@ -46,6 +46,7 @@ class GeneralHub():
         floor_temp = []
         area_temp = []
         restype_temp=[]
+        card_temp = []
         #print(cls.stopwords)
         for word in word_list:
 
@@ -79,13 +80,18 @@ class GeneralHub():
                     restype_temp.append(cls.restype_list[restype_index])
                     question = question.replace(word, 'RESTYPE')
                     break
-                #else:
-                #    print(restype, word)
+
             for area_index in range(len(cls.area_variant_list)):
                 area = cls.area_variant_list[area_index]
                 if word in area:
                     area_temp.append(cls.area_list[area_index])
                     question = question.replace(word, 'AREA')
+                    break
+            for card_index in range(len(cls.card_variant_list)):
+                card = cls.card_variant_list[card_index]
+                if word in card:
+                    card_temp.append(cls.card_list[card_index])
+                    question = question.replace(word, 'CARD')
                     break
 
         entity_dict['room'] = room_temp
@@ -93,9 +99,8 @@ class GeneralHub():
         entity_dict['floor'] = floor_temp
         entity_dict['area'] = area_temp
         entity_dict['restype'] = restype_temp
-        #print(cls.restype_variant_list,restype_temp)
-        #print(cls.floor_variant_list)
-        #print(question)
+        entity_dict['card'] = card_temp
+
         return question, entity_dict
 
     def question_answer_hub(self, question_str):
