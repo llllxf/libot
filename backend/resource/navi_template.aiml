@@ -1,16 +1,5 @@
 <aiml version="1.0.1" encoding="UTF-8">
 
-    <category>
-        <pattern>再见</pattern>
-        <template>再见</template>
-    </category>
-
-    <category>
-        <pattern>再见*</pattern>
-            <template><srai>再 见</srai></template>
-    </category>
-    <!--
-
 
     <category>
         <pattern>RES#哪#看#</pattern>
@@ -43,7 +32,7 @@
 
 
     <category>
-        <pattern>#ROOM_有#看#</pattern>
+        <pattern>#ROOM有#看#</pattern>
         <template>
            task_room_res
         </template>

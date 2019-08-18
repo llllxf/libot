@@ -1,0 +1,16 @@
+<aiml version="1.0.1" encoding="UTF-8">
+    <!-- 进馆室证件 -->
+    <category>
+        <pattern>#ROOM*证#</pattern>
+        <template>
+           task_room_card
+        </template>
+    </category>
+    <category>
+        <pattern>*证*ROOM#</pattern>
+        <template>
+           task_room_card
+        </template>
+    </category>
+
+</aiml>

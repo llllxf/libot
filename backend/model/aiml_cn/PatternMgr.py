@@ -84,7 +84,7 @@ class PatternMgr:
         # Navigate through the node tree to the template's location, adding
         # nodes if necessary.
         node = self._root
-        print("==========================",node,self._root)
+        #print("==========================",node,self._root)
         #print("pattern",pattern)
         for word in pattern.split():
             #print(word)
@@ -152,7 +152,7 @@ class PatternMgr:
         node[self._TEMPLATE] = template
 
 #        print("================================2",node)
-        print("================================root",self._root)
+        #print("================================root",self._root)
 
     def match(self, pattern, that, topic):
         """Return the template which is the closest match to pattern. The
@@ -167,9 +167,9 @@ class PatternMgr:
         # Mutilate the input.  Remove all punctuation and convert the
         # text to all caps.
         input_ = pattern.upper()
-        print("1_m_input",input_)
+        #print("1_m_input",input_)
         input_ = re.sub(self._puncStripRE, " ", input_)
-        print("2_m_input", input_)
+        #print("2_m_input", input_)
         if that.strip() == u"": that = u"ULTRABOGUSDUMMYTHAT" # 'that' must never be empty
         thatInput = that.upper()
         thatInput = re.sub(self._puncStripRE, " ", thatInput)
@@ -177,11 +177,11 @@ class PatternMgr:
         if topic.strip() == u"": topic = u"ULTRABOGUSDUMMYTOPIC" # 'topic' must never be empty
         topicInput = topic.upper()
         topicInput = re.sub(self._puncStripRE, " ", topicInput)
-        print("topicInput,thatInput", topicInput,thatInput)
+        #print("topicInput,thatInput", topicInput,thatInput)
         
         # Pass the input off to the recursive call
         patMatch, template = self._match(input_.split(), thatInput.split(), topicInput.split(), self._root)
-        print("final", patMatch, template)
+        #print("final", patMatch, template)
         return template
 
     def star(self, starType, pattern, that, topic, index):
@@ -195,7 +195,7 @@ class PatternMgr:
         """
         # Mutilate the input.  Remove all punctuation and convert the
         # text to all caps.
-        print("===========================================================star")
+        #print("===========================================================star")
         input_ = pattern.upper()
         input_ = re.sub(self._puncStripRE, " ", input_)
         input_ = re.sub(self._whitespaceRE, " ", input_)
@@ -207,11 +207,11 @@ class PatternMgr:
         topicInput = topic.upper()
         topicInput = re.sub(self._puncStripRE, " ", topicInput)
         topicInput = re.sub(self._whitespaceRE, " ", topicInput)
-        print("1111111111111",input_,thatInput,topicInput)
+        #print("1111111111111",input_,thatInput,topicInput)
 
         # Pass the input off to the recursive pattern-matcher
         patMatch, template = self._match(input_.split(), thatInput.split(), topicInput.split(), self._root)
-        print("match_star11111",patMatch, template)
+        #print("match_star11111",patMatch, template)
 
         if template == None:
             return ""
@@ -219,13 +219,13 @@ class PatternMgr:
         # Extract the appropriate portion of the pattern, based on the
         # starType argument.
         words = None
-        print("starType",starType)
+        #print("starType",starType)
         if starType == 'star':
             patMatch = patMatch[:patMatch.index(self._THAT)]
-            print(patMatch)
+            #print(patMatch)
             words = input_.split()
-            print(words)
-            print("============================================")
+            #print(words)
+            #print("============================================")
         elif starType == 'thatstar':
             patMatch = patMatch[patMatch.index(self._THAT)+1 : patMatch.index(self._TOPIC)]
             words = thatInput.split()
@@ -294,7 +294,7 @@ class PatternMgr:
         # base-case: if the word list is empty, return the current node's
         # template.
         if len(words) == 0:
-            print("words",words)
+            #print("words",words)
             # we're out of words.
             pattern = []
             template = None
@@ -305,7 +305,7 @@ class PatternMgr:
                     pattern, template = self._match(thatWords, [], topicWords, root[self._THAT])
                     if pattern != None:
                         pattern = [self._THAT] + pattern
-                        print("pattern1",pattern)
+                        #print("pattern1",pattern)
                 except KeyError:
                     pattern = []
                     template = None
@@ -314,10 +314,10 @@ class PatternMgr:
                 # on the _TOPIC node with topicWords as words.
                 try:
                     pattern, template = self._match(topicWords, [], [], root[self._TOPIC])
-                    print("top,pattern,template",pattern,template)
+                    #print("top,pattern,template",pattern,template)
                     if pattern != None:
                         pattern = [self._TOPIC] + pattern
-                        print("pattern2", pattern)
+                        #print("pattern2", pattern)
                 except KeyError:
                     pattern = []
                     template = None
@@ -330,7 +330,7 @@ class PatternMgr:
 
         first = words[0]
         suffix = words[1:]
-        print("first,suffix",first,suffix,self._UNDERSCORE,root)
+        #print("first,suffix",first,suffix,self._UNDERSCORE,root)
         
         # Check underscore.
         # Note: this is causing problems in the standard AIML set, and is
@@ -352,7 +352,7 @@ class PatternMgr:
             pattern, template = self._match(suffix, thatWords, topicWords, root[first])
             if template is not None:
                 newPattern = [first] + pattern
-                print("newPattern,template",newPattern,template)
+                #print("newPattern,template",newPattern,template)
                 return (newPattern, template)
 
         # check bot name
@@ -372,7 +372,7 @@ class PatternMgr:
 
                 if template is not None:
                     newPattern = [self._STAR] + pattern
-                    print("newPattern,template", newPattern, template)
+                    #print("newPattern,template", newPattern, template)
                     return (newPattern, template)
         # check #
         '''

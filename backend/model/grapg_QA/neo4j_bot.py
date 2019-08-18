@@ -372,7 +372,7 @@ class neo4jBot():
             dy.append(y_list[1])
         #print(dx,dy)
         #####################################################
-        cls.draw_pic(dx,dy)
+        #cls.draw_pic(dx,dy)
         #####################################################
         #print(dx,dy)
         return responds

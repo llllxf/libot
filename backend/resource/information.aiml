@@ -1,0 +1,93 @@
+<aiml version="1.0.1" encoding="UTF-8">
+    <!-- 外借 -->
+    <category>
+        <pattern>#ROOM*外借#</pattern>
+        <template>
+           task_room_borrow
+        </template>
+    </category>
+
+    <category>
+        <pattern>*外借#ROOM*</pattern>
+        <template>
+           task_room_borrow
+        </template>
+    </category>
+
+    <category>
+        <pattern>#RES*外借#</pattern>
+        <template>
+           task_res_borrow
+        </template>
+    </category>
+
+    <category>
+        <pattern>*外借#RES*</pattern>
+        <template>
+           task_res_borrow
+        </template>
+    </category>
+
+    <!-- 馆室联系电话 -->
+    <category>
+        <pattern>*联系#ROOM#</pattern>
+        <template>
+           task_room_phone
+        </template>
+    </category>
+
+    <category>
+        <pattern>#ROOM*电*</pattern>
+        <template>
+           task_room_phone
+        </template>
+    </category>
+
+    <category>
+        <pattern>#ROOM*号码*</pattern>
+        <template>
+           task_room_phone
+        </template>
+    </category>
+
+    <!-- 馆室介绍 -->
+    <category>
+        <pattern>ROOM</pattern>
+        <template>
+           task_room_describe
+        </template>
+    </category>
+    <category>
+        <pattern>#介绍#ROOM#</pattern>
+        <template>
+           task_room_describe
+        </template>
+    </category>
+    <!-- 介绍资源 -->
+    <category>
+        <pattern>RES</pattern>
+        <template>
+           task_res_describe
+        </template>
+    </category>
+    <category>
+        <pattern>#RES是*</pattern>
+        <template>
+           task_res_describe
+        </template>
+    </category>
+    <category>
+        <pattern>*是RES#</pattern>
+        <template>
+           task_res_describe
+        </template>
+    </category>
+    <category>
+        <pattern>#介绍#RES#</pattern>
+        <template>
+           task_res_describe
+        </template>
+    </category>
+
+
+</aiml>

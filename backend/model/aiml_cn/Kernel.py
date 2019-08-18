@@ -132,7 +132,7 @@ class Kernel:
         """
         start = time.clock()
         if brainFile:
-            print("brainFile",brainFile)
+            #print("brainFile",brainFile)
             self.loadBrain(brainFile)
 
 
@@ -229,8 +229,8 @@ class Kernel:
         created.
 
         """
-        if name == "topic":
-            print("oooosdajdhkaegiaalkdhakjhfaklefgaedaj")
+        #if name == "topic":
+            #print("oooosdajdhkaegiaalkdhakjhfaklefgaedaj")
         self._addSession(sessionID) # add the session, if it doesn't already exist.
         self._sessions[sessionID][name] = value
 
@@ -367,13 +367,13 @@ class Kernel:
             parser = create_parser()
             handler = parser.getContentHandler()
             handler.setEncoding(self._textEncoding)
-            print("===============================itemsfirst",handler.categories.items())
+            #print("===============================itemsfirst",handler.categories.items())
             try: parser.parse(f)
             except xml.sax.SAXParseException as msg:
                 err = "\nFATAL PARSE ERROR in file %s:\n%s\n" % (f,msg)
                 sys.stderr.write(err)
                 continue
-            print("===============================itemssecond",handler.categories.items())
+            #print("===============================itemssecond",handler.categories.items())
             # store the pattern/template pairs in the PatternMgr.
             em_ext = os.path.splitext(filename)[1]
             for key,tem in handler.categories.items():
@@ -383,7 +383,7 @@ class Kernel:
                 elif key and key[0] and key[1] and key[2] and em_ext == '.aiml' and self._check_all_english(key[0]):
                     new_key=(key[0].upper(), key[1], key[2])
 
-                print("new_key",new_key,"tem",tem)
+                #print("new_key",new_key,"tem",tem)
                 self._brain.add(new_key,tem)
 
 
@@ -391,7 +391,7 @@ class Kernel:
                 # add more pattern with # represent 0+
                 if '#' in new_key[0]:
                     more_pattern_list = self.zero_plus_strick(new_key[0])
-                    print("more_pattern_list",more_pattern_list)
+                    #print("more_pattern_list",more_pattern_list)
                     for pattern in more_pattern_list:
                         pattern = pattern.replace('  ', ' ')
                         more_key = (pattern, new_key[1], new_key[2])
@@ -419,9 +419,9 @@ class Kernel:
             self._addSession(sessionID)
 
             # split the input into discrete sentences
-            print("input_",input_)
+            #print("input_",input_)
             sentences = Utils.sentences(input_)
-            print("sentences",sentences)
+            #print("sentences",sentences)
             finalResponse = u""
             for index,s in enumerate(sentences):
                 if not self._check_all_english(s):
@@ -432,7 +432,7 @@ class Kernel:
                 inputHistory.append(s)
                 while len(inputHistory) > self._maxHistorySize:
                     inputHistory.pop(0)
-                print("inputHistory",inputHistory)
+                #print("inputHistory",inputHistory)
                 self.setPredicate(self._inputHistory, inputHistory, sessionID)
 
                 # Fetch the response
@@ -469,10 +469,10 @@ class Kernel:
         """Private version of respond(), does the real work."""
         if len(input_) == 0:
             return u""
-        print(input_)
+        #print(input_)
         # guard against infinite recursion
         inputStack = self.getPredicate(self._inputStack, sessionID)
-        print("1====inputStack",inputStack)
+        #print("1====inputStack",inputStack)
         if len(inputStack) > self._maxRecursionDepth:
             if self._verboseMode:
                 err = u"WARNING: maximum recursion depth exceeded (input='%s')" % self._cod.enc(input_)
@@ -481,33 +481,33 @@ class Kernel:
 
         # push the input onto the input stack
         inputStack = self.getPredicate(self._inputStack, sessionID)
-        print("2=====inputStack",inputStack)
+        #print("2=====inputStack",inputStack)
         inputStack.append(input_)
-        print("3=====inputStack",inputStack)
+        #print("3=====inputStack",inputStack)
         self.setPredicate(self._inputStack, inputStack, sessionID)
 
         # run the input through the 'normal' subber
         subbedInput = self._subbers['normal'].sub(input_)
-        print("4====subbedInput",subbedInput)
+        #print("4====subbedInput",subbedInput)
 
         # fetch the bot's previous response, to pass to the match()
         # function as 'that'.
         outputHistory = self.getPredicate(self._outputHistory, sessionID)
-        print("1==========outputHistory",outputHistory)
+        #print("1==========outputHistory",outputHistory)
         try: that = outputHistory[-1]
         except IndexError: that = ""
-        print("that",that)
+        #print("that",that)
         subbedThat = self._subbers['normal'].sub(that)
 
         # fetch the current topic
         topic = self.getPredicate("topic", sessionID)
         subbedTopic = self._subbers['normal'].sub(topic)
-        print("subbedThat",subbedThat,"subbedTopic",subbedTopic)
+        #print("subbedThat",subbedThat,"subbedTopic",subbedTopic)
 
         # Determine the final response.
         response = u""
         elem = self._brain.match(subbedInput, subbedThat, subbedTopic)
-        print("elem",elem)
+        #print("elem",elem)
         if elem is None:
             if self._verboseMode:
                 err = "WARNING: No match found for input: %s\n" % self._cod.enc(input_)
@@ -923,9 +923,9 @@ class Kernel:
 
         """
         value = ""
-        print("_processSet",elem[1],elem)
+        #print("_processSet",elem[1],elem)
         for e in elem[2:]:
-            print("_processSet",e)
+            #print("_processSet",e)
             value += self._processElement(e, sessionID)
         #print( "@ELEM", elem ) 
         self.setPredicate(elem[1]['name'], value, sessionID)    
@@ -965,7 +965,7 @@ class Kernel:
         newInput = ""
         for e in elem[2:]:
             newInput += self._processElement(e, sessionID)
-            print("srai==============e,ni",e,newInput)
+            #print("srai==============e,ni",e,newInput)
         return self._respond(newInput, sessionID)
 
     # <star>
@@ -988,7 +988,7 @@ class Kernel:
         # fetch the user's last input
         inputStack = self.getPredicate(self._inputStack, sessionID)
         input_ = self._subbers['normal'].sub(inputStack[-1])
-        print("star,input====================================",input_)
+        #print("star,input====================================",input_)
         # fetch the Kernel's last response (for 'that' context)
         outputHistory = self.getPredicate(self._outputHistory, sessionID)
         try: that = self._subbers['normal'].sub(outputHistory[-1])
@@ -1053,7 +1053,7 @@ class Kernel:
         #print("_processTemplate",elem)
         #print(elem[2:])
         for e in elem[2:]:
-            print("_processTemplate",e)
+            #print("_processTemplate",e)
             response += self._processElement(e, sessionID)
         return response
 
@@ -1151,7 +1151,7 @@ class Kernel:
 
         """
         for e in elem[2:]:
-            print("_processThink",e)
+            #print("_processThink",e)
             self._processElement(e, sessionID)
         return ""
 

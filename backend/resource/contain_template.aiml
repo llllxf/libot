@@ -1,19 +1,314 @@
 <aiml version="1.0.1" encoding="UTF-8">
 <!-- floor_chat.aiml -->
+    <!-- 馆室层数 -->
     <category>
-        <pattern>#FLOOR#有多少#ROOM#</pattern>
+        <pattern>#AREA#多少#层#</pattern>
+        <template>
+            task_count_floor
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA#几#层#</pattern>
+        <template>
+            task_count_floor
+        </template>
+    </category>
+
+    <!-- 楼层馆室询问 -->
+    <category>
+        <pattern>#FLOOR*多少*</pattern>
         <template>
             task_floor_count_room
         </template>
     </category>
     <category>
-        <pattern>#FLOOR#有几#ROOM#</pattern>
+        <pattern>#FLOOR*几*</pattern>
         <template>
             task_floor_count_room
         </template>
     </category>
     <category>
-        <pattern>#ROOM#有多少#ROOM#</pattern>
+        <pattern>#FLOOR#有*</pattern>
+        <template>
+            task_floor_room_a
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#在#FLOOR#</pattern>
+        <template>
+            task_room_floor
+        </template>
+    </category>
+
+    <category>
+        <pattern>#FLOOR#有#ROOM#</pattern>
+        <template>
+            task_room_floor
+        </template>
+    </category>
+
+    <!-- 楼层资源询问 -->
+    <category>
+        <pattern>#FLOOR#有#RES#</pattern>
+        <template>
+            task_res_floor
+        </template>
+    </category>
+
+    <category>
+        <pattern>#RES#在#FLOOR#</pattern>
+        <template>
+            task_res_floor
+        </template>
+    </category>
+
+    <category>
+        <pattern>#FLOOR#有*资源#</pattern>
+        <template>
+            task_floor_res_a
+        </template>
+    </category>
+
+    <category>
+        <pattern>#FLOOR#存*资源#</pattern>
+        <template>
+            task_floor_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>*资源#存*FLOOR</pattern>
+        <template>
+            task_floor_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#FLOOR#有*看#</pattern>
+        <template>
+            task_floor_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#FLOOR#有*书#</pattern>
+        <template>
+            task_floor_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>*书#存*FLOOR</pattern>
+        <template>
+            task_floor_res_a
+        </template>
+    </category>
+
+    <!-- 馆室资源询问 -->
+    <category>
+        <pattern>#ROOM#有#RES#</pattern>
+        <template>
+            task_res_room
+        </template>
+    </category>
+
+    <category>
+        <pattern>#RES#在#ROOM#</pattern>
+        <template>
+            task_res_room
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#有*资源#</pattern>
+        <template>
+            task_room_res_a
+        </template>
+    </category>
+
+    <category>
+        <pattern>#ROOM#包*资源#</pattern>
+        <template>
+            task_room_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#有*看#</pattern>
+        <template>
+            task_room_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#有*书#</pattern>
+        <template>
+            task_room_res_a
+        </template>
+    </category>
+
+    <!-- 资源数量 -->
+    <category>
+        <pattern>#多少#RES#</pattern>
+        <template>
+            task_count_res
+        </template>
+    </category>
+    <category>
+        <pattern>#几#RES#</pattern>
+        <template>
+            task_count_res
+        </template>
+    </category>
+    <category>
+        <pattern>#RES#多少#</pattern>
+        <template>
+            task_count_res
+        </template>
+    </category>
+    <category>
+        <pattern>#RES#几#</pattern>
+        <template>
+            task_count_res
+        </template>
+    </category>
+    <category>
+        <pattern>*多少#RESTYPE#</pattern>
+        <template>
+            task_count_restype
+        </template>
+    </category>
+    <category>
+        <pattern>*几*RESTYPE#</pattern>
+        <template>
+            task_count_restype
+        </template>
+    </category>
+    <category>
+        <pattern>#RESTYPE*多少#</pattern>
+        <template>
+            task_count_restype
+        </template>
+    </category>
+    <category>
+        <pattern>#RESTYPE*几*</pattern>
+        <template>
+            task_count_restype
+        </template>
+    </category>
+
+    <!-- 资源包含情况 -->
+    <category>
+        <pattern>#RESTYPE#包*RES#</pattern>
+        <template>
+            task_res_res_h
+        </template>
+    </category>
+    <category>
+        <pattern>#RES#属于#RESTYPE#</pattern>
+        <template>
+            task_res_res_h
+        </template>
+    </category>
+    <category>
+        <pattern>#RESTYPE#包*</pattern>
+        <template>
+            task_res_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#RESTYPE#有哪些*</pattern>
+        <template>
+            task_res_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#RESTYPE#有什么*</pattern>
+        <template>
+            task_res_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#RESTYPE#有*RES#</pattern>
+        <template>
+            task_res_res_h
+        </template>
+    </category>
+    <category>
+        <pattern>*包*RESTYPE#</pattern>
+        <template>
+            task_res_res_t
+        </template>
+    </category>
+    <category>
+        <pattern>#RESTYPE#属于*</pattern>
+        <template>
+            task_res_res_t
+        </template>
+    </category>
+    <!--
+    <category>
+        <pattern>#ROOM#含*</pattern>
+        <template>
+            task_room_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#包*</pattern>
+        <template>
+            task_room_res_a
+        </template>
+    </category>
+
+    <category>
+        <pattern>#ROOM#有*</pattern>
+        <template>
+            task_room_room_or_res_a
+        </template>
+    </category>
+    -->
+
+    <!--
+    <category>
+        <pattern>#FLOOR#有#馆#</pattern>
+        <template>
+            task_floor_room_a
+        </template>
+    </category>
+
+    <category>
+        <pattern>#FLOOR#有#室#</pattern>
+        <template>
+            task_floor_room_a
+        </template>
+    </category>
+
+    <category>
+        <pattern>#FLOOR#含#馆#</pattern>
+        <template>
+            task_floor_room_a
+        </template>
+    </category>
+    <category>
+        <pattern>#FLOOR#包括#</pattern>
+        <template>
+            task_floor_room_a
+        </template>
+    </category>
+
+    <category>
+        <pattern>#FLOOR#含#室#</pattern>
+        <template>
+            task_floor_room_a
+        </template>
+    </category>
+
+    <category>
+        <pattern>#FLOOR#有#</pattern>
+        <template>
+            task_floor_room_a
+        </template>
+    </category>
+
+    -->
+
+
+    <!--
+    <category>
+        <pattern>#ROOM*多少#馆#</pattern>
         <template>
             task_room_count_room
         </template>
@@ -77,251 +372,9 @@
             task_room_room_a
         </template>
     </category>
-
-    <category>
-        <pattern>#ROOM#在#FLOOR#</pattern>
-        <template>
-            task_room_floor_l
-        </template>
-    </category>
-
-    <category>
-        <pattern>#FLOOR#有#ROOM#</pattern>
-        <template>
-            task_room_floor_h
-        </template>
-    </category>
-
-    <category>
-        <pattern>#FLOOR#有#RES#</pattern>
-        <template>
-            task_res_floor_h
-        </template>
-    </category>
-
-    <category>
-        <pattern>#FLOOR#含#RES#</pattern>
-        <template>
-            task_res_floor_h
-        </template>
-    </category>
-
-    <category>
-        <pattern>#RES#在#FLOOR#</pattern>
-        <template>
-            task_res_floor_l
-        </template>
-    </category>
-
-    <category>
-        <pattern>#ROOM#有#RES#</pattern>
-        <template>
-            task_res_room_h
-        </template>
-    </category>
-    <category>
-        <pattern>#ROOM#含#RES#</pattern>
-        <template>
-            task_res_room_h
-        </template>
-    </category>
-
-    <category>
-        <pattern>#RES#在#ROOM#</pattern>
-        <template>
-            task_res_room_l
-        </template>
-    </category>
-
-    <category>
-        <pattern>#FLOOR#有#馆#</pattern>
-        <template>
-            task_floor_room_a
-        </template>
-    </category>
-
-    <category>
-        <pattern>#FLOOR#有#室#</pattern>
-        <template>
-            task_floor_room_a
-        </template>
-    </category>
-
-    <category>
-        <pattern>#FLOOR#含#馆#</pattern>
-        <template>
-            task_floor_room_a
-        </template>
-    </category>
-    <category>
-        <pattern>#FLOOR#包括#</pattern>
-        <template>
-            task_floor_room_a
-        </template>
-    </category>
-
-    <category>
-        <pattern>#FLOOR#含#室#</pattern>
-        <template>
-            task_floor_room_a
-        </template>
-    </category>
-
-    <category>
-        <pattern>#FLOOR#有#</pattern>
-        <template>
-            task_floor_room_a
-        </template>
-    </category>
+    -->
 
 
-    <category>
-        <pattern>#ROOM#有#资源#</pattern>
-        <template>
-            task_room_res_a
-        </template>
-    </category>
-
-    <category>
-        <pattern>#ROOM#含#资源#</pattern>
-        <template>
-            task_room_res_a
-        </template>
-    </category>
-
-    <category>
-        <pattern>#ROOM#包括#资源#</pattern>
-        <template>
-            task_room_res_a
-        </template>
-    </category>
-
-    <category>
-        <pattern>#FLOOR#有#资源#</pattern>
-        <template>
-            task_floor_res_a
-        </template>
-    </category>
-
-    <category>
-        <pattern>#FLOOR#含#资源#</pattern>
-        <template>
-            task_floor_res_a
-        </template>
-    </category>
-    <category>
-        <pattern>#FLOOR#有#看#</pattern>
-        <template>
-            task_floor_res_a
-        </template>
-    </category>
-    <category>
-        <pattern>#FLOOR#有#书#</pattern>
-        <template>
-            task_floor_res_a
-        </template>
-    </category>
-    <category>
-        <pattern>#FLOOR#包括#资源#</pattern>
-        <template>
-            task_floor_res_a
-        </template>
-    </category>
-
-    <category>
-        <pattern>#ROOM#含#</pattern>
-        <template>
-            task_room_room_or_res_a
-        </template>
-    </category>
-
-    <category>
-        <pattern>#ROOM#包括#</pattern>
-        <template>
-            task_room_room_or_res_a
-        </template>
-    </category>
-    <category>
-        <pattern>#ROOM#有#</pattern>
-        <template>
-            task_room_room_or_res_a
-        </template>
-    </category>
-    <category>
-        <pattern>#ROOM#有#</pattern>
-        <template>
-            task_room_room_or_res_a
-        </template>
-    </category>
-    <category>
-        <pattern>#ROOM#有#看</pattern>
-        <template>
-            task_room_res_a
-        </template>
-    </category>
-
-    <category>
-        <pattern>#多少#RES#</pattern>
-        <template>
-            task_count_res
-        </template>
-    </category>
-    <category>
-        <pattern>#几#RES#</pattern>
-        <template>
-            task_count_res
-        </template>
-    </category>
-    <category>
-        <pattern>#RES#多少#</pattern>
-        <template>
-            task_count_res
-        </template>
-    </category>
-    <category>
-        <pattern>#RES#几#</pattern>
-        <template>
-            task_count_res
-        </template>
-    </category>
-    <category>
-        <pattern>#ROOM#多少#层#</pattern>
-        <template>
-            task_count_floor
-        </template>
-    </category>
-    <category>
-        <pattern>#ROOM#几#层#</pattern>
-        <template>
-            task_count_floor
-        </template>
-    </category>
-
-    <category>
-        <pattern>#RES#有#RES#</pattern>
-        <template>
-            task_res_res_h
-        </template>
-    </category>
-    <category>
-        <pattern>#RES#包#RES#</pattern>
-        <template>
-            task_res_res_h
-        </template>
-    </category>
-    <category>
-        <pattern>#RES#包#</pattern>
-        <template>
-            task_res_res_a
-        </template>
-    </category>
-
-    <category>
-        <pattern>A怎么走</pattern>
-        <template>
-            task_navi
-        </template>
-    </category>
 
 
 </aiml>

@@ -24,6 +24,8 @@ class Neo4jPrepare(object):
         cls.floor = '楼层'
         cls.resource = "资源"
         cls.mark = "标志点"
+        cls.card = '证件'
+        cls.restype = '资源类型'
         cls.graph.delete_all()
 
         """建图"""
@@ -31,11 +33,6 @@ class Neo4jPrepare(object):
 
         cls.create_node(workbook)
         cls.create_relation(workbook)
-        '''
-        cls.room_list,cls.room_variant_list,cls.floor_list,cls.floor_variant_list,cls.area_list,cls.area_variant_list,cls.resource_list,cls.resource_variant_list=cls.get_all_varname()
-        jieba.load_userdict("../../resource/guotu_dict.txt")
-        '''
-        #print(cls.room_list,cls.area_variant_list,cls.resource_variant_list)
 
 
     '''
@@ -133,6 +130,9 @@ class Neo4jPrepare(object):
         area_variant_list = []
         resource_list=[]
         resource_variant_list=[]
+        restype_list=[]
+        restype_variant_list=[]
+
 
         '''
         馆室正名、别名
@@ -199,125 +199,20 @@ class Neo4jPrepare(object):
             for j in i:
                 print(j)
         '''
-        return room_list,room_variant_list,floor_list,floor_variant_list,area_list,area_variant_list,resource_list,resource_variant_list
+
+        cursor = cls.graph.run("match(n:`资源类型`)return n.office_name as restype ,n.variant_name as variant_name")
+        while cursor.forward():
+            record = dict(cursor.current())
+            restype_list.append(record['restype'])
+            temp = record['variant_name'].split("，")
+            temp = sorted(temp, key=lambda i: len(i), reverse=True)
+            restype_variant_list.append(temp)
 
 
-    @classmethod
-    def repalce_question(cls, question):
-
-        entity_dict = {}
-        word_list = jieba.cut(question, cut_all=False)
-        room_temp = []
-        resource_temp = []
-        floor_temp = []
-        area_temp = []
-        for word in word_list:
-            #print(word)
-            if word in cls.stopwords:
-                continue
-
-            for room_index in range(len(cls.room_variant_list)):
-                room = cls.room_variant_list[room_index]
-                if word in room:
-                    room_temp.append(cls.room_list[room_index])
-                    question = question.replace(word, 'ROOM')
-                    break
-            for resource_index in range(len(cls.resource_variant_list)):
-                resource = cls.resource_variant_list[resource_index]
-                if word in resource:
-                    resource_temp.append(cls.resource_list[resource_index])
-                    question = question.replace(word, 'RES')
-                    break
-            for floor_index in range(len(cls.floor_variant_list)):
-                floor = cls.floor_variant_list[floor_index]
-                if word in floor:
-                    floor_temp.append(cls.floor_list[floor_index])
-                    question = question.replace(word, 'FLOOR')
-                    break
-            for area_index in range(len(cls.area_variant_list)):
-                area = cls.area_variant_list[area_index]
-                if word in area:
-                    area_temp.append(cls.area_list[area_index])
-                    question = question.replace(word, 'AREA')
-                    break
-
-        entity_dict['room'] = room_temp
-        entity_dict['res'] = resource_temp
-        entity_dict['floor'] = floor_temp
-        entity_dict['area'] = area_temp
-        #print(entity_dict['room'])
-        return question, entity_dict
-
-    '''
-    @classmethod
-    def repalce_question(cls, question):
-
-        entity_dict={}
-
-        offical_temp=[]
-        for var_index in range(len(cls.resource_variant_list)):
-            sub_var = cls.resource_variant_list[var_index]
-            #print(sub_var)
-            for sub_name in sub_var:
-                if sub_name in question:
-                    offical_temp.append(cls.resource_list[var_index])
-                    question = question.replace(sub_name, 'RES')
-                    break
-        entity_dict['res'] = offical_temp
-
-        offical_temp = []
-        for var_index in range(len(cls.floor_variant_list)):
-            sub_var = cls.floor_variant_list[var_index]
-            #print(sub_var)
-            for sub_name in sub_var:
-                if sub_name in question:
-                    offical_temp.append(cls.floor_list[var_index])
-                    question = question.replace(sub_name, 'FLOOR')
-                    break
-        entity_dict['floor'] = offical_temp
-
-        offical_temp = []
-        for var_index in range(len(cls.room_variant_list)):
-            sub_var = cls.room_variant_list[var_index]
-            #print(sub_var)
-            for sub_name in sub_var:
-                if sub_name in question:
-                    offical_temp.append(cls.room_list[var_index])
-                    question = question.replace(sub_name, 'ROOM')
-                    break
-
-        for var_index in range(len(cls.area_variant_list)):
-            sub_var = cls.area_variant_list[var_index]
-            #print(sub_var)
-            for sub_name in sub_var:
-                if sub_name in question:
-                    offical_temp.append(cls.area_list[var_index])
-                    question = question.replace(sub_name, 'ROOM')
-                    break
-        entity_dict['room'] = offical_temp
-        #print(entity_dict)
-        #print(question)
-        return question,entity_dict
-    '''
-
-
+        return room_list,room_variant_list,floor_list,floor_variant_list,area_list,area_variant_list,resource_list,resource_variant_list,restype_list,restype_variant_list
 
     @classmethod
     def create_node(cls, workbook):
-        '''
-        values = cls.data.values
-
-        for value in values[:9]:
-            room_node = Node(cls.room2, name=value[0], des_x=value[3], des_y=value[4])
-            cls.graph.create(room_node)
-
-        for value in values[9:]:
-            mark_node = Node(cls.mark, name=value[0], self_site=value[2])
-            cls.graph.create(mark_node)
-
-        cls.graph.create(Node(cls.building2, name="总馆北区"))
-        cls.graph.create(Node(cls.floor2, name="总馆北区一层"))
-        '''
 
         """建立馆室节点"""
         room_sheet = workbook.sheet_by_index(0)
@@ -330,7 +225,7 @@ class Neo4jPrepare(object):
                     name = name_arr[2]
 
 
-            room_node = Node(cls.room,type=cls.room,name=name,office_name=row[0],variant_name=row[1],position=row[2],service=row[3],
+            room_node = Node(cls.room,type=cls.room,name=name,office_name=row[0],variant_name=row[1],position=row[2],describe=row[3],
                              open_date=row[4],phone=row[5],
                              monday_open=row[6],monday_borrow=row[7],
                              tuseday_open=row[8],tuseday_borrow=row[9],
@@ -342,7 +237,8 @@ class Neo4jPrepare(object):
                              #area=row[20],floor=row[21],
                              certification=row[22],
                              des_x=row[25],
-                             des_y=row[26]
+                             des_y=row[26],
+                             borrow=row[29]
 
                              )
             cls.graph.create(room_node)
@@ -353,7 +249,7 @@ class Neo4jPrepare(object):
 
 
         """建立馆区节点"""
-        building_sheet = workbook.sheet_by_index(1)
+        building_sheet = workbook.sheet_by_index(2)
         for i in range(1, building_sheet.nrows):
             row = building_sheet.row_values(i)
             name = row[0]
@@ -365,7 +261,7 @@ class Neo4jPrepare(object):
             cls.graph.create(building_node)
 
         """建立楼层节点"""
-        floor_sheet = workbook.sheet_by_index(3)
+        floor_sheet = workbook.sheet_by_index(4)
         for i in range(1, floor_sheet.nrows):
             row = floor_sheet.row_values(i)
             name = row[0]
@@ -377,17 +273,36 @@ class Neo4jPrepare(object):
             cls.graph.create(floor_node)
 
         """建立资源节点"""
-        resource_sheet = workbook.sheet_by_index(2)
+        resource_sheet = workbook.sheet_by_index(3)
         for i in range(1, resource_sheet.nrows):
             row = resource_sheet.row_values(i)
+            print(row)
             name = row[0]
             if row[0].find("_") != -1:
                 name = row[0].split("_")[1]
             # print(name)
             resource_node = Node(cls.resource, type=cls.resource,name=name, office_name=row[0], variant_name=row[1], describe=row[2], count=row[3],
-                              #room=row[4],
-                              belong=row[5])
+                              room=row[4],
+                              belong=row[5],
+                              borrow=row[6])
             cls.graph.create(resource_node)
+
+        '''建立证件节点'''
+        card_sheet = workbook.sheet_by_index(1)
+        for i in range(1,card_sheet.nrows):
+            row = card_sheet.row_values(i)
+            card_node = Node(cls.card, type=cls.card, name = row[0], office_name=row[0], variant_name=row[1], age=row[2])
+            cls.graph.create(card_node)
+
+        '''建立资源类型节点'''
+        restype_sheet = workbook.sheet_by_index(6)
+        for i in range(1, restype_sheet.nrows):
+            row = restype_sheet.row_values(i)
+            restype_node = Node(cls.restype, type=cls.restype, name=row[0], office_name=row[0], variant_name=row[1], describe=row[2], count=row[3],
+                              room=row[4],
+                              belong=row[5])
+            cls.graph.create(restype_node)
+
 
     @classmethod
     def create_relation(cls, workbook):
@@ -410,6 +325,14 @@ class Neo4jPrepare(object):
                                                                property_value=row[0]), "位于",
                                            cls.graph.find_one(label=cls.floor, property_key='office_name',
                                                                property_value=sub_floor))
+                        cls.graph.create(rel)
+                if row[22].find("，"):
+                    card_arr = row[22].split("，")
+                    for sub_card in card_arr:
+                        rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
+                                                               property_value=row[0]), "证件",
+                                           cls.graph.find_one(label=cls.card, property_key='office_name',
+                                                               property_value=sub_card))
                         cls.graph.create(rel)
             except AttributeError as e:
                 print("1",row[0],e,row[20])
@@ -437,7 +360,7 @@ class Neo4jPrepare(object):
 
 
         """建立楼层联系"""
-        floor_sheet = workbook.sheet_by_index(3)
+        floor_sheet = workbook.sheet_by_index(4)
         for i in range(1, floor_sheet.nrows):
             try:
                 row = floor_sheet.row_values(i)
@@ -450,11 +373,18 @@ class Neo4jPrepare(object):
                 #print("2",row[0],e,row[2])
 
         """建立资源联系"""
-        floor_sheet = workbook.sheet_by_index(2)
-        for i in range(1, floor_sheet.nrows):
+        res_sheet = workbook.sheet_by_index(3)
+        for i in range(1, res_sheet.nrows):
             try:
+
                 room_arr = []
-                row = floor_sheet.row_values(i)
+                row = res_sheet.row_values(i)
+
+                rel = Relationship(cls.graph.find_one(label=cls.resource, property_key='office_name',
+                                                      property_value=row[0]), "属于",
+                                   cls.graph.find_one(label=cls.restype, property_key='office_name',
+                                                      property_value=row[5]))
+                cls.graph.create(rel)
                 #print(row[4])
                 if row[4].find("，")!=-1:
                     room_arr = row[4].split("，")
@@ -468,6 +398,7 @@ class Neo4jPrepare(object):
                                                        property_value=row[0]), "存放",
                                    cls.graph.find_one(label=cls.room, property_key='office_name', property_value=sub_room))
                     cls.graph.create(rel)
+
             except AttributeError as e:
                 a = 0
                 #print("3", row[0], e, row[4])
@@ -500,6 +431,14 @@ class Neo4jPrepare(object):
                                                       property_value=row[0]), "位于",
                                    cls.graph.find_one(label=cls.floor, property_key='office_name',
                                                       property_value=row[21]))
+                if row[22].find("，"):
+                    card_arr = row[22].split("，")
+                    for sub_card in card_arr:
+                        rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
+                                                               property_value=row[0]), "证件",
+                                           cls.graph.find_one(label=cls.card, property_key='office_name',
+                                                               property_value=sub_card))
+                        cls.graph.create(rel)
                 cls.graph.create(rel)
 
             except AttributeError as e:
@@ -538,12 +477,34 @@ class Neo4jPrepare(object):
                                                       property_value=row[0]), "位于",
                                    cls.graph.find_one(label=cls.floor, property_key='office_name',
                                                       property_value=row[21]))
+                if row[22].find("，"):
+                    card_arr = row[22].split("，")
+                    for sub_card in card_arr:
+                        rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
+                                                               property_value=row[0]), "证件",
+                                           cls.graph.find_one(label=cls.card, property_key='office_name',
+                                                               property_value=sub_card))
+                        cls.graph.create(rel)
                 cls.graph.create(rel)
 
             except AttributeError as e:
                 print("1",row[0],e,row[20])
                 print(cls.graph.find_one(label=cls.room, property_key='office_name',
                                                    property_value=row[0]))
+        """建立资源联系"""
+        restype_sheet = workbook.sheet_by_index(6)
+        for i in range(1, restype_sheet.nrows):
+            try:
+
+                row = restype_sheet.row_values(i)
+
+                rel = Relationship(cls.graph.find_one(label=cls.restype, property_key='office_name',
+                                                      property_value=row[0]), "属于",
+                                   cls.graph.find_one(label=cls.restype, property_key='office_name',
+                                                      property_value=row[5]))
+                cls.graph.create(rel)
+            except AttributeError as e:
+                a = 0
         
 
         
@@ -554,10 +515,13 @@ class Neo4jPrepare(object):
 
 
 if __name__ == '__main__':
+    Neo4jPrepare()
 
-    a = Neo4jPrepare().get_relation('总馆北区一层','馆区')
-    #print(a)
-    #print(q,e)
-    #prepare.repalce_question("数字共享空间在总馆北区一层吗")
+
+    res = Neo4jPrepare.get_reverse_relation('基藏外文图书外借出纳台','资源')
+    for r in res:
+        print(r['office_name'])
+
+
 
 
