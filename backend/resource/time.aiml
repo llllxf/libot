@@ -65,7 +65,7 @@
         </template>
     </category>
     <category>
-        <pattern>#ROOM*开放*</pattern>
+        <pattern>#ROOM#开放*</pattern>
         <template>
            task_room_time
         </template>
@@ -150,7 +150,31 @@
         </template>
     </category>
     <category>
+        <pattern>#ROOM*点*借#</pattern>
+        <template>
+            task_room_res_time
+        </template>
+    </category>
+    <category>
         <pattern>*时*借#ROOM#</pattern>
+        <template>
+            task_room_res_time
+        </template>
+    </category>
+    <category>
+        <pattern>*点*借#ROOM#</pattern>
+        <template>
+            task_room_res_time
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM*借*时#</pattern>
+        <template>
+            task_room_res_time
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM*借*点#</pattern>
         <template>
             task_room_res_time
         </template>
@@ -162,13 +186,31 @@
         </template>
     </category>
     <category>
-        <pattern>#RES*借*时#</pattern>
+        <pattern>#RES#几点*借#</pattern>
+        <template>
+            task_res_time
+        </template>
+    </category>
+    <category>
+        <pattern>#RES#借*时#</pattern>
+        <template>
+            task_res_time
+        </template>
+    </category>
+    <category>
+        <pattern>#RES#借*几点#</pattern>
         <template>
             task_res_time
         </template>
     </category>
     <category>
         <pattern>*时*借#RES#</pattern>
+        <template>
+            task_res_time
+        </template>
+    </category>
+    <category>
+        <pattern>#几点*借#RES#</pattern>
         <template>
             task_res_time
         </template>

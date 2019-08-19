@@ -9,6 +9,8 @@ from model.grapg_QA.Task_time import Task_time
 from model.grapg_QA.Task_contain import Task_contain
 from model.grapg_QA.Task_information import Task_information
 from model.grapg_QA.Task_condition import Task_condition
+from model.grapg_QA.Task_business import Task_business
+
 import time
 import datetime
 import matplotlib.pyplot as plt
@@ -71,6 +73,19 @@ class Bot():
             answer = cls.answer_res_res_t(entity_dict)
         elif task == "task_room_card_a":
             answer = cls.answer_room_card_a(entity_dict)
+        elif task == "task_card_yes":
+            answer = cls.answer_card_yes()
+        elif task == "task_card_no":
+            answer = cls.answer_card_no()
+        elif task == "task_card_thirteen":
+            answer = cls.answer_card_thirteen()
+        elif task == "task_card_twelve":
+            answer = cls.answer_card_twelve()
+        elif task == "task_restype_borrow":
+            answer = cls.answer_restype_borrow(entity_dict)
+        elif task == "task_restype_describe":
+            answer = cls.answer_restype_describe(entity_dict)
+
 
         return answer
 
@@ -194,6 +209,41 @@ class Bot():
         task_condition = Task_condition()
         res = task_condition.solve_room_card_a(entity_dict)
         return res
+
+    @classmethod
+    def answer_card_yes(cls):
+        task_business = Task_business()
+        return task_business.solve__card_yes()
+
+    @classmethod
+    def answer_card_no(cls):
+        task_business = Task_business()
+        return task_business.solve__card_no()
+
+    @classmethod
+    def answer_card_thirteen(cls):
+        task_business = Task_business()
+        return task_business.solve__card_thirteen()
+
+    @classmethod
+    def answer_card_twelve(cls):
+        task_business = Task_business()
+        return task_business.solve__card_twelve()
+
+    @classmethod
+    def answer_restype_borrow(cls, entity_dict):
+
+        task_information = Task_information()
+        res = task_information.solve_restype_borrow(entity_dict)
+        return res
+
+    @classmethod
+    def answer_restype_describe(cls, entity_dict):
+        task_information = Task_information()
+        res = task_information.solve_restype_describe(entity_dict)
+        return res
+
+
 
 
 

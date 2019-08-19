@@ -1,0 +1,59 @@
+<aiml version="1.0.1" encoding="UTF-8">
+    <!-- 办卡 -->
+    <!-- ========================================================== -->
+    <category>
+        <pattern>#办#卡#</pattern>
+        <template>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </template>
+    </category>
+    <category>
+        <pattern>*卡*办#</pattern>
+        <template>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </template>
+    </category>
+    <category>
+        <pattern>#A#</pattern>
+        <that>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </that>
+        <template>
+            请问办卡人是否为中国公民？
+        </template>
+    </category>
+    <category>
+        <pattern>#是#</pattern>
+        <that>请问办卡人是否为中国公民？</that>
+        <template>
+            task_card_yes
+        </template>
+    </category>
+    <category>
+        <pattern>#不#</pattern>
+        <that>请问办卡人是否为中国公民？</that>
+        <template>
+            task_card_no
+        </template>
+    </category>
+    <category>
+        <pattern>#B#</pattern>
+        <that>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </that>
+        <template>
+            task_card_thirteen
+        </template>
+    </category>
+    <category>
+        <pattern>#C#</pattern>
+        <that>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </that>
+        <template>
+            task_card_twelve
+        </template>
+    </category>
+    <!-- ========================================================== -->
+</aiml>
+

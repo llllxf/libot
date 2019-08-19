@@ -40,11 +40,12 @@ class Neo4jPrepare(object):
     '''
     @classmethod
     def get_property(cls,entity):
-
+        #print(entity)
         cursor = cls.graph.run("match(n {office_name:{a}})return n",a=entity)
         #print(cursor)
         cursor.forward()
         record = cursor.current()
+        #print(record)
         return (dict(record['n']))
 
 
@@ -499,20 +500,36 @@ class Neo4jPrepare(object):
                 print("1",row[0],e,row[20])
                 print(cls.graph.find_one(label=cls.room, property_key='office_name',
                                                    property_value=row[0]))
-        """建立资源联系"""
+        """建立资源类型联系"""
         restype_sheet = workbook.sheet_by_index(6)
         for i in range(1, restype_sheet.nrows):
             try:
 
                 row = restype_sheet.row_values(i)
+                #print("==========================",row[0])
 
                 rel = Relationship(cls.graph.find_one(label=cls.restype, property_key='office_name',
                                                       property_value=row[0]), "属于",
                                    cls.graph.find_one(label=cls.restype, property_key='office_name',
                                                       property_value=row[5]))
                 cls.graph.create(rel)
+                room_arr = []
+                if row[4].find("，")!=-1:
+                    room_arr = row[4].split("，")
+                else:
+                    room_arr.append(row[4])
+                #print(room_arr)
+
+                for sub_room in room_arr:
+                    #print("===========================================",sub_room,row[0])
+
+                    rel = Relationship(cls.graph.find_one(label=cls.restype, property_key='office_name',
+                                                       property_value=row[0]), "存放",
+                                   cls.graph.find_one(label=cls.room, property_key='office_name', property_value=sub_room))
+                    cls.graph.create(rel)
             except AttributeError as e:
-                a = 0
+                a=0
+                #print("-----------",row[0],e)
         
 
         

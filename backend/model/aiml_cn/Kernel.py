@@ -538,7 +538,7 @@ class Kernel:
         """
         try:
             handlerFunc = self._elementProcessors[elem[0]]
-            print("process",elem[0],self._elementProcessors[elem[0]])
+            #print("process",elem[0],self._elementProcessors[elem[0]])
         except:
             # Oops -- there's no handler function for this element type!
             if self._verboseMode:

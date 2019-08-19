@@ -5,9 +5,14 @@ class Task_time():
         res = Neo4jPrepare.get_property(room)
         #print(res)
         open_day = res['open_date']
+        ans = "\n" + room + "开放日为：" + open_day+"\n"
         workday_time = res['monday_open']
         weekend_time = res['sunday_open']
-        ans = "\n"+room+"开放日为："+open_day+"\n工作日开放时间为："+workday_time+"\n周末开放时间为："+weekend_time+"\n"
+        if workday_time != '':
+
+            ans += "工作日开放时间为："+workday_time+"\n"
+        if weekend_time != '':
+            ans += "周末开放时间为："+weekend_time+"\n"
 
         return ans
 
@@ -18,6 +23,8 @@ class Task_time():
         #print("================================",res)
         workday_time = res['monday_borrow']
         weekend_time = res['sunday_borrow']
+        if workday_time == '' and weekend_time == '':
+            return "很抱歉，"+room+"的资源材料不提供借阅\n"
         ans = "\n"+room+"的书籍材料借阅时间为："
         if workday_time != '':
             ans += "\n工作日："+workday_time
@@ -33,8 +40,11 @@ class Task_time():
         res = Neo4jPrepare.get_property(room)
         workday_time = res['monday_borrow']
         weekend_time = res['sunday_borrow']
+        if workday_time == '' and weekend_time == '':
+            return "很抱歉，"+room+"的资源材料不提供借阅\n"
         #ans = "\n" + resource + "的借阅时间为：\n工作日：" + workday_time + "\n周未：" + weekend_time + "\n"
-        ans = "\n" + room + "的借阅时间为："
+        ans = "\n" + resource + "存放在"+room+","
+        ans += room + "的借阅时间为："
         if workday_time != '':
             ans += "\n工作日：" + workday_time
         if weekend_time != '':

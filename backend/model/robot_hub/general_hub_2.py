@@ -26,14 +26,16 @@ class GeneralHub():
     def __init__(cls):
         cls._aiml_kernal = aiml_cn.Kernel()
         cls._aiml_kernal.learn('../../resource/navi_template.aiml')
-        cls._aiml_kernal.learn('../../resource/time.aiml')
         cls._aiml_kernal.learn('../../resource/contain_template.aiml')
+        cls._aiml_kernal.learn('../../resource/time.aiml')
+
         cls._aiml_kernal.learn('../../resource/condition.aiml')
         cls._aiml_kernal.learn('../../resource/information.aiml')
+        cls._aiml_kernal.learn('../../resource/business.aiml')
         cls.room_list, cls.room_variant_list, cls.floor_list, cls.floor_variant_list, cls.area_list, cls.area_variant_list, cls.resource_list, cls.resource_variant_list,cls.restype_list,cls.restype_variant_list,cls.card_list,cls.card_variant_list = Neo4jPrepare.get_all_varname()
         jieba.load_userdict("../../resource/guotu_dict.txt")
         cls.stopwords = ['什么', '哪里', '怎么', '有', '走', '去', '可以', '如何', '怎样', '的', '地', '得']
-        #self._aiml_kernal.learn('../../resource/contain_template.aiml')
+
 
     @classmethod
     def repalce_question(cls, question):
@@ -76,7 +78,7 @@ class GeneralHub():
                 restype = cls.restype_variant_list[restype_index]
                 #print(restype,word)
                 if word in restype:
-                    print(word)
+                    #print(word)
                     restype_temp.append(cls.restype_list[restype_index])
                     question = question.replace(word, 'RESTYPE')
                     break
@@ -112,11 +114,15 @@ class GeneralHub():
 
 
         question_replaced,entity_dict = GeneralHub.repalce_question(question_str)
+        #print(question_replaced)
         aiml_respons = GeneralHub._aiml_kernal.respond(question_replaced)
         #print(aiml_respons)
+        #return aiml_respons
 
         if 'task_' in aiml_respons:
                 graph_respons = Bot.task_response(aiml_respons,entity_dict)
+        else:
+            return aiml_respons
 
         return graph_respons
 

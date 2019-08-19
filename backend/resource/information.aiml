@@ -28,6 +28,20 @@
         </template>
     </category>
 
+    <category>
+        <pattern>#RESTYPE*外借#</pattern>
+        <template>
+           task_restype_borrow
+        </template>
+    </category>
+
+    <category>
+        <pattern>*外借#RESTYPE*</pattern>
+        <template>
+           task_restype_borrow
+        </template>
+    </category>
+
     <!-- 馆室联系电话 -->
     <category>
         <pattern>*联系#ROOM#</pattern>
@@ -44,7 +58,7 @@
     </category>
 
     <category>
-        <pattern>#ROOM*号码*</pattern>
+        <pattern>#ROOM#号码*</pattern>
         <template>
            task_room_phone
         </template>
@@ -59,6 +73,12 @@
     </category>
     <category>
         <pattern>#介绍#ROOM#</pattern>
+        <template>
+           task_room_describe
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM是*</pattern>
         <template>
            task_room_describe
         </template>
@@ -86,6 +106,31 @@
         <pattern>#介绍#RES#</pattern>
         <template>
            task_res_describe
+        </template>
+    </category>
+    <!-- 资源类型介绍 -->
+    <category>
+        <pattern>RESTYPE</pattern>
+        <template>
+           task_restype_describe
+        </template>
+    </category>
+    <category>
+        <pattern>#RESTYPE是*</pattern>
+        <template>
+           task_restype_describe
+        </template>
+    </category>
+    <category>
+        <pattern>*是RESTYPE#</pattern>
+        <template>
+           task_restype_describe
+        </template>
+    </category>
+    <category>
+        <pattern>#介绍#RESTYPE#</pattern>
+        <template>
+           task_restype_describe
         </template>
     </category>
 
