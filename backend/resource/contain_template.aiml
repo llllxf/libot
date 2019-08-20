@@ -16,13 +16,13 @@
 
     <!-- 楼层馆室询问 -->
     <category>
-        <pattern>#FLOOR*多少*</pattern>
+        <pattern>#FLOOR#有多少*</pattern>
         <template>
             task_floor_count_room
         </template>
     </category>
     <category>
-        <pattern>#FLOOR*几*</pattern>
+        <pattern>#FLOOR#有几*</pattern>
         <template>
             task_floor_count_room
         </template>
@@ -204,13 +204,31 @@
         </template>
     </category>
     <category>
+        <pattern>#RES#是#RESTYPE#</pattern>
+        <template>
+            task_res_res_h
+        </template>
+    </category>
+    <category>
+        <pattern>#RES#算#RESTYPE#</pattern>
+        <template>
+            task_res_res_h
+        </template>
+    </category>
+    <category>
         <pattern>#RESTYPE#包*</pattern>
         <template>
             task_res_res_a
         </template>
     </category>
     <category>
-        <pattern>#RESTYPE#有哪些*</pattern>
+        <pattern>#RESTYPE#有哪些#</pattern>
+        <template>
+            task_res_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#有哪些#ESTYPE</pattern>
         <template>
             task_res_res_a
         </template>

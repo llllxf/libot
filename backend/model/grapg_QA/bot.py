@@ -10,6 +10,7 @@ from model.grapg_QA.Task_contain import Task_contain
 from model.grapg_QA.Task_information import Task_information
 from model.grapg_QA.Task_condition import Task_condition
 from model.grapg_QA.Task_business import Task_business
+from model.grapg_QA.Task_position import Task_position
 
 import time
 import datetime
@@ -85,7 +86,14 @@ class Bot():
             answer = cls.answer_restype_borrow(entity_dict)
         elif task == "task_restype_describe":
             answer = cls.answer_restype_describe(entity_dict)
-
+        elif task == "task_count_floor":
+            answer = cls.answer_count_floor(entity_dict)
+        elif task == "task_floor_count_room":
+            answer = cls.answer_floor_count_room(entity_dict)
+        elif task == "task_room_pos":
+            answer = cls.answer_room_pos(entity_dict)
+        elif task == 'task_res_pos':
+            answer = cls.answer_res_pos(entity_dict)
 
         return answer
 
@@ -242,6 +250,35 @@ class Bot():
         task_information = Task_information()
         res = task_information.solve_restype_describe(entity_dict)
         return res
+
+    @classmethod
+    def answer_count_floor(cls, entity_dict):
+        task_condition = Task_condition()
+        res = task_condition.solve_count_floor(entity_dict)
+        return res
+
+    @classmethod
+    def answer_floor_count_room(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_floor_count_room(entity_dict)
+        return res
+
+    @classmethod
+    def answer_room_pos(cls, entity_dict):
+        task_position = Task_position()
+        res = task_position.solve_room_pos(entity_dict)
+        return res
+
+
+    @classmethod
+    def answer_res_pos(cls, entity_dict):
+        task_position = Task_position()
+        res = task_position.solve_res_pos(entity_dict)
+        return res
+
+
+
+
 
 
 

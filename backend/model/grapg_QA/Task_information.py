@@ -106,6 +106,7 @@ class Task_information():
 
     def solve_restype_describe(self, entity):
         restype = entity['restype'][0]
+
         res = Neo4jPrepare.get_reverse_relation(restype,'资源')
         res_arr = []
         yes_room = []
@@ -135,4 +136,6 @@ class Task_information():
             ans += yes_room[y]+":"+describe[y]+"\n"
 
         return ans
+
+
 

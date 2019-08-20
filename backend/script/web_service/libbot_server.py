@@ -18,8 +18,8 @@ from tornado.httpserver import HTTPServer
 from model.robot_hub.general_hub_2 import GeneralHub
 from model.search_QA.similar_question_bot import similarQuestionBot
 from model.log.simple_log import simpleLog
-
-
+from model.kb_prepare.neo4j_prepare import Neo4jPrepare
+Neo4jPrepare()
 graph_qa_hub = GeneralHub()
 search_bot = similarQuestionBot()
 
@@ -36,12 +36,14 @@ class MainHandler(tornado.web.RequestHandler):
             res_json = json.dumps(res_dict)
             self.write(res_json)
             simpleLog.log_something('graph_answer:'+graph_respons)
+
         elif target == 'search_qa':
             answer_list = search_bot.answer_question(question_str)
             res_dict = {'search_answer': answer_list}
             res_json = json.dumps(res_dict)
             self.write(res_json)
             simpleLog.log_something('search_answer:' + str(answer_list))
+        
         elif target == 'all':
             graph_respons = graph_qa_hub.question_answer_hub(question_str)
             answer_list = search_bot.answer_question(question_str)
@@ -50,6 +52,7 @@ class MainHandler(tornado.web.RequestHandler):
             self.write(res_json)
             simpleLog.log_something('graph_answer:' + graph_respons)
             simpleLog.log_something('search_answer:' + str(answer_list))
+
 
 
     def set_default_headers(self):
