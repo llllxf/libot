@@ -1,47 +1,4 @@
 <aiml version="1.0.1" encoding="UTF-8">
-    <!-- 外借 -->
-    <category>
-        <pattern>#ROOM*外借#</pattern>
-        <template>
-           task_room_borrow
-        </template>
-    </category>
-
-    <category>
-        <pattern>*外借#ROOM*</pattern>
-        <template>
-           task_room_borrow
-        </template>
-    </category>
-
-    <category>
-        <pattern>#RES*外借#</pattern>
-        <template>
-           task_res_borrow
-        </template>
-    </category>
-
-    <category>
-        <pattern>*外借#RES*</pattern>
-        <template>
-           task_res_borrow
-        </template>
-    </category>
-
-    <category>
-        <pattern>#RESTYPE*外借#</pattern>
-        <template>
-           task_restype_borrow
-        </template>
-    </category>
-
-    <category>
-        <pattern>*外借#RESTYPE*</pattern>
-        <template>
-           task_restype_borrow
-        </template>
-    </category>
-
     <!-- 馆室联系电话 -->
     <category>
         <pattern>*联系#ROOM#</pattern>
@@ -133,6 +90,18 @@
            task_restype_describe
         </template>
     </category>
+    <category>
+        <pattern>#读者卡#</pattern>
+        <template>
+           task_card_describe
+        </template>
+    </category>
 
+    <category>
+        <pattern>#读者卡#金融功能#</pattern>
+        <template>
+           task_finance_describe
+        </template>
+    </category>
 
 </aiml>

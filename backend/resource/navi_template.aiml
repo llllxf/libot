@@ -10,15 +10,69 @@
     </category>
 
     <category>
-        <pattern>#附近#RES#吗</pattern>
+        <pattern>#附近#RES#</pattern>
         <template>
            task_res_pos
         </template>
     </category>
     <category>
-        <pattern>RES#哪#看#</pattern>
+        <pattern>#怎么借#RES#</pattern>
         <template>
            task_res_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#RES#哪#看#</pattern>
+        <template>
+           task_res_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#RESTYPE#哪#看#</pattern>
+        <template>
+           task_restype_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#RESTYPE*哪</pattern>
+        <template>
+           task_restype_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#电影#去哪#</pattern>
+        <template>
+           task_movie_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#音乐#去哪#</pattern>
+        <template>
+           task_music_pos
+        </template>
+    </category>
+    <category>
+        <pattern>去哪看电影#</pattern>
+        <template>
+           task_movie_pos
+        </template>
+    </category>
+    <category>
+        <pattern>去哪里看电影#</pattern>
+        <template>
+           task_movie_pos
+        </template>
+    </category>
+    <category>
+        <pattern>去哪听音乐#</pattern>
+        <template>
+           task_music_pos
+        </template>
+    </category>
+    <category>
+        <pattern>去哪里听音乐#</pattern>
+        <template>
+           task_music_pos
         </template>
     </category>
     <category>
@@ -34,10 +88,15 @@
         </template>
     </category>
     <category>
-        <pattern>*去ROOM#</pattern>
+        <pattern>*去#ROOM</pattern>
         <template>
            task_room_pos
         </template>
     </category>
-
+    <category>
+        <pattern>*到#ROOM</pattern>
+        <template>
+           task_room_pos
+        </template>
+    </category>
 </aiml>

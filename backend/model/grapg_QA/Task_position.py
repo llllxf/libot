@@ -1,4 +1,5 @@
 from model.kb_prepare.neo4j_prepare import Neo4jPrepare
+from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
 from skimage import io
@@ -92,15 +93,16 @@ class Task_position():
             plt.plot([x - left, int(nx) - left, int(dx) - left],
                      [y - up, int(ny) - up, int(dy) - up])
         io.imshow(img)
+        print(img)
         plt.savefig('../../resource/2.png')
         return
 
     @classmethod
     def draw_pic(cls, x, y):
 
-        img = None
+        #img = None
         img = io.imread('../../resource/1.png')
-        # print(x,y)
+        #print("=================",x,y)
         x = np.array(x, dtype='int')
         y = np.array(y, dtype='int')
         sy = y.min()
@@ -140,8 +142,9 @@ class Task_position():
             dy.append(temp)
         plt.plot(dx, dy)
         io.imshow(img)
+        #print(img)
         plt.savefig('../../resource/2.png')
-        return
+        return img
 
     def form_answern(self,cursor):
         mark_list=[]
@@ -242,8 +245,9 @@ class Task_position():
             else:
                 responds += "走" + str(int(dis_mark[m_index])) + "米您就能找到" + ans_desroom + "。\n"
                 # print("走" + str(int(dis_mark[m_index])) + "米您就能找到" +desroom)
-            cls.draw_pic(dx, dy)
-            return responds;
+            #print("==============================")
+            img = self.draw_pic(dx, dy)
+            return responds,img;
         # print(des_name,dis_mark)
         min_path_list = []
         min_dis_list = []
@@ -283,21 +287,24 @@ class Task_position():
                 final_sum = tmp_sum
 
             # print(final_index)
+
         dx = []
         dy = []
+
         # print("min_path_list",min_path_list)
 
         #####################################################
 
         arr = min_path_list[final_index][0]['self_site'].split("；")
-        # print(arr)
+        #print(arr)
         dx.append(arr[0])
         dy.append(arr[1])
+
 
         #####################################################
         dir = min_dis_list[final_index]
         # print(dir,"dir")
-        # dx.append(min_path_list[final_index])
+        #dx.append(min_path_list[final_index])
         # print(min_path_list[final_index])
         if len(min_path_list) > 1:
             for i in range(1, len(min_path_list[final_index])):
@@ -306,7 +313,7 @@ class Task_position():
                 # print(dir)
                 if dis.find("，") != -1:
                     arr = dis.split("，")
-                    responds += "先向" + dir[0] + "走" + arr[0] + "米\n"
+                    responds += "向" + dir[0] + "走" + arr[0] + "米\n"
                     # print("先向" + dir[0]+"走" + arr[0]+"米")
                     for arr_index in range(1, len(arr)):
                         responds += "接着先向" + dir[arr_index] + "走" + arr[arr_index] + "米到" + \
@@ -327,24 +334,28 @@ class Task_position():
                     # print(dict(min_dis_list[final_index][i-1])['x'])
                 if dict(min_dis_list[final_index][i - 1])['y'] != '':
                     dy.append(dict(min_dis_list[final_index][i - 1])['y'])
-
+                    
+                
                 site = dict(min_path_list[final_index][i])['self_site'].split("；")
                 dx.append(site[0])
                 dy.append(site[1])
+
 
                 #####################################################
             des_index = des_name.index(dict(min_path_list[final_index][i])['name'])
             # print("qqq",modify_index,final_index)
             responds += "最后向" + dir_list[des_index] + "走" + str(int(dis_mark[des_index])) + "就能到" + ans_desroom + "\n"
             # print("最后向"+dir_list[des_index]+"走"+str(int(dis_mark[des_index]))+"就能到"+desroom)
+
             dx.append(x_list[1])
             dy.append(y_list[1])
+
         # print(dx,dy)
         #####################################################
-        # cls.draw_pic(dx,dy)
+        img = self.draw_pic(dx,dy)
         #####################################################
         # print(dx,dy)
-        return responds
+        return responds,img
 
     def solve_room_pos(self,entity):
         response = "\n您当前在总馆北区一层\n"
@@ -354,21 +365,23 @@ class Task_position():
         if room.find("_")!=-1:
             arr = room.split("_")
             ans_room = arr[2]
+        print("room",room)
         area = Neo4jPrepare.get_relation(room,'馆区')
 
         #print(area)
         if area[0]['office_name'] != '总馆北区':
             response += ans_room+'在'+ area[0]['office_name'] + "，位于"+area[0]['position']+"\n"
-            return response
+            return [response]
         floor = Neo4jPrepare.get_relation(room,'楼层')
 
         #print(floor)
         if floor[0]['office_name'] != '总馆北区一层':
             response += ans_room+'在'+ floor[0]['office_name']+", 直走340米您就能找到最近的电梯。\n"
-            return response
+            return [response]
+        respo,img = self.navi(room)
 
-        response += self.navi(room)
-        return response
+        response += respo
+        return [response,img]
 
     def solve_res_pos(self,entity):
         response = "\n"
@@ -380,6 +393,16 @@ class Task_position():
             ans_room = arr[2]
         response += res + "存放于" + ans_room + "\n"
         #print(ans)
-        response += self.navi(ans[0]['office_name'])
+        #response += self.navi(ans[0]['office_name'])[0]
         return response
+
+
+
+
+
+
+
+
+
+
 

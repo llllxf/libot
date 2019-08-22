@@ -1,6 +1,7 @@
 from model.kb_prepare.neo4j_prepare import Neo4jPrepare
 import numpy as np
 class Task_information():
+    '''
     def solve_room_borrow(self,entity):
         room = entity['room'][0]
         room_name = room
@@ -60,7 +61,7 @@ class Task_information():
                 ans += y+","
             ans += no_room[len(no_room)-1]+"的"+restype+"不可以外借\n"
         return ans
-
+    '''
     def solve_room_phone(self, entity):
         room = entity['room'][0]
         room_name = room
@@ -104,6 +105,28 @@ class Task_information():
             ans += "对不起，暂时没有"+resource+"的描述信息\n"
         return ans
 
+    def solve_card_describe(self):
+
+
+        res = Neo4jPrepare.get_entity("证件")
+        #print(res)
+        ans = "\n"
+        num = len(res)
+        ans += "一共有"+str(num-1)+"种读者卡\n"
+        for r in res:
+            if r['office_name'] == '第二代身份证':
+                continue
+            ans += '年龄'+r['age']+'可以办理和使用'+r['office_name']+"\n"
+
+        return ans
+
+    def solve_finance_describe(self):
+        res = Neo4jPrepare.get_property('国家图书馆读者卡')
+        ans = '\n'+'读者卡的金融功能指读者卡'+res['function']+'的功能\n'
+        return ans
+
+
+
     def solve_restype_describe(self, entity):
         restype = entity['restype'][0]
 
@@ -136,6 +159,8 @@ class Task_information():
             ans += yes_room[y]+":"+describe[y]+"\n"
 
         return ans
+
+
 
 
 

@@ -56,6 +56,8 @@ class Bot():
             answer = cls.answer_room_borrow(entity_dict)
         elif task == "task_res_borrow":
             answer = cls.answer_res_borrow(entity_dict)
+        elif task == "task_area_borrow":
+            answer = cls.answer_area_borrow(entity_dict)
         elif task == "task_room_phone":
             answer = cls.answer_room_phone(entity_dict)
         elif task == "task_room_describe":
@@ -94,7 +96,20 @@ class Bot():
             answer = cls.answer_room_pos(entity_dict)
         elif task == 'task_res_pos':
             answer = cls.answer_res_pos(entity_dict)
-
+        elif task == "task_card_describe":
+            answer = cls.answer_card_describe(entity_dict)
+        elif task == "task_finance_describe":
+            answer = cls.answer_finance_describe()
+        elif task == "task_money_back":
+            answer = cls.answer_money_back()
+        elif task == "task_money_back_no":
+            answer = cls.answer_money_back_no()
+        elif task == "task_restype_pos":
+            answer = cls.answer_restype_pos()
+        elif task == "task_music_pos":
+            answer = cls.answer_music_pos()
+        elif task == "task_movie_pos":
+            answer = cls.answer_movie_pos()
         return answer
 
     @classmethod
@@ -102,166 +117,166 @@ class Bot():
 
         task_time = Task_time()
         res = task_time.solve_room_time(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_room_res_time(cls,entity_dict):
         task_time = Task_time()
         res = task_time.solve_room_res_time(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_res_time(cls, entity_dict):
         task_time = Task_time()
         res = task_time.solve_res_time(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_floor_room_a(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_floor_room_a(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_floor_room(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_room_floor(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_res_room(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_res_room(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_res_floor(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_res_floor(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_res_floor_a(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_res_floor_a(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_room_res_a(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_room_res_a(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_room_borrow(cls, entity_dict):
-        task_information = Task_information()
-        res = task_information.solve_room_borrow(entity_dict)
-        return res
+        task_business = Task_business()
+        res = task_business.solve_room_borrow(entity_dict)
+        return [res]
 
     @classmethod
     def answer_res_borrow(cls, entity_dict):
-        task_information = Task_information()
-        res = task_information.solve_res_borrow(entity_dict)
-        return res
+        task_business = Task_business()
+        res = task_business.solve_res_borrow(entity_dict)
+        return [res]
 
     @classmethod
     def answer_room_phone(cls, entity_dict):
         task_information = Task_information()
         res = task_information.solve_room_phone(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_room_describe(cls, entity_dict):
         task_information = Task_information()
         res = task_information.solve_room_describe(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_res_describe(cls, entity_dict):
         task_information = Task_information()
         res = task_information.solve_res_describe(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_count_res(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_count_res(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_count_restype(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_count_restype(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_res_res_h(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_res_res_h(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_res_res_a(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_res_res_a(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_res_res_t(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_res_res_t(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_room_card_a(cls, entity_dict):
         task_condition = Task_condition()
         res = task_condition.solve_room_card_a(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_card_yes(cls):
         task_business = Task_business()
-        return task_business.solve__card_yes()
+        return [task_business.solve__card_yes()]
 
     @classmethod
     def answer_card_no(cls):
         task_business = Task_business()
-        return task_business.solve__card_no()
+        return [task_business.solve__card_no()]
 
     @classmethod
     def answer_card_thirteen(cls):
         task_business = Task_business()
-        return task_business.solve__card_thirteen()
+        return [task_business.solve__card_thirteen()]
 
     @classmethod
     def answer_card_twelve(cls):
         task_business = Task_business()
-        return task_business.solve__card_twelve()
+        return [task_business.solve__card_twelve()]
 
     @classmethod
     def answer_restype_borrow(cls, entity_dict):
 
-        task_information = Task_information()
-        res = task_information.solve_restype_borrow(entity_dict)
-        return res
+        task_business = Task_business()
+        res = task_business.solve_restype_borrow(entity_dict)
+        return [res]
 
     @classmethod
     def answer_restype_describe(cls, entity_dict):
         task_information = Task_information()
         res = task_information.solve_restype_describe(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_count_floor(cls, entity_dict):
         task_condition = Task_condition()
         res = task_condition.solve_count_floor(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_floor_count_room(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_floor_count_room(entity_dict)
-        return res
+        return [res]
 
     @classmethod
     def answer_room_pos(cls, entity_dict):
@@ -274,7 +289,69 @@ class Bot():
     def answer_res_pos(cls, entity_dict):
         task_position = Task_position()
         res = task_position.solve_res_pos(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_area_borrow(cls, entity_dict):
+        task_business = Task_business()
+        res = task_business.solve_area_borrow(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_card_describe(cls, entity_dict):
+        task_information = Task_information()
+        res = task_information.solve_card_describe()
+        return [res]
+
+    @classmethod
+    def answer_finance_describe(cls):
+        task_information = Task_information()
+        res = task_information.solve_finance_describe()
+        return [res]
+
+    @classmethod
+    def answer_money_back(cls):
+        task_business = Task_business()
+        res = task_business.solve_money_back()
+        return [res]
+
+    @classmethod
+    def answer_money_back_no(cls):
+        task_business = Task_business()
+        res = task_business.solve_money_back_no()
+        return [res]
+
+    @classmethod
+    def answer_restype_pos(cls,entity):
+        return ['请询问具体资源\n']
+
+    @classmethod
+    def answer_music_pos(cls):
+        dict = {'room':'视听阅览区'}
+        print("====================")
+        task_position = Task_position()
+        res = task_position.solve_room_pos(dict)
         return res
+
+    @classmethod
+    def answer_movie_pos(cls):
+        dict = {'room': ['视听阅览区']}
+        task_position = Task_position()
+        res = task_position.solve_room_pos(dict)
+        return res
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

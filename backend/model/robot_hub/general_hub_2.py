@@ -32,7 +32,7 @@ class GeneralHub():
         cls._aiml_kernal.learn('../../resource/condition.aiml')
         cls._aiml_kernal.learn('../../resource/information.aiml')
         cls._aiml_kernal.learn('../../resource/business.aiml')
-        cls.room_list, cls.room_variant_list, cls.floor_list, cls.floor_variant_list, cls.area_list, cls.area_variant_list, cls.resource_list, cls.resource_variant_list,cls.restype_list,cls.restype_variant_list,cls.card_list,cls.card_variant_list = Neo4jPrepare.get_all_varname()
+        cls.room_list, cls.room_variant_list, cls.floor_list, cls.floor_variant_list, cls.area_list, cls.area_variant_list, cls.resource_list, cls.resource_variant_list,cls.restype_list,cls.restype_variant_list,cls.card_list,cls.card_variant_list,cls.library_list,cls.library_variant_list,cls.service_list,cls.service_variant_list = Neo4jPrepare.get_all_varname()
         jieba.load_userdict("../../resource/guotu_dict.txt")
         cls.stopwords = ['什么', '哪里', '怎么', '有', '走', '去', '可以', '如何', '怎样', '的', '地', '得']
 
@@ -49,12 +49,19 @@ class GeneralHub():
         area_temp = []
         restype_temp=[]
         card_temp = []
+        library_temp=[]
+        service_temp=[]
         #print(cls.stopwords)
         for word in word_list:
 
             if word in cls.stopwords:
                 continue
-
+            for library_index in range(len(cls.library_variant_list)):
+                library = cls.library_variant_list[library_index]
+                if word in library:
+                    library_temp.append(cls.library_list[library_index])
+                    question = question.replace(word, 'LIBRARY')
+                    break
             for room_index in range(len(cls.room_variant_list)):
                 room = cls.room_variant_list[room_index]
                 if word in room:
@@ -95,6 +102,16 @@ class GeneralHub():
                     card_temp.append(cls.card_list[card_index])
                     question = question.replace(word, 'CARD')
                     break
+            '''
+            for service_index in range(len(cls.service_variant_list)):
+                service = cls.service_variant_list[service_index]
+                if word in service:
+                    service_temp.append(cls.service_list[service_index])
+                    question = question.replace(word, 'SERVICE')
+                    break
+            '''
+
+
 
         entity_dict['room'] = room_temp
         entity_dict['res'] = resource_temp
@@ -102,6 +119,8 @@ class GeneralHub():
         entity_dict['area'] = area_temp
         entity_dict['restype'] = restype_temp
         entity_dict['card'] = card_temp
+        #entity_dict['service'] = service_temp
+        entity_dict['library'] = library_temp
 
         return question, entity_dict
 
@@ -114,7 +133,7 @@ class GeneralHub():
 
 
         question_replaced,entity_dict = GeneralHub.repalce_question(question_str)
-        #print(question_replaced)
+        print(question_replaced,entity_dict)
         aiml_respons = GeneralHub._aiml_kernal.respond(question_replaced)
         #print(aiml_respons)
         #return aiml_respons
@@ -122,18 +141,15 @@ class GeneralHub():
         if 'task_' in aiml_respons:
                 graph_respons = Bot.task_response(aiml_respons,entity_dict)
         else:
-            return aiml_respons
+            return [aiml_respons]
 
         return graph_respons
-
-
-
-
 
 import time
 
 if __name__ == '__main__':
     Neo4jPrepare()
+
     gh = GeneralHub()
 
 
@@ -147,6 +163,7 @@ if __name__ == '__main__':
             print('Libot:', gh.question_answer_hub(question_str))
             time_end = time.time()
             #print('time cost', time_end - time_start, 's')
+
 
 
 

@@ -14,6 +14,8 @@ class Task_condition():
             if res['card'].find("，") != -1:
                 card_arr = res['card'].split("，")
                 for c in card_arr:
+
+                    #print("==============================c",c)
                     c_res = Neo4jPrepare.get_property(c)
                     ans += "年龄"+c_res['age']+"的读者可以持"+c_res['office_name'] + "进入"+room_name+"\n"
             else :

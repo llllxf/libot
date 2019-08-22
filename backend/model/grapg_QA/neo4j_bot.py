@@ -174,7 +174,7 @@ class neo4jBot():
 
         img = None
         img = io.imread('../../resource/1.png')
-        #print(x,y)
+        print(x,y)
         x = np.array(x,dtype='int')
         y = np.array(y,dtype='int')
         sy = y.min()
@@ -372,7 +372,7 @@ class neo4jBot():
             dy.append(y_list[1])
         #print(dx,dy)
         #####################################################
-        #cls.draw_pic(dx,dy)
+        cls.draw_pic(dx,dy)
         #####################################################
         #print(dx,dy)
         return responds

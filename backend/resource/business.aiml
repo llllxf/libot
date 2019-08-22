@@ -1,4 +1,59 @@
 <aiml version="1.0.1" encoding="UTF-8">
+    <!-- 外借 -->
+    <category>
+        <pattern>#ROOM*外借#</pattern>
+        <template>
+           task_room_borrow
+        </template>
+    </category>
+
+    <category>
+        <pattern>*外借#ROOM*</pattern>
+        <template>
+           task_room_borrow
+        </template>
+    </category>
+
+    <category>
+        <pattern>#RES*外借#</pattern>
+        <template>
+           task_res_borrow
+        </template>
+    </category>
+
+    <category>
+        <pattern>*外借#RES*</pattern>
+        <template>
+           task_res_borrow
+        </template>
+    </category>
+
+    <category>
+        <pattern>#RESTYPE*外借#</pattern>
+        <template>
+           task_restype_borrow
+        </template>
+    </category>
+
+    <category>
+        <pattern>*外借#RESTYPE*</pattern>
+        <template>
+           task_restype_borrow
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA*外借#</pattern>
+        <template>
+           task_area_borrow
+        </template>
+    </category>
+
+    <category>
+        <pattern>*外借#AREA*</pattern>
+        <template>
+           task_area_borrow
+        </template>
+    </category>
     <!-- 办卡 -->
     <!-- ========================================================== -->
     <category>
@@ -55,5 +110,77 @@
         </template>
     </category>
     <!-- ========================================================== -->
+    <!-- 退押金 -->
+    <!-- ========================================================== -->
+    <category>
+        <pattern>#退#押金#</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+    <category>
+        <pattern>#押金*退#</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+    <category>
+        <pattern>#是#</pattern>
+        <that>
+            请问押金收据是否还在？
+        </that>
+        <template>
+            是否本人办理退押金？
+        </template>
+    </category>
+    <category>
+        <pattern>#是#</pattern>
+        <that>
+            是否本人办理退押金？
+        </that>
+        <template>
+            task_money_back
+        </template>
+    </category>
+
+    <category>
+        <pattern>#否#</pattern>
+        <that>
+            是否本人办理退押金？
+        </that>
+        <template>
+            task_money_back_no
+        </template>
+    </category>
+    <category>
+        <pattern>#不#</pattern>
+        <that>
+            是否本人办理退押金？
+        </that>
+        <template>
+            task_money_back_no
+        </template>
+    </category>
+    <category>
+        <pattern>#否#</pattern>
+        <that>
+            请问押金收据是否还在？
+        </that>
+        <template>
+            请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
+        </template>
+    </category>
+    <category>
+        <pattern>#不#</pattern>
+        <that>
+            请问押金收据是否还在？
+        </that>
+        <template>
+            请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
+        </template>
+    </category>
+
+    <!-- ========================================================== -->
+
 </aiml>
 

@@ -1,5 +1,128 @@
 <aiml version="1.0.1" encoding="UTF-8">
 <!-- basic_chat.aiml -->
+
+
+    <category>
+        <pattern>#LIBRARY*时*</pattern>
+        <template>
+            task_library_time
+        </template>
+    </category>
+    <category>
+        <pattern>*时*LIBRARY#</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+
+    <category>
+        <pattern>#LIBRARY#几点*</pattern>
+        <template>
+            task_library_time
+        </template>
+    </category>
+    <category>
+        <pattern>#几点*LIBRARY#</pattern>
+        <template>
+            task_library_time
+        </template>
+    </category>
+
+    <category>
+        <pattern>*天*LIBRARY#</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY*天*</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+    <category>
+        <pattern>#周*LIBRARY#</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#周*</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+
+    <category>
+        <pattern>#星期*LIBRARY#</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#星期*</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#开放*</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+    <category>
+        <pattern>#现在*LIBRARY#</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#现在*</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+
+    <category>
+        <pattern>#LIBRARY#上午*</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+    <category>
+        <pattern>#上午*LIBRARY#</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+
+    <category>
+        <pattern>#LIBRARY#下午*</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+    <category>
+        <pattern>#下午*LIBRARY#</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+
+    <category>
+        <pattern>#LIBRARY#晚上*</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+    <category>
+        <pattern>#晚上*LIBRARY#</pattern>
+        <template>
+           task_library_time
+        </template>
+    </category>
+
     <!-- 馆室开放时间问题 -->
     <category>
         <pattern>#ROOM*时*</pattern>
@@ -68,25 +191,6 @@
         <pattern>#ROOM#开放*</pattern>
         <template>
            task_room_time
-        </template>
-    </category>
-
-    <category>
-        <pattern>#ROOM#可以去#</pattern>
-        <template>
-            task_room_time_openday
-        </template>
-    </category>
-        <category>
-        <pattern>#ROOM#可以进#</pattern>
-        <template>
-            task_room_time_openday
-        </template>
-    </category>
-     <category>
-        <pattern>我想#ROOM#</pattern>
-        <template>
-           task_room_pos
         </template>
     </category>
 
