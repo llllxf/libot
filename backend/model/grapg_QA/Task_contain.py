@@ -191,7 +191,7 @@ class Task_contain():
         ans = "\n"+restype+"包含的资源有：\n"
         for r in res[:-1]:
             ans += r['office_name']+","
-        ans += "和"+res[-1]['office_name'] + "\n"
+        ans += res[-1]['office_name'] + "\n"
         return ans
 
     def solve_res_res_t(self, entity):
@@ -206,6 +206,15 @@ class Task_contain():
         #print(res)
         l = len(res)
         ans = "\n"+area+"一共有"+str(l)+"层\n"
+        return ans
+
+    def solve_library_area(self):
+        res = Neo4jPrepare.get_relation("国家图书馆","馆区")
+        print(res)
+        ans = "\n国家图书馆包括"
+        for r in res[:-1]:
+            ans += r['office_name']+","
+        ans += res[-1]['office_name']+"\n"
         return ans
 
 

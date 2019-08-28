@@ -1,8 +1,6 @@
 <aiml version="1.0.1" encoding="UTF-8">
-
-
     <category>
-        <pattern>RES#哪#看#</pattern>
+        <pattern>RES#哪#</pattern>
 
         <template>
             task_res_pos
@@ -11,12 +9,6 @@
 
     <category>
         <pattern>#附近#RES#</pattern>
-        <template>
-           task_res_pos
-        </template>
-    </category>
-    <category>
-        <pattern>#怎么借#RES#</pattern>
         <template>
            task_res_pos
         </template>

@@ -27,7 +27,7 @@ class Bot():
         :return:
         """
 
-        answer = "GraphQA 什么也没说！"
+        answer = "GraphQA 还不清楚您的问题"
         if task == 'task_res_pos':
             answer = cls.answer_res_pos(entity_dict)
         elif task == 'task_room_pos':
@@ -110,6 +110,14 @@ class Bot():
             answer = cls.answer_music_pos()
         elif task == "task_movie_pos":
             answer = cls.answer_movie_pos()
+        elif task == "task_library_describe":
+            answer = cls.answer_library_describe()
+        elif task == "task_library_area":
+            answer = cls.answer_library_area()
+        elif task == "task_res_read":
+            answer = cls.answer_res_read(entity_dict)
+        elif task == 'task_service_describe':
+            answer = cls.answer_service_describe(entity_dict)
         return answer
 
     @classmethod
@@ -328,7 +336,7 @@ class Bot():
     @classmethod
     def answer_music_pos(cls):
         dict = {'room':'视听阅览区'}
-        print("====================")
+        #print("====================")
         task_position = Task_position()
         res = task_position.solve_room_pos(dict)
         return res
@@ -339,6 +347,37 @@ class Bot():
         task_position = Task_position()
         res = task_position.solve_room_pos(dict)
         return res
+
+    @classmethod
+    def answer_library_describe(cls):
+        task_information = Task_information()
+        res = task_information.solve_library_describe()
+        return [res]
+
+    @classmethod
+    def answer_library_area(cls):
+        task_contain = Task_contain()
+        res = task_contain.solve_library_area()
+        return [res]
+
+    @classmethod
+    def answer_res_read(cls,entity_dict):
+        task_business = Task_business()
+        res = task_business.solve_res_read(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_service_describe(cls,entity_dict):
+        task_information = Task_information()
+        res = task_information.solve_service_describe(entity_dict)
+        return [res]
+
+
+
+
+
+
+
 
 
 

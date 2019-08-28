@@ -1,4 +1,54 @@
 <aiml version="1.0.1" encoding="UTF-8">
+    <!-- 借阅 -->
+    <category>
+        <pattern>#书#借#</pattern>
+        <template>
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。
+        </template>
+    </category>
+    <category>
+        <pattern>#借#书#</pattern>
+        <template>
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。
+        </template>
+    </category>
+    <category>
+        <pattern>#RES#借#</pattern>
+        <template>
+           task_res_read
+        </template>
+    </category>
+    <category>
+        <pattern>#借#RES#</pattern>
+        <template>
+           task_res_read
+        </template>
+    </category>
+    <!-- 文献 -->
+    <category>
+        <pattern>#书#借#</pattern>
+        <template>
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。
+        </template>
+    </category>
+    <category>
+        <pattern>#借#书#</pattern>
+        <template>
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。
+        </template>
+    </category>
+    <category>
+        <pattern>#RES#借#</pattern>
+        <template>
+           task_res_read
+        </template>
+    </category>
+    <category>
+        <pattern>#借#RES#</pattern>
+        <template>
+           task_res_read
+        </template>
+    </category>
     <!-- 外借 -->
     <category>
         <pattern>#ROOM*外借#</pattern>

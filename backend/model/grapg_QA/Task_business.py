@@ -2,6 +2,38 @@ from model.kb_prepare.neo4j_prepare import Neo4jPrepare
 import numpy as np
 class Task_business():
 
+    def solve_book_back(self, entity):
+        resource  = entity['res'][0]
+        res = Neo4jPrepare.get_relation(resource,'馆室')
+
+        ans = "\n"+resource+"存放在"
+        for r in res[:-1]:
+            #print(r)
+            ans += r['office_name']+","
+
+        ans += res[-1]['office_name']+"\n"
+        card = Neo4jPrepare.get_relation(res[-1]['office_name'],'证件')
+
+        for c in card:
+            ans += "年龄"+c['age']+"可持"+c['office_name']+"进入馆室\n"
+        return ans
+
+    def solve_res_read(self, entity):
+        resource  = entity['res'][0]
+        res = Neo4jPrepare.get_relation(resource,'馆室')
+
+        ans = "\n"+resource+"存放在"
+        for r in res[:-1]:
+            #print(r)
+            ans += r['office_name']+","
+
+        ans += res[-1]['office_name']+"\n"
+        card = Neo4jPrepare.get_relation(res[-1]['office_name'],'证件')
+
+        for c in card:
+            ans += "年龄"+c['age']+"可持"+c['office_name']+"进入馆室\n"
+        return ans
+
     def solve_money_back(self):
         res = Neo4jPrepare.get_property('退押金')
         card = res['card']
@@ -104,24 +136,24 @@ class Task_business():
 
     def solve_restype_borrow(self,entity):
         restype = entity['restype'][0]
-        room_res = Neo4jPrepare.get_relation(restype,'馆室')
-
+        res_res = Neo4jPrepare.get_reverse_relation(restype,'资源')
+        #print(res_res)
         yes_room = []
         copy_room = []
         no_room = []
-        for r in room_res:
-            room = r['office_name']
-            room_name = room
-            if room.find("_") != -1:
-                room_name = room.split("_")[2]
-            if r['borrow'] == 1:
-                yes_room.append(room_name)
-            elif r['borrow'] == 2:
-                copy_room.append(room_name)
-            else:
-                no_room.append(room_name)
-        #print(yes_room,no_room)
-        copy_room = np.unique(copy_room)
+
+        for res in res_res:
+            room_res = Neo4jPrepare.get_relation(res['office_name'],'馆室')
+            for r in room_res:
+                room = r['office_name']
+
+                if r['borrow'] == 1:
+                    yes_room.append(room)
+                elif r['borrow'] == 2:
+                    copy_room.append(room)
+                else:
+                    no_room.append(room)
+                copy_room = np.unique(copy_room)
         ans = "\n"
         if len(yes_room)>0:
             ans += "存放在"

@@ -257,6 +257,20 @@
             task_res_res_t
         </template>
     </category>
+
+    <!-- 国家图书馆 -->
+    <category>
+        <pattern>#LIBRARY*馆舍#</pattern>
+        <template>
+           task_library_area
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY*馆区#</pattern>
+        <template>
+           task_library_area
+        </template>
+    </category>
     <!--
     <category>
         <pattern>#ROOM#含*</pattern>

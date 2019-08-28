@@ -360,12 +360,12 @@ class Task_position():
     def solve_room_pos(self,entity):
         response = "\n您当前在总馆北区一层\n"
         room = entity['room'][0]
-        #print(room)
+        #print(entity)
         ans_room = room
         if room.find("_")!=-1:
             arr = room.split("_")
             ans_room = arr[2]
-        print("room",room)
+        #print("room",room)
         area = Neo4jPrepare.get_relation(room,'馆区')
 
         #print(area)
@@ -393,7 +393,10 @@ class Task_position():
             ans_room = arr[2]
         response += res + "存放于" + ans_room + "\n"
         #print(ans)
-        #response += self.navi(ans[0]['office_name'])[0]
+        dict = {}
+        dict['room'] = [ans[0]['office_name']]
+        ans = self.solve_room_pos(dict)[0]
+        response += ans[0]
         return response
 
 

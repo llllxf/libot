@@ -29,6 +29,7 @@ class Neo4jPrepare(object):
         cls.library = '国家图书馆'
         cls.service = '服务'
         cls.attribute = '属性'
+        cls.res = '资源大类'
 
         cls.graph.delete_all()
 
@@ -208,14 +209,11 @@ class Neo4jPrepare(object):
     '''
     @classmethod
     def get_property(cls,entity):
-        #print(entity)
 
-        #print(entity)
         cursor = cls.graph.run("match(n {office_name:{a}})return n",a=entity)
-        #print(cursor)
         cursor.forward()
         record = cursor.current()
-        #print(record)
+
         return (dict(record['n']))
 
 
@@ -232,7 +230,7 @@ class Neo4jPrepare(object):
 
             record = cursor.current()
             ans.append(dict(record['b']))
-            #print(dict(record['b']))
+
         return ans
 
     '''
@@ -342,12 +340,12 @@ class Neo4jPrepare(object):
             temp = record['variant_name'].split("，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             room_variant_list.append(temp)
-        '''
+
         print("room_list====================================================")
         for i in room_variant_list:
             for j in i:
                 print(j)
-        '''
+
         '''
         楼层正名、别名
         '''
@@ -358,12 +356,12 @@ class Neo4jPrepare(object):
             temp = record['variant_name'].split("，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             floor_variant_list.append(temp)
-        '''
+
         print("floor_list====================================================")
         for i in floor_variant_list:
             for j in i:
                 print(j)
-        '''
+
         '''
         馆区正名、别名
         '''
@@ -374,12 +372,12 @@ class Neo4jPrepare(object):
             temp = record['variant_name'].split("，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             area_variant_list.append(temp)
-        '''
+
         print("area_list====================================================")
         for i in area_variant_list:
             for j in i:
                 print(j)
-        '''
+
         '''
         资源正名、别名
         '''
@@ -390,12 +388,12 @@ class Neo4jPrepare(object):
             temp = record['variant_name'].split("，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             resource_variant_list.append(temp)
-        '''
+
         print("resource_list====================================================")
         for i in resource_variant_list:
             for j in i:
                 print(j)
-        '''
+
 
         cursor = cls.graph.run("match(n:`资源类型`)return n.office_name as restype ,n.variant_name as variant_name")
         while cursor.forward():
@@ -404,22 +402,40 @@ class Neo4jPrepare(object):
             temp = record['variant_name'].split("，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             restype_variant_list.append(temp)
+        for i in restype_variant_list:
+            for j in i:
+                print(j)
 
         cursor = cls.graph.run("match(n:`证件`)return n.office_name as card ,n.variant_name as variant_name")
         while cursor.forward():
             record = dict(cursor.current())
             card_list.append(record['card'])
-            temp = record['variant_name'].split("，")
+            if record['variant_name'].find("，")!=-1:
+                temp = record['variant_name'].split("，")
+            else:
+                temp = record['variant_name']
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             card_variant_list.append(temp)
+
+        for i in card_variant_list:
+            for j in i:
+                print(j)
 
         cursor = cls.graph.run("match(n:`国家图书馆`)return n.office_name as library ,n.variant_name as variant_name")
         while cursor.forward():
             record = dict(cursor.current())
             library_list.append(record['library'])
-            temp = record['variant_name'].split("，")
+            if record['variant_name'].find("，")!=-1:
+                temp = record['variant_name'].split("，")
+            else:
+                temp = record['variant_name']
+            #temp = record['variant_name'].split("，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             library_variant_list.append(temp)
+
+        for i in library_variant_list:
+            for j in i:
+                print(j)
 
         cursor = cls.graph.run("match(n:`服务`)return n.office_name as service ,n.variant_name as variant_name")
         while cursor.forward():
@@ -428,6 +444,11 @@ class Neo4jPrepare(object):
             temp = record['variant_name'].split("，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             service_variant_list.append(temp)
+
+        for i in service_variant_list:
+            for j in i:
+                print(j)
+
         return room_list,room_variant_list,floor_list,floor_variant_list,area_list,area_variant_list,resource_list,resource_variant_list,restype_list,restype_variant_list,card_list,card_variant_list,library_list,library_variant_list,service_list,service_variant_list
 
     @classmethod
@@ -491,7 +512,7 @@ class Neo4jPrepare(object):
             name = row[0]
             #print(name)
             floor_node = Node(cls.floor, type=cls.floor,name=name, office_name=row[0], variant_name=row[1],
-                              #area=row[2],
+                              area=row[2],
                               upstair=row[3],downstair=row[4]
                               )
             cls.graph.create(floor_node)
@@ -500,7 +521,7 @@ class Neo4jPrepare(object):
         resource_sheet = workbook.sheet_by_index(3)
         for i in range(1, resource_sheet.nrows):
             row = resource_sheet.row_values(i)
-            print(row)
+            #print(row)
             name = row[0]
             if row[0].find("_") != -1:
                 name = row[0].split("_")[1]
@@ -508,7 +529,10 @@ class Neo4jPrepare(object):
             resource_node = Node(cls.resource, type=cls.resource,name=name, office_name=row[0], variant_name=row[1], describe=row[2], count=row[3],
                               room=row[4],
                               belong=row[5],
-                              borrow=row[6])
+                              ctime=row[6],
+                              range=row[8],
+                              topic=row[9]
+                                 )
             cls.graph.create(resource_node)
 
         '''建立证件节点'''
@@ -519,27 +543,37 @@ class Neo4jPrepare(object):
             cls.graph.create(card_node)
 
         '''建立服务节点'''
-        card_sheet = workbook.sheet_by_index(7)
-        for i in range(1, card_sheet.nrows):
-            row = card_sheet.row_values(i)
-            card_node = Node(cls.service, type=cls.service, name=row[0], office_name=row[0], variant_name=row[1], date=row[4],
+        service_sheet = workbook.sheet_by_index(7)
+        for i in range(1, service_sheet.nrows):
+            row = service_sheet.row_values(i)
+            service_node = Node(cls.service, type=cls.service, name=row[0], office_name=row[0], variant_name=row[1], date=row[4],
                              time=row[5],discribe=row[6],card=row[7])
-            cls.graph.create(card_node)
+            cls.graph.create(service_node)
 
         '''建立资源类型节点'''
         restype_sheet = workbook.sheet_by_index(6)
         for i in range(1, restype_sheet.nrows):
 
             row = restype_sheet.row_values(i)
-            #print("=========",row[0])
             restype_node = Node(cls.restype, type=cls.restype, name=row[0], office_name=row[0], variant_name=row[1], describe=row[2], count=row[3],
                               room=row[4],
                               belong=row[5])
             cls.graph.create(restype_node)
 
         '''建立国家图书馆节点'''
-        library = Node(cls.library, type=cls.library, name=cls.library, office_name=cls.library, variant_name=cls.library)
+        variant_name='图书馆，国家图书馆'
+        describe='国家图书馆的前身是建于1909年（清宣统元年）9月9日的京师图书馆，1912年8月27日开馆接待读者，1916年京师图书馆按规定正式接受国内出版物呈缴本，开始履行国家图书馆的部分职能，1928年7月更名为国立北平图书馆，1929年8月与北平北海图书馆合并，仍名国立北平图书馆， 1950年3月6日国立北平图书馆更名为国立北京图书馆，1951年6月12日更名为北京图书馆，1998年12月12日经国务院批准，北京图书馆更名为国家图书馆，对外称中国国家图书馆。包括文津街古籍馆、白石桥总馆南区和总馆北区三个馆区。'
+        library = Node(cls.library, type=cls.library, name=cls.library, office_name=cls.library, variant_name=variant_name,
+                       describe=describe)
         cls.graph.create(library)
+
+        '''建立资源大类'''
+        res_sheet = workbook.sheet_by_index(8)
+        for i in range(1, res_sheet.nrows):
+            row = res_sheet.row_values(i)
+            res_node = Node(cls.res, type=cls.res, name=row[0], office_name=row[0], variant_name=row[0], num=row[1])
+            cls.graph.create(res_node)
+
 
 
     @classmethod
@@ -552,12 +586,21 @@ class Neo4jPrepare(object):
             try:
                 row = room_sheet.row_values(i)
 
-                #print(self.graph.find_one(label=self.building, property_key='area', property_value=row[20]),row[20])
-                rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
+                if row[20].find("，")!=-1:
+                    area_arr = row[21].split("，")
+                    for sub_area in area_arr:
+
+                        rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
+                                                               property_value=row[0]), "位于",
+                                           cls.graph.find_one(label=cls.building, property_key='office_name',
+                                                               property_value=sub_area))
+                        cls.graph.create(rel)
+                else:
+                    rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
                                                    property_value=row[0]), "处于",
                                cls.graph.find_one(label=cls.building, property_key='office_name', property_value=row[20]))
-                cls.graph.create(rel)
-                if row[21].find("，"):
+                    cls.graph.create(rel)
+                if row[21].find("，")!=-1:
                     floor_arr = row[21].split("，")
                     for sub_floor in floor_arr:
 
@@ -566,7 +609,13 @@ class Neo4jPrepare(object):
                                            cls.graph.find_one(label=cls.floor, property_key='office_name',
                                                                property_value=sub_floor))
                         cls.graph.create(rel)
-                if row[22].find("，"):
+                else:
+                    rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
+                                                          property_value=row[0]), "位于",
+                                       cls.graph.find_one(label=cls.floor, property_key='office_name',
+                                                          property_value=row[21]))
+                    cls.graph.create(rel)
+                if row[22].find("，")!=-1:
 
                     card_arr = row[22].split("，")
                     for sub_card in card_arr:
@@ -577,6 +626,13 @@ class Neo4jPrepare(object):
                                            cls.graph.find_one(label=cls.card, property_key='office_name',
                                                                property_value=sub_card))
                         cls.graph.create(rel)
+                else:
+                    rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
+                                                          property_value=row[0]), "证件",
+                                       cls.graph.find_one(label=cls.card, property_key='office_name',
+                                                          property_value=row[22]))
+
+                    cls.graph.create(rel)
 
             except AttributeError as e:
                 a=0

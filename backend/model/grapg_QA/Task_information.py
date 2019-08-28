@@ -94,15 +94,23 @@ class Task_information():
         return ans
 
     def solve_res_describe(self, entity):
-        resource = entity['res'][0]
-
-        res = Neo4jPrepare.get_property(resource)
-        #print(res)
         ans = "\n"
-        if res['describe'] != '':
-            ans += resource + "：" + res['describe']
-        else :
-            ans += "对不起，暂时没有"+resource+"的描述信息\n"
+        for resource in entity['res']:
+        #resource = entity['res'][0]
+
+            res = Neo4jPrepare.get_property(resource)
+            if res['ctime'] != '':
+                ans += "国家图书馆的"+resource+"始藏于"+str(int(res['ctime']))+"年\n"
+            if res['describe'] != '':
+                ans += res['describe']+"\n"
+            if res['belong'] != '':
+                ans += resource+"属于"+res['belong']
+            if res['range'] != '':
+                ans += ",图书馆收藏"+resource+"包括:"+res['range']
+            if res['topic'] != '':
+                ans += "\n涵盖的主题包括"+res['topic']+"\n"
+            if ans == "" :
+                ans += "对不起，暂时没有"+resource+"的描述信息\n"
         return ans
 
     def solve_card_describe(self):
@@ -151,14 +159,51 @@ class Task_information():
         ans += restype+"包括"
         for r in res_arr[:-1]:
             ans+=r+","
-        ans+=res_arr[-1]+"\n很抱歉，没有"
-        for n in no_room[:-1]:
-            ans += n+","
-        ans += no_room[-1]+"的介绍\n"
+        ans += res_arr[-1]
+        #ans+=res_arr[-1]+"\n很抱歉，没有"
+
         for y in range(len(yes_room)):
             ans += yes_room[y]+":"+describe[y]+"\n"
 
         return ans
+
+    def solve_library_describe(self):
+        res = Neo4jPrepare.get_entity("国家图书馆")
+        #print(res)
+
+        ans = "\n"+res[0]['describe']
+
+        return ans
+
+    def solve_service_describe(self,entity):
+        service = entity['service'][0]
+        #print(service)
+        res = Neo4jPrepare.get_property(service)
+        #print(res.keys())
+        ans = ''
+        if res['discribe'] != '':
+            ans = "\n"+service+"指"+res['discribe']
+        else:
+            room_res = Neo4jPrepare.get_relation(service,'馆室')
+            for r in room_res:
+                if r['describe']!='':
+                    ans += "\n"+r['office_name']+r['describe']
+        if ans == '':
+            ans = "很抱歉，暂时没有"+service+"的描述信息\n"
+        return ans
+
+
+    '''
+    def solve_library_area(self):
+        res = Neo4jPrepare.get_relation("国家图书馆","馆区")
+        #print(res)
+        ans = "\n国家图书馆包括"
+        for r in res[:-1]:
+            ans += r['office_name']+","
+        ans += res[-1]['office_name']+"\n"
+        return ans
+    '''
+
 
 
 

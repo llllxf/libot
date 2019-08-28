@@ -48,6 +48,24 @@
         </template>
     </category>
     <category>
+        <pattern>RES*</pattern>
+        <template>
+           task_res_describe
+        </template>
+    </category>
+    <category>
+        <pattern>*RES*</pattern>
+        <template>
+           task_res_describe
+        </template>
+    </category>
+    <category>
+        <pattern>*RES</pattern>
+        <template>
+           task_res_describe
+        </template>
+    </category>
+    <category>
         <pattern>#RES是*</pattern>
         <template>
            task_res_describe
@@ -65,9 +83,33 @@
            task_res_describe
         </template>
     </category>
+    <category>
+        <pattern>#RES#RES#</pattern>
+        <template>
+           task_res_describe
+        </template>
+    </category>
     <!-- 资源类型介绍 -->
     <category>
         <pattern>RESTYPE</pattern>
+        <template>
+           task_restype_describe
+        </template>
+    </category>
+    <category>
+        <pattern>RESTYPE*</pattern>
+        <template>
+           task_restype_describe
+        </template>
+    </category>
+    <category>
+        <pattern>*RESTYPE</pattern>
+        <template>
+           task_restype_describe
+        </template>
+    </category>
+    <category>
+        <pattern>*RESTYPE*</pattern>
         <template>
            task_restype_describe
         </template>
@@ -90,18 +132,124 @@
            task_restype_describe
         </template>
     </category>
+    <!-- 读者卡介绍 -->
     <category>
-        <pattern>#读者卡#</pattern>
+        <pattern>CARD*</pattern>
+        <template>
+           task_card_describe
+        </template>
+    </category>
+    <category>
+        <pattern>*CARD*</pattern>
+        <template>
+           task_card_describe
+        </template>
+    </category>
+    <category>
+        <pattern>*CARD</pattern>
+        <template>
+           task_card_describe
+        </template>
+    </category>
+    <category>
+        <pattern>CARD</pattern>
         <template>
            task_card_describe
         </template>
     </category>
 
     <category>
-        <pattern>#读者卡#金融功能#</pattern>
+        <pattern>#CARD#金融功能#</pattern>
         <template>
            task_finance_describe
         </template>
     </category>
+    <!-- 国家图书馆 -->
+    <category>
+        <pattern>LIBRARY</pattern>
+        <template>
+           task_library_describe
+        </template>
+    </category>
+    <category>
+        <pattern>LIBRARY*</pattern>
+        <template>
+           task_library_describe
+        </template>
+    </category>
+    <category>
+        <pattern>*LIBRARY</pattern>
+        <template>
+           task_library_describe
+        </template>
+    </category>
+    <category>
+        <pattern>*LIBRARY*</pattern>
+        <template>
+           task_library_describe
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY*</pattern>
+        <template>
+           task_library_describe
+        </template>
+    </category>
+    <category>
+        <pattern>*LIBRARY#</pattern>
+        <template>
+           task_library_describe
+        </template>
+    </category>
+    <category>
+        <pattern>#介绍#LIBRARY#</pattern>
+        <template>
+           task_library_describe
+        </template>
+    </category>
+    <!-- 资源类型介绍 -->
+    <category>
+        <pattern>SERVICE</pattern>
+        <template>
+           task_service_describe
+        </template>
+    </category>
+    <category>
+        <pattern>SERVICE*</pattern>
+        <template>
+           task_service_describe
+        </template>
+    </category>
+    <category>
+        <pattern>*SERVICE</pattern>
+        <template>
+           task_service_describe
+        </template>
+    </category>
+    <category>
+        <pattern>*SERVICE*</pattern>
+        <template>
+           task_service_describe
+        </template>
+    </category>
+    <category>
+        <pattern>#SERVICE*</pattern>
+        <template>
+           task_service_describe
+        </template>
+    </category>
+    <category>
+        <pattern>*SERVICE#</pattern>
+        <template>
+           task_service_describe
+        </template>
+    </category>
+    <category>
+        <pattern>#介绍#SERVICE#</pattern>
+        <template>
+           task_service_describe
+        </template>
+    </category>
+
 
 </aiml>
