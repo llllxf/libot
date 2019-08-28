@@ -32,6 +32,7 @@ GraphBaseConfig = {
     #'now_machine': '总馆北区_F1_标志位_3'
     #'now_machine': '总馆北区_F1_标志位_4'
     'now_machine': '总馆北区_F1_标志位_5'
+    #this is a teseting
 }
 
 
