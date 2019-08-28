@@ -3,6 +3,12 @@
 # UpdateDate: 19-03-19
 """This file contains the public interface to the aiml module."""
 
+#??aiml1.0???0+,??1+???????
+#_check_all_english??????????????????????????????????????
+
+#zero_plus_strick??#??????*???0+??
+
+
 from __future__ import print_function
 
 import copy
@@ -325,7 +331,7 @@ class Kernel:
         return copy.deepcopy(s)
 
     #==================================================================================================
-
+    '''????????'''
     def _check_all_english(self, des_str):
         for uchar in des_str:
             if (uchar >= u'\u0041' and uchar <= u'\u005a') or (uchar >= u'\u0061' and uchar <= u'\u007a'):
@@ -333,7 +339,7 @@ class Kernel:
             else:
                 return False
         return True
-
+    '''?#???*????0+??'''
     def zero_plus_strick(self, pattern_with_pound):
         """
         a simple way for implement 0+ with # in pattern str

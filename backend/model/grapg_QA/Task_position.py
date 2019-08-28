@@ -399,6 +399,26 @@ class Task_position():
         response += ans[0]
         return response
 
+    def solve_restype_pos(self, entity):
+        restype = entity['restype'][0]
+        res = Neo4jPrepare.get_reverse_relation(restype,'资源')
+        #print(res)
+        ans = "\n"+restype+"包括:\n"
+        for r in res:
+            #print(r)
+            room = Neo4jPrepare.get_relation(r['office_name'],'馆室')
+            ans += r['office_name']+",存放在"
+            for sub_room in room[:-1]:
+                ans += sub_room['office_name']+","
+            ans += room[-1]['office_name']+"\n"
+        return ans
+
+
+
+
+
+
+
 
 
 

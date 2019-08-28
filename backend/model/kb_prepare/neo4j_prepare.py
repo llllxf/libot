@@ -340,11 +340,12 @@ class Neo4jPrepare(object):
             temp = record['variant_name'].split("，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             room_variant_list.append(temp)
-
+        '''
         print("room_list====================================================")
         for i in room_variant_list:
             for j in i:
                 print(j)
+        '''
 
         '''
         楼层正名、别名
@@ -356,11 +357,12 @@ class Neo4jPrepare(object):
             temp = record['variant_name'].split("，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             floor_variant_list.append(temp)
-
+        '''
         print("floor_list====================================================")
         for i in floor_variant_list:
             for j in i:
                 print(j)
+        '''
 
         '''
         馆区正名、别名
@@ -373,10 +375,12 @@ class Neo4jPrepare(object):
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             area_variant_list.append(temp)
 
+        '''        
         print("area_list====================================================")
         for i in area_variant_list:
             for j in i:
                 print(j)
+        '''
 
         '''
         资源正名、别名
@@ -388,11 +392,12 @@ class Neo4jPrepare(object):
             temp = record['variant_name'].split("，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             resource_variant_list.append(temp)
-
+        '''
         print("resource_list====================================================")
         for i in resource_variant_list:
             for j in i:
                 print(j)
+        '''
 
 
         cursor = cls.graph.run("match(n:`资源类型`)return n.office_name as restype ,n.variant_name as variant_name")
@@ -402,9 +407,11 @@ class Neo4jPrepare(object):
             temp = record['variant_name'].split("，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             restype_variant_list.append(temp)
+        '''
         for i in restype_variant_list:
             for j in i:
                 print(j)
+        '''
 
         cursor = cls.graph.run("match(n:`证件`)return n.office_name as card ,n.variant_name as variant_name")
         while cursor.forward():
@@ -416,10 +423,11 @@ class Neo4jPrepare(object):
                 temp = record['variant_name']
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             card_variant_list.append(temp)
-
+        '''
         for i in card_variant_list:
             for j in i:
                 print(j)
+        '''
 
         cursor = cls.graph.run("match(n:`国家图书馆`)return n.office_name as library ,n.variant_name as variant_name")
         while cursor.forward():
@@ -433,9 +441,11 @@ class Neo4jPrepare(object):
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             library_variant_list.append(temp)
 
+        '''
         for i in library_variant_list:
             for j in i:
                 print(j)
+        '''
 
         cursor = cls.graph.run("match(n:`服务`)return n.office_name as service ,n.variant_name as variant_name")
         while cursor.forward():
@@ -445,9 +455,11 @@ class Neo4jPrepare(object):
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             service_variant_list.append(temp)
 
+        '''
         for i in service_variant_list:
             for j in i:
                 print(j)
+        '''
 
         return room_list,room_variant_list,floor_list,floor_variant_list,area_list,area_variant_list,resource_list,resource_variant_list,restype_list,restype_variant_list,card_list,card_variant_list,library_list,library_variant_list,service_list,service_variant_list
 

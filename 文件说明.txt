@@ -1,0 +1,4 @@
+graph_qa文件夹：bot.py是衔接用户输入即预处理和问答任务的模块代码，Task开头的类为问答类，即具体业务逻辑处理类
+kb_prepare文件夹：neo4j_prepare.py是图数据库创建和使用
+robot_hub文件夹：general_hub_2.py是接受用户输入并预处理问题，得到问题中的实体传递给bot.py
+resource文件夹：.aiml文件为模版文件

@@ -26,7 +26,7 @@
         </template>
     </category>
     <category>
-        <pattern>#RESTYPE*哪</pattern>
+        <pattern>#RESTYPE*哪#</pattern>
         <template>
            task_restype_pos
         </template>

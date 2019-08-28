@@ -155,10 +155,10 @@ class GeneralHub():
 
 
         question_replaced,question_replaced2,entity_dict = GeneralHub.repalce_question(question_str)
-        print(question_replaced)
+        #print(question_replaced)
         aiml_respons = GeneralHub._aiml_kernal.respond(question_replaced)
         aiml_respons2 = GeneralHub._aiml_kernal.respond(question_replaced2)
-        print(aiml_respons,aiml_respons2)
+        #print(aiml_respons,aiml_respons2)
 
         #return aiml_respons
 

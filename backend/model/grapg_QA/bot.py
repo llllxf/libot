@@ -105,7 +105,7 @@ class Bot():
         elif task == "task_money_back_no":
             answer = cls.answer_money_back_no()
         elif task == "task_restype_pos":
-            answer = cls.answer_restype_pos()
+            answer = cls.answer_restype_pos(entity_dict)
         elif task == "task_music_pos":
             answer = cls.answer_music_pos()
         elif task == "task_movie_pos":
@@ -331,7 +331,9 @@ class Bot():
 
     @classmethod
     def answer_restype_pos(cls,entity):
-        return ['请询问具体资源\n']
+        task_position = Task_position()
+        res = task_position.solve_restype_pos(entity)
+        return [res]
 
     @classmethod
     def answer_music_pos(cls):
