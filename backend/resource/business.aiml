@@ -107,13 +107,13 @@
     <!-- 办卡 -->
     <!-- ========================================================== -->
     <category>
-        <pattern>#办#卡#</pattern>
+        <pattern>#办#CARD#</pattern>
         <template>
             请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
         </template>
     </category>
     <category>
-        <pattern>*卡*办#</pattern>
+        <pattern>#CARD*办#</pattern>
         <template>
             请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
         </template>
@@ -163,7 +163,13 @@
     <!-- 退押金 -->
     <!-- ========================================================== -->
     <category>
-        <pattern>#退#押金#</pattern>
+        <pattern>退押金</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+    <category>
+        <pattern>我*退押金</pattern>
         <template>
             请问押金收据是否还在？
         </template>
@@ -175,7 +181,38 @@
         </template>
     </category>
     <category>
+        <pattern>#怎么#退押金#</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+    <category>
+        <pattern>#如何#退押金#</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+    <category>
+        <pattern>#退押金#怎么#</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+    <category>
+        <pattern>#退押金#如何#</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+    <category>
         <pattern>#是#</pattern>
+        <that>请问押金收据是否还在？</that>
+        <template>
+            是否本人办理退押金？
+        </template>
+    </category>
+    <category>
+        <pattern>#在#</pattern>
         <that>
             请问押金收据是否还在？
         </that>
@@ -192,7 +229,103 @@
             task_money_back
         </template>
     </category>
+    <category>
+        <pattern>#否#</pattern>
+        <that>
+            是否本人办理退押金？
+        </that>
+        <template>
+            请到相应阅览室/服务点还清所借图书，确认无欠款后，持读者卡,身份证原件,押金收据,代理人的有效身份证原件到办证处办理退押金手续
+        </template>
+    </category>
+    <category>
+        <pattern>#不#</pattern>
+        <that>
+            是否本人办理退押金？
+        </that>
+        <template>
+            请到相应阅览室/服务点还清所借图书，确认无欠款后，持读者卡,身份证原件,押金收据,代理人的有效身份证原件到办证处办理退押金手续
+        </template>
+    </category>
+    <category>
+        <pattern>#否#</pattern>
+        <that>
+            请问押金收据是否还在？
+        </that>
+        <template>
+            请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
+        </template>
+    </category>
 
+    <category>
+        <pattern>#没#</pattern>
+        <that>
+            请问押金收据是否还在？
+        </that>
+        <template>
+            请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
+        </template>
+    </category>
+    <category>
+        <pattern>#不#</pattern>
+        <that>请问押金收据是否还在</that>
+        <template>
+            请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
+        </template>
+    </category>
+    <!-- ========================================================== -->
+
+    <!--  -->
+    <!-- ========================================================== -->
+    <category>
+        <pattern>退押金</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+    <category>
+        <pattern>#退押金#怎么#</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+    <category>
+        <pattern>#退押金#如何#</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+    <category>
+        <pattern>#押金*退#</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+    <category>
+        <pattern>#是#</pattern>
+        <that>请问押金收据是否还在？</that>
+        <template>
+            是否本人办理退押金？
+        </template>
+    </category>
+    <category>
+        <pattern>#在#</pattern>
+        <that>
+            请问押金收据是否还在？
+        </that>
+        <template>
+            是否本人办理退押金？
+        </template>
+    </category>
+    <category>
+        <pattern>#是#</pattern>
+        <that>
+            是否本人办理退押金？
+        </that>
+        <template>
+            task_money_back
+        </template>
+    </category>
     <category>
         <pattern>#否#</pattern>
         <that>
@@ -220,8 +353,9 @@
             请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
         </template>
     </category>
+
     <category>
-        <pattern>#不#</pattern>
+        <pattern>#没#</pattern>
         <that>
             请问押金收据是否还在？
         </that>
@@ -229,7 +363,13 @@
             请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
         </template>
     </category>
-
+    <category>
+        <pattern>#不#</pattern>
+        <that>请问押金收据是否还在</that>
+        <template>
+            请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
+        </template>
+    </category>
     <!-- ========================================================== -->
 
 </aiml>

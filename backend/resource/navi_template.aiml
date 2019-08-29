@@ -91,4 +91,56 @@
            task_room_pos
         </template>
     </category>
+
+    <category>
+        <pattern>#哪#SERVICE#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#SERVICE#哪#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+
+    <category>
+        <pattern>#地方#SERVICE#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#SERVICE#地方#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+
+    <category>
+        <pattern>#馆#SERVICE#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#SERVICE#馆#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+
+    <category>
+        <pattern>#室#SERVICE#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#SERVICE#室#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
 </aiml>

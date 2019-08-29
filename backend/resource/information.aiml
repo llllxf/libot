@@ -207,49 +207,38 @@
            task_library_describe
         </template>
     </category>
-    <!-- 资源类型介绍 -->
+    <!-- 服务介绍 -->
     <category>
-        <pattern>SERVICE</pattern>
+        <pattern>#SERVICE#</pattern>
+        <template>
+           task_service_describe
+        </template>
+    </category>
+    <!--
+    <category>
+        <pattern>SERVICE#是*</pattern>
         <template>
            task_service_describe
         </template>
     </category>
     <category>
-        <pattern>SERVICE*</pattern>
+        <pattern>*是#SERVICE</pattern>
         <template>
            task_service_describe
+        </template>
+    </category>
+    -->
+    <category>
+        <pattern>#几点#SERVICE#</pattern>
+        <template>
+           task_service_time
         </template>
     </category>
     <category>
-        <pattern>*SERVICE</pattern>
+        <pattern>#SERVICE#几点#</pattern>
         <template>
-           task_service_describe
+           task_service_time
         </template>
     </category>
-    <category>
-        <pattern>*SERVICE*</pattern>
-        <template>
-           task_service_describe
-        </template>
-    </category>
-    <category>
-        <pattern>#SERVICE*</pattern>
-        <template>
-           task_service_describe
-        </template>
-    </category>
-    <category>
-        <pattern>*SERVICE#</pattern>
-        <template>
-           task_service_describe
-        </template>
-    </category>
-    <category>
-        <pattern>#介绍#SERVICE#</pattern>
-        <template>
-           task_service_describe
-        </template>
-    </category>
-
 
 </aiml>
