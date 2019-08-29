@@ -5,7 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from skimage import io
 class Task_position():
-
+    '''
+    作废
+    '''
     @classmethod
     def draw_pic_1(cls, x, y, dx, dy):
         x = 432
@@ -98,6 +100,9 @@ class Task_position():
         plt.savefig('../../resource/2.png')
         return
 
+    '''
+    绘制导航图
+    '''
     @classmethod
     def draw_pic(cls, x, y):
 
@@ -147,6 +152,9 @@ class Task_position():
         plt.savefig('../../resource/2.png')
         return img
 
+    '''
+    得到查询结果的形式化
+    '''
     def form_answern(self,cursor):
         mark_list=[]
         dis_list=[]
@@ -174,6 +182,9 @@ class Task_position():
         #print("??", mark_list, dis_list, x_list, y_list)
         return mark_list,dis_list,x_list,y_list,dir_list
 
+    '''
+    得到查询结果的形式化
+    '''
     def form_answern_list(self,cursor):
         path_list=[]
         dis_list=[]
@@ -187,6 +198,9 @@ class Task_position():
         return path_list,dis_dir_list
 
 
+    '''
+    同层导航
+    '''
     def navi(self, entity):
         responds = ''
         machine = '拐角'
@@ -358,6 +372,9 @@ class Task_position():
         # print(dx,dy)
         return responds,img
 
+    """
+    馆室位置查询
+    """
     def solve_room_pos(self,entity):
         response = "\n您当前在总馆北区一层\n"
         room = entity['room'][0]

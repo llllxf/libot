@@ -39,7 +39,12 @@ class GeneralHub():
         print("=======================================")
         print(cls.room_list, cls.room_variant_list, cls.floor_list, cls.floor_variant_list, cls.area_list, cls.area_variant_list, cls.resource_list, cls.resource_variant_list,cls.restype_list,cls.restype_variant_list,cls.card_list,cls.card_variant_list,cls.library_list,cls.library_variant_list,cls.service_list,cls.service_variant_list)
         '''
-
+    '''
+    抽取出句子中的实体，同时将实体替换为模版符号：ROOM,AREA,FLOOR等
+    
+    SERVICE实体比较特别，他们的统一属性通过转为SERVICE查询，但是他们有具有个性，所以最终生成两个替换后的句子，
+    一个将服务实体替换为SERVICE，一个不替换，优先匹配不替换的，如果不替换的找不到对应的模板则再匹配替换的。
+    '''
     @classmethod
     def repalce_question(cls, question):
 
@@ -168,6 +173,7 @@ class GeneralHub():
         '''
         由于服务类同时具有共性与特性，所以生产两个模版，即一份模版将服务实体替换为service进行模版匹配，一类模版
         不讲服务实体替换为service直接用原词汇匹配模版
+        
         '''
 
         if 'task_' in aiml_respons:
