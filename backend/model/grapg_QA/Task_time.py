@@ -1,8 +1,10 @@
-from model.kb_prepare.neo4j_prepare import Neo4jPrepare
+# -*- coding: utf-8 -*-
 """
 时间类问答模块
 作者:lxf
 """
+from model.kb_prepare.neo4j_prepare import Neo4jPrepare
+
 class Task_time():
     """
     馆室开放时间

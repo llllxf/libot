@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from model.kb_prepare.neo4j_prepare import Neo4jPrepare
 from PIL import Image
 import numpy as np
