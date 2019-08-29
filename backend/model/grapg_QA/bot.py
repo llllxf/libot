@@ -118,6 +118,10 @@ class Bot():
             answer = cls.answer_res_read(entity_dict)
         elif task == 'task_service_describe':
             answer = cls.answer_service_describe(entity_dict)
+        elif task == 'task_service_pos':
+            answer = cls.answer_service_pos(entity_dict)
+        elif task == 'task_service_time':
+            answer = cls.answer_service_time(entity_dict)
         return answer
 
     @classmethod
@@ -373,6 +377,20 @@ class Bot():
         task_information = Task_information()
         res = task_information.solve_service_describe(entity_dict)
         return [res]
+
+    @classmethod
+    def answer_service_pos(cls, entity_dict):
+        task_position = Task_position()
+        res = task_position.solve_service_pos(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_service_time(cls, entity_dict):
+        task_time = Task_time()
+        res = task_time.solve_service_time(entity_dict)
+        return [res]
+
+
 
 
 

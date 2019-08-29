@@ -382,7 +382,9 @@ class Task_position():
 
         response += respo
         return [response,img]
-
+    """
+    
+    """
     def solve_res_pos(self,entity):
         response = "\n"
         res = entity['res'][0]
@@ -398,7 +400,9 @@ class Task_position():
         ans = self.solve_room_pos(dict)[0]
         response += ans[0]
         return response
-
+    """
+    一类资源地点问询，需查出该类所有资源以及其对应的馆室
+    """
     def solve_restype_pos(self, entity):
         restype = entity['restype'][0]
         res = Neo4jPrepare.get_reverse_relation(restype,'资源')
@@ -412,6 +416,23 @@ class Task_position():
                 ans += sub_room['office_name']+","
             ans += room[-1]['office_name']+"\n"
         return ans
+
+    """
+    服务地点问询
+    """
+    def solve_service_pos(self, entity):
+        service = entity['service'][0]
+        room = Neo4jPrepare.get_relation(service,"馆室")
+        ans = "\n"+"您可以去"
+        for r in room[:-1]:
+            ans += r['office_name']+","
+        ans += room[-1]['office_name']+"接受该服务\n"
+        return ans
+
+
+
+
+
 
 
 

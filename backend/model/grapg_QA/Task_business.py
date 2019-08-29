@@ -2,6 +2,9 @@ from model.kb_prepare.neo4j_prepare import Neo4jPrepare
 import numpy as np
 class Task_business():
 
+    """
+    还书
+    """
     def solve_book_back(self, entity):
         resource  = entity['res'][0]
         res = Neo4jPrepare.get_relation(resource,'馆室')
@@ -18,6 +21,9 @@ class Task_business():
             ans += "年龄"+c['age']+"可持"+c['office_name']+"进入馆室\n"
         return ans
 
+    """
+    资源借阅
+    """
     def solve_res_read(self, entity):
         resource  = entity['res'][0]
         res = Neo4jPrepare.get_relation(resource,'馆室')
@@ -34,6 +40,9 @@ class Task_business():
             ans += "年龄"+c['age']+"可持"+c['office_name']+"进入馆室\n"
         return ans
 
+    """
+    作废了
+    """
     def solve_money_back(self):
         res = Neo4jPrepare.get_property('退押金')
         card = res['card']
@@ -44,6 +53,7 @@ class Task_business():
         ans += card_arr[len(card_arr)-2]
         ans += "到办证处办理退押金手续\n"
         return ans
+
 
     def solve_money_back_no(self):
         res = Neo4jPrepare.get_property('退押金')
@@ -56,6 +66,9 @@ class Task_business():
         ans += "到办证处办理退押金手续\n"
         return ans
 
+    """
+    馆区的资源是否可以外借
+    """
     def solve_area_borrow(self,entity):
         area = entity['area'][0]
         ans = "\n"
@@ -99,6 +112,10 @@ class Task_business():
             ans += "提供复制处，可携带读者卡前往该楼层复制处复制或扫描\n"
 
         return ans
+
+    """
+    馆室的资源是否可以外借
+    """
     def solve_room_borrow(self,entity):
         room = entity['room'][0]
         room_name = room
@@ -117,6 +134,9 @@ class Task_business():
             ans += room_name + "的资源书籍均不可以外借，仅供借阅\n"
         return ans
 
+    """
+    资源是否可以外借
+    """
     def solve_res_borrow(self,entity):
         res = entity['res'][0]
         room_res = Neo4jPrepare.get_relation(res,'馆室')
@@ -134,6 +154,9 @@ class Task_business():
             ans += res + "不可以外借，仅供借阅\n"
         return ans
 
+    """
+    某类资源是否可以外借，需先查出此类资源包括什么资源，具体某个资源是否可以外借
+    """
     def solve_restype_borrow(self,entity):
         restype = entity['restype'][0]
         res_res = Neo4jPrepare.get_reverse_relation(restype,'资源')
@@ -171,6 +194,14 @@ class Task_business():
                 ans += y+","
             ans += no_room[len(no_room)-1]+"的"+restype+"不可以外借，仅供借阅\n"
         return ans
+
+    '''
+    办理读者卡
+    solve__card_yes 中国籍满16岁
+    solve__card_no 非中国籍满16岁
+    solve__card_thirteen 13-15岁
+    solve__card_twelve 未满十三岁
+    '''
     def solve__card_yes(self):
         return "国家图书馆读者卡分人工办证和自助办证两种。\n人工办证：每日16：30之前在办证处办理；自助办证：总馆北区和南区办证处设有自助办证机，可于周一至周五9：00--21：00，周六和周日9：00--17：00自助办理。\n年满十六周岁的中国公民须持本人身份证件原件（包括身份证、户口簿、军人证、护照、港澳通行证、台胞回乡证）办理。\n"
     def solve__card_no(self):

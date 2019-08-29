@@ -155,21 +155,36 @@ class GeneralHub():
 
 
         question_replaced,question_replaced2,entity_dict = GeneralHub.repalce_question(question_str)
-        #print(question_replaced)
         aiml_respons = GeneralHub._aiml_kernal.respond(question_replaced)
+        '''
         aiml_respons2 = GeneralHub._aiml_kernal.respond(question_replaced2)
-        #print(aiml_respons,aiml_respons2)
+        if 'task_' in aiml_respons2:
+            graph_respons = Bot.task_response(aiml_respons2, entity_dict)
+            print([graph_respons])
+            return [graph_respons]
+        '''
 
-        #return aiml_respons
+
+        '''
+        由于服务类同时具有共性与特性，所以生产两个模版，即一份模版将服务实体替换为service进行模版匹配，一类模版
+        不讲服务实体替换为service直接用原词汇匹配模版
+        '''
 
         if 'task_' in aiml_respons:
-            graph_respons = Bot.task_response(aiml_respons,entity_dict)
-        elif 'task_' in aiml_respons2:
-            graph_respons = Bot.task_response(aiml_respons2, entity_dict)
+            graph_respons = Bot.task_response(aiml_respons, entity_dict)
+        elif aiml_respons!='':
+            graph_respons=[aiml_respons]
         else:
-            return [aiml_respons]
-
+            aiml_respons2 = GeneralHub._aiml_kernal.respond(question_replaced2)
+            #print(question_replaced2,aiml_respons2)
+            if 'task_' in aiml_respons2:
+                graph_respons = Bot.task_response(aiml_respons2, entity_dict)
+            elif aiml_respons2 != '':
+                graph_respons = [aiml_respons2]
+            else:
+                graph_respons=['很抱歉，我好像不明白，请您换一种说法']
         return graph_respons
+
 
 import time
 

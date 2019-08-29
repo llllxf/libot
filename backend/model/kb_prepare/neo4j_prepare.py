@@ -558,8 +558,9 @@ class Neo4jPrepare(object):
         service_sheet = workbook.sheet_by_index(7)
         for i in range(1, service_sheet.nrows):
             row = service_sheet.row_values(i)
-            service_node = Node(cls.service, type=cls.service, name=row[0], office_name=row[0], variant_name=row[1], date=row[4],
-                             time=row[5],discribe=row[6],card=row[7])
+            print(row,row)
+            service_node = Node(cls.service, type=cls.service, name=row[0], office_name=row[0], variant_name=row[1], date=row[3],
+                             worktime=row[4],weektime=row[5],discribe=row[6],card=row[7])
             cls.graph.create(service_node)
 
         '''建立资源类型节点'''
@@ -856,7 +857,7 @@ class Neo4jPrepare(object):
             try:
                 row = restype_sheet.row_values(i)
                 room_arr = []
-                print("===========",row[2])
+                #print("===========",row[2])
                 if row[2].find("，") != -1:
                     room_arr = row[2].split("，")
                 else:
