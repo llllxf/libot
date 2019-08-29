@@ -12,7 +12,7 @@ class Task_condition():
         ans = "\n"
         if res['card'] != '':
             ans += "进"+room_name+"需要满足的条件为：\n"
-            if res['card'].find("，") != -1:
+            if res['card'].find(u"，") != -1:
                 card_arr = res['card'].split("，")
                 for c in card_arr:
 

@@ -337,7 +337,7 @@ class Neo4jPrepare(object):
             record = dict(cursor.current())
             room_list.append(record['room'])
             #print(type(record[variant_name]))
-            temp = record['variant_name'].split("，")
+            temp = record['variant_name'].split(u"，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             room_variant_list.append(temp)
         '''
@@ -354,7 +354,7 @@ class Neo4jPrepare(object):
         while cursor.forward():
             record = dict(cursor.current())
             floor_list.append(record['floor'])
-            temp = record['variant_name'].split("，")
+            temp = record['variant_name'].split(u"，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             floor_variant_list.append(temp)
         '''
@@ -371,7 +371,7 @@ class Neo4jPrepare(object):
         while cursor.forward():
             record = dict(cursor.current())
             area_list.append(record['area'])
-            temp = record['variant_name'].split("，")
+            temp = record['variant_name'].split(u"，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             area_variant_list.append(temp)
 
@@ -389,7 +389,7 @@ class Neo4jPrepare(object):
         while cursor.forward():
             record = dict(cursor.current())
             resource_list.append(record['resource'])
-            temp = record['variant_name'].split("，")
+            temp = record['variant_name'].split(u"，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             resource_variant_list.append(temp)
         '''
@@ -404,7 +404,7 @@ class Neo4jPrepare(object):
         while cursor.forward():
             record = dict(cursor.current())
             restype_list.append(record['restype'])
-            temp = record['variant_name'].split("，")
+            temp = record['variant_name'].split(u"，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             restype_variant_list.append(temp)
         '''
@@ -417,8 +417,8 @@ class Neo4jPrepare(object):
         while cursor.forward():
             record = dict(cursor.current())
             card_list.append(record['card'])
-            if record['variant_name'].find("，")!=-1:
-                temp = record['variant_name'].split("，")
+            if record['variant_name'].find(u"，")!=-1:
+                temp = record['variant_name'].split(u"，")
             else:
                 temp = record['variant_name']
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
@@ -433,8 +433,8 @@ class Neo4jPrepare(object):
         while cursor.forward():
             record = dict(cursor.current())
             library_list.append(record['library'])
-            if record['variant_name'].find("，")!=-1:
-                temp = record['variant_name'].split("，")
+            if record['variant_name'].find(u"，")!=-1:
+                temp = record['variant_name'].split(u"，")
             else:
                 temp = record['variant_name']
             #temp = record['variant_name'].split("，")
@@ -451,7 +451,7 @@ class Neo4jPrepare(object):
         while cursor.forward():
             record = dict(cursor.current())
             service_list.append(record['service'])
-            temp = record['variant_name'].split("，")
+            temp = record['variant_name'].split(u"，")
             temp = sorted(temp, key=lambda i: len(i), reverse=True)
             service_variant_list.append(temp)
 
@@ -599,8 +599,8 @@ class Neo4jPrepare(object):
             try:
                 row = room_sheet.row_values(i)
 
-                if row[20].find("，")!=-1:
-                    area_arr = row[21].split("，")
+                if row[20].find(u"，")!=-1:
+                    area_arr = row[21].split(u"，")
                     for sub_area in area_arr:
 
                         rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
@@ -613,8 +613,8 @@ class Neo4jPrepare(object):
                                                    property_value=row[0]), "处于",
                                cls.graph.find_one(label=cls.building, property_key='office_name', property_value=row[20]))
                     cls.graph.create(rel)
-                if row[21].find("，")!=-1:
-                    floor_arr = row[21].split("，")
+                if row[21].find(u"，")!=-1:
+                    floor_arr = row[21].split(u"，")
                     for sub_floor in floor_arr:
 
                         rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
@@ -628,9 +628,9 @@ class Neo4jPrepare(object):
                                        cls.graph.find_one(label=cls.floor, property_key='office_name',
                                                           property_value=row[21]))
                     cls.graph.create(rel)
-                if row[22].find("，")!=-1:
+                if row[22].find(u"，")!=-1:
 
-                    card_arr = row[22].split("，")
+                    card_arr = row[22].split(u"，")
                     for sub_card in card_arr:
                         if sub_card == "":
                             continue
@@ -702,8 +702,8 @@ class Neo4jPrepare(object):
                                                       property_value=row[5]))
                 cls.graph.create(rel)
                 #print(row[4])
-                if row[4].find("，")!=-1:
-                    room_arr = row[4].split("，")
+                if row[4].find(u"，")!=-1:
+                    room_arr = row[4].split(u"，")
                 else:
                     room_arr.append(row[4])
 
@@ -724,9 +724,9 @@ class Neo4jPrepare(object):
         for i in range(room_sheet.nrows-8, room_sheet.nrows-6):
             try:
                 row = room_sheet.row_values(i)
-                mark_list = row[28].split("，")
+                mark_list = row[28].split(u"，")
                 dis_list = str(row[23]).split("_")
-                dir_list = str(row[27]).split("；")
+                dir_list = str(row[27]).split(u"；")
                 #print("marklist==================================",mark_list,row[0])
                 for i in range(len(mark_list)):
                     mark = mark_list[i]
@@ -748,8 +748,8 @@ class Neo4jPrepare(object):
                                    cls.graph.find_one(label=cls.floor, property_key='office_name',
                                                       property_value=row[21]))
                 cls.graph.create(rel)
-                if row[22].find("，"):
-                    card_arr = row[22].split("，")
+                if row[22].find(u"，"):
+                    card_arr = row[22].split(u"，")
                     for sub_card in card_arr:
                         if sub_card == '':
                             continue
@@ -769,11 +769,11 @@ class Neo4jPrepare(object):
         for i in range(room_sheet.nrows-6, room_sheet.nrows):
             try:
                 row = room_sheet.row_values(i)
-                mark_list = row[28].split("，")
-                dis_list = str(row[23]).split("_")
-                dir_list = str(row[27]).split("；")
-                x_list = row[25].split("；")
-                y_list = row[26].split("；")
+                mark_list = row[28].split(u"，")
+                dis_list = str(row[23]).split(u"_")
+                dir_list = str(row[27]).split(u"；")
+                x_list = row[25].split(u"；")
+                y_list = row[26].split(u"；")
                 for i in range(len(mark_list)):
                     mark = mark_list[i]
                     dis = dis_list[i]
@@ -802,8 +802,8 @@ class Neo4jPrepare(object):
                                                       property_value=row[21]))
                 cls.graph.create(rel)
                 #print("....")
-                if row[22].find("，"):
-                    card_arr = row[22].split("，")
+                if row[22].find(u"，"):
+                    card_arr = row[22].split(u"，")
                     for sub_card in card_arr:
                         if sub_card=='':
                             continue
@@ -834,8 +834,8 @@ class Neo4jPrepare(object):
 
                 cls.graph.create(rel)
                 room_arr = []
-                if row[4].find("，")!=-1:
-                    room_arr = row[4].split("，")
+                if row[4].find(u"，")!=-1:
+                    room_arr = row[4].split(u"，")
                 else:
                     room_arr.append(row[4])
 
@@ -858,8 +858,8 @@ class Neo4jPrepare(object):
                 row = restype_sheet.row_values(i)
                 room_arr = []
                 #print("===========",row[2])
-                if row[2].find("，") != -1:
-                    room_arr = row[2].split("，")
+                if row[2].find(u"，") != -1:
+                    room_arr = row[2].split(u"，")
                 else:
                     room_arr.append(row[2])
 

@@ -16,11 +16,11 @@ class Task_contain():
         ans = "\n"+floor+"有馆室"
         for r in res[:-1]:
             room_name = r['office_name']
-            if room_name.find("_")!=-1:
+            if room_name.find(u"_")!=-1:
                 room_name = room_name.split("_")[2]
             ans += room_name+","
         room_name = res[-1]['office_name']
-        if room_name.find("_") != -1:
+        if room_name.find(u"_") != -1:
             room_name = room_name.split("_")[2]
             ans += room_name + "\n"
         #print(ans)
@@ -89,7 +89,7 @@ class Task_contain():
             ans += resource+"存放在"+room_name
         else:
             des_room = res[0]['office_name']
-            if res[0]['office_name'].find("_")!=-1:
+            if res[0]['office_name'].find(u"_")!=-1:
                 des_room = res[0]['office_name'].split("_")[2]
             ans += resource+"不存放在"+room_name+"\n"+resource+"存放在"+des_room+"\n"
         return ans
@@ -97,7 +97,7 @@ class Task_contain():
     def solve_room_res_a(self, entity):
         room = entity['room'][0]
         room_name = room
-        if room.find("_")!=-1:
+        if room.find(u"_")!=-1:
             room_name = room.split("_")[2]
         res = Neo4jPrepare.get_reverse_relation(room,'资源')
         res_dict = {}
