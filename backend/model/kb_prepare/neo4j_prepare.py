@@ -4,9 +4,9 @@ import os
 #import pandas as pd
 import  py2neo
 from py2neo import Node, Graph, Relationship
-#from pandas import DataFrame
-#import numpy as np
-#import jieba
+from pandas import DataFrame
+import numpy as np
+import jieba
 import xlrd
 class Neo4jPrepare(object):
 
