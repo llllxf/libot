@@ -47,7 +47,7 @@ class Task_business():
     def solve_money_back(self):
         res = Neo4jPrepare.get_property('退押金')
         card = res['card']
-        card_arr = card.split("，")
+        card_arr = card.split(u"，")
         ans = "\n请到相应阅览室/服务点还清所借图书，确认无欠款后，持"
         for c in card_arr[:-2]:
             ans += c+","
@@ -59,7 +59,7 @@ class Task_business():
     def solve_money_back_no(self):
         res = Neo4jPrepare.get_property('退押金')
         card = res['card']
-        card_arr = card.split("，")
+        card_arr = card.split(u"，")
         ans = "\n请到相应阅览室/服务点还清所借图书，确认无欠款后，持"
         for c in card_arr[:-1]:
             ans += c+","

@@ -726,7 +726,7 @@ class Neo4jPrepare(object):
                 row = room_sheet.row_values(i)
                 mark_list = row[28].split(u"，")
                 dis_list = str(row[23]).split("_")
-                dir_list = str(row[27]).split(u"；")
+                dir_list = str(row[27]).split(u";")
                 #print("marklist==================================",mark_list,row[0])
                 for i in range(len(mark_list)):
                     mark = mark_list[i]
@@ -771,9 +771,9 @@ class Neo4jPrepare(object):
                 row = room_sheet.row_values(i)
                 mark_list = row[28].split(u"，")
                 dis_list = str(row[23]).split(u"_")
-                dir_list = str(row[27]).split(u"；")
-                x_list = row[25].split(u"；")
-                y_list = row[26].split(u"；")
+                dir_list = str(row[27]).split(u";")
+                x_list = row[25].split(u";")
+                y_list = row[26].split(u";")
                 for i in range(len(mark_list)):
                     mark = mark_list[i]
                     dis = dis_list[i]
