@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-from model.kb_prepare.neo4j_prepare import Neo4jPrepare
+from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
 import numpy as np
 class Task_contain():
     def solve_floor_count_room(self, entity):
-        #print("<<<")
         floor = entity['floor'][0]
         res = Neo4jPrepare.get_reverse_relation(floor, '馆室')
-        # print(res)
         l = len(res)
         ans = "\n" + floor + "一共有" + str(l) + "间馆室\n"
         return ans
@@ -34,8 +32,6 @@ class Task_contain():
         room_name = room
         if room.find("_")!=-1:
             room_name = room.split("_")[2]
-        #print(res['office_name'])
-        #print(res[0]['office_name'],floor)
         if res[0]['office_name'] == floor:
             ans += room_name+"在"+floor
         else:
@@ -126,7 +122,7 @@ class Task_contain():
         resource = entity['res'][0]
         res = Neo4jPrepare.get_property(resource)
         ans = "\n"
-        if res['count']!='':
+        if res['count']!='nan':
             ans += resource+"的数量是:"+str(res['count'])+"本（份）\n"
         else:
             ans += "很抱歉，"+resource+"暂时没有数据信息\n"
@@ -145,7 +141,7 @@ class Task_contain():
             type_num = 0
             res_r = Neo4jPrepare.get_reverse_relation(t['office_name'],'资源')
             for r in res_r:
-                if r['count'] =='':
+                if r['count'] =='nan':
                     continue
                 type_num += int(r['count'])
                 num += int(r['count'])
@@ -160,7 +156,7 @@ class Task_contain():
                 continue
             num += int(r['count'])
             other_num += int(r['count'])
-        if other_num != 0 and describe != '':
+        if other_num != 0 and describe != 'nan':
             describe += "以及其他" + restype + str(other_num) + "份\n"
 
         # print(num)

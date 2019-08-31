@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from model.kb_prepare.neo4j_prepare import Neo4jPrepare
+from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
 import numpy as np
 class Task_business():
 
@@ -141,11 +141,6 @@ class Task_business():
     def solve_res_borrow(self,entity):
         res = entity['res'][0]
         room_res = Neo4jPrepare.get_relation(res,'馆室')
-        #print(room_res)
-        room = room_res[0]['office_name']
-        room_name = room
-        if room.find("_")!=-1:
-            room_name=room.split("_")[2]
         ans = "\n"
         if room_res[0]['borrow'] == 1:
             ans+=res+"可以外借\n"

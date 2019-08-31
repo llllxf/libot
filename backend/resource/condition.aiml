@@ -83,7 +83,7 @@
         </template>
     </category>
     <category>
-        <pattern>*条件*ROOM#</pa ttern>
+        <pattern>*条件*ROOM#</pattern>
         <template>
            task_room_card_a
         </template>

@@ -2,6 +2,12 @@
 
 from py2neo import Node, Graph, Relationship
 import xlrd
+from model.kb_prepare.room import room
+from model.kb_prepare.floor import floor
+from model.kb_prepare.resource import resource
+from model.kb_prepare.card import card
+from model.kb_prepare.resType import resType
+from model.kb_prepare.service import service
 class Neo4jPrepare(object):
 
 
@@ -29,7 +35,6 @@ class Neo4jPrepare(object):
 
         """建图"""
         workbook = xlrd.open_workbook(r'../../resource/neo4j2.xlsx')
-        #cls.create()
         cls.create_node(workbook)
         cls.create_relation(workbook)
 
@@ -294,7 +299,6 @@ class Neo4jPrepare(object):
         while cursor.forward():
             record = cursor.current()
             ans.append(dict(record['n']))
-            # print(dict(record['b']))
         return ans
 
     '''
@@ -462,37 +466,30 @@ class Neo4jPrepare(object):
     def create_node(cls, workbook):
 
         """建立馆室节点"""
-        room_sheet = workbook.sheet_by_index(0)
-        for i in range(1,room_sheet.nrows-6):
-            row = room_sheet.row_values(i)
+        #room_sheet = workbook.sheet_by_index(0)
+        room_values = room.split("@")
+        for i in range(1,len(room_values)-6):
+            row = room_values[i].split(" ")
             name=row[0]
-            if row[0].find("_") != -1:
-                name_arr = row[0].split("_")
-                if len(name_arr)>=3:
-                    name = name_arr[2]
-
-
             room_node = Node(cls.room,type=cls.room,name=name,office_name=row[0],variant_name=row[1],position=row[2],describe=row[3],
                              open_date=row[4],phone=row[5],
-                             monday_open=row[6],monday_borrow=row[7],
-                             tuseday_open=row[8],tuseday_borrow=row[9],
-                             wednesday_open=row[10],wednesday_borrow=row[11],
-                             thursday_open=row[12],thursday_borrow=row[13],
-                             friday_open=row[14], friday_borrow=row[15],
-                             saturday_open=row[16], saturday_borrow=row[17],
-                             sunday_open=row[18], sunday_borrow=row[19],
-                             area=row[20],floor=row[21],
-                             card=row[22],
-                             des_x=row[25],
-                             des_y=row[26],
-                             borrow=row[29]
+                             work_open=row[6],work_borrow=row[7],
+                             week_open=row[8], week_borrow=row[9],
+                             area=row[10],floor=row[11],
+                             card=row[12],
+                             des_x=row[15],
+                             des_y=row[16],
+                             borrow=row[19]
 
                              )
             cls.graph.create(room_node)
-        for i in range(room_sheet.nrows-6,room_sheet.nrows):
-            row = room_sheet.row_values(i)
-            mark_node = Node(cls.mark, type=cls.mark,name=row[0], office_name=row[0],self_site=row[24])
+        for i in range(len(room_values)-6,len(room_values)):
+            row = room_values[i].split(" ")
+            print(row[14])
+            mark_node = Node(cls.mark, type=cls.mark,name=row[0], office_name=row[0],self_site=row[14])
             cls.graph.create(mark_node)
+
+
 
 
         """建立馆区节点"""
@@ -500,24 +497,22 @@ class Neo4jPrepare(object):
         for i in range(1, building_sheet.nrows):
             row = building_sheet.row_values(i)
             name = row[0]
-            #print(name)
             building_node = Node(cls.building, type=cls.building,name=name,
                                  office_name=row[0],
                                  variant_name=row[1],
                                  position=row[2],
                                  date=row[3],
-                                 #weekdate=row[4],
                                  worktime=row[5],
                                  weektime=row[6])
 
             cls.graph.create(building_node)
 
         """建立楼层节点"""
-        floor_sheet = workbook.sheet_by_index(4)
-        for i in range(1, floor_sheet.nrows):
-            row = floor_sheet.row_values(i)
+
+        floor_values = floor.split("@")
+        for i in range(1, len(floor_values)):
+            row = floor_values[i].split(" ")
             name = row[0]
-            #print(name)
             floor_node = Node(cls.floor, type=cls.floor,name=name, office_name=row[0], variant_name=row[1],
                               area=row[2],
                               upstair=row[3],downstair=row[4]
@@ -525,44 +520,40 @@ class Neo4jPrepare(object):
             cls.graph.create(floor_node)
 
         """建立资源节点"""
-        resource_sheet = workbook.sheet_by_index(3)
-        for i in range(1, resource_sheet.nrows):
-            row = resource_sheet.row_values(i)
-            #print(row)
+        resource_values = resource.split("@")
+        for i in range(1, len(resource_values)):
+            row = resource_values[i].split(" ")
             name = row[0]
-            if row[0].find("_") != -1:
-                name = row[0].split("_")[1]
-            # print(name)
+
             resource_node = Node(cls.resource, type=cls.resource,name=name, office_name=row[0], variant_name=row[1], describe=row[2], count=row[3],
                               room=row[4],
                               belong=row[5],
-                              ctime=row[6],
+                              collection_time=row[6],
                               range=row[8],
                               topic=row[9]
                                  )
             cls.graph.create(resource_node)
 
         '''建立证件节点'''
-        card_sheet = workbook.sheet_by_index(1)
-        for i in range(1,card_sheet.nrows):
-            row = card_sheet.row_values(i)
+        card_values = card.split("@")
+        for i in range(1,len(card_values)):
+            row = card_values[i].split(" ")
             card_node = Node(cls.card, type=cls.card, name = row[0], office_name=row[0], variant_name=row[1], age=row[2], function=row[3])
             cls.graph.create(card_node)
 
         '''建立服务节点'''
-        service_sheet = workbook.sheet_by_index(7)
-        for i in range(1, service_sheet.nrows):
-            row = service_sheet.row_values(i)
-            #print(row,row)
+        service_values = service.split("@")
+        for i in range(1, len(service_values)):
+            row = service_values[i].split(" ")
             service_node = Node(cls.service, type=cls.service, name=row[0], office_name=row[0], variant_name=row[1], date=row[3],
                              worktime=row[4],weektime=row[5],discribe=row[6],card=row[7])
             cls.graph.create(service_node)
 
         '''建立资源类型节点'''
-        restype_sheet = workbook.sheet_by_index(6)
-        for i in range(1, restype_sheet.nrows):
+        resType_values = resType.split("@")
+        for i in range(1, len(resType_values)):
 
-            row = restype_sheet.row_values(i)
+            row = resType_values[i].split(" ")
             restype_node = Node(cls.restype, type=cls.restype, name=row[0], office_name=row[0], variant_name=row[1], describe=row[2], count=row[3],
                               room=row[4],
                               belong=row[5])
@@ -577,9 +568,9 @@ class Neo4jPrepare(object):
         cls.graph.create(library)
 
         '''建立资源大类'''
-        res_sheet = workbook.sheet_by_index(8)
-        for i in range(1, res_sheet.nrows):
-            row = res_sheet.row_values(i)
+        res_values = [['数字资源',19609100],['实体资源',39011882]]
+        for i in range(2):
+            row = res_values[i]
             res_node = Node(cls.res, type=cls.res, name=row[0], office_name=row[0], variant_name=row[0], num=row[1])
             cls.graph.create(res_node)
 
@@ -589,16 +580,15 @@ class Neo4jPrepare(object):
     def create_relation(cls, workbook):
 
         """建立馆室联系"""
-
-        room_sheet = workbook.sheet_by_index(0)
-        for i in range(1, room_sheet.nrows-5-8):
+        room_values = room.split("@")
+        #room_sheet = workbook.sheet_by_index(0)
+        for i in range(1, len(room_values)-6):
             try:
-                row = room_sheet.row_values(i)
+                row = room_values[i].split(" ")
 
-                if row[20].find(u"，")!=-1:
-                    area_arr = row[21].split(u"，")
+                if row[10].find(u"，")!=-1:
+                    area_arr = row[10].split(u"，")
                     for sub_area in area_arr:
-
                         rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
                                                                property_value=row[0]), "位于",
                                            cls.graph.find_one(label=cls.building, property_key='office_name',
@@ -607,12 +597,11 @@ class Neo4jPrepare(object):
                 else:
                     rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
                                                    property_value=row[0]), "处于",
-                               cls.graph.find_one(label=cls.building, property_key='office_name', property_value=row[20]))
+                               cls.graph.find_one(label=cls.building, property_key='office_name', property_value=row[10]))
                     cls.graph.create(rel)
-                if row[21].find(u"，")!=-1:
-                    floor_arr = row[21].split(u"，")
+                if row[11].find(u"，")!=-1:
+                    floor_arr = row[11].split(u"，")
                     for sub_floor in floor_arr:
-
                         rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
                                                                property_value=row[0]), "位于",
                                            cls.graph.find_one(label=cls.floor, property_key='office_name',
@@ -622,11 +611,12 @@ class Neo4jPrepare(object):
                     rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
                                                           property_value=row[0]), "位于",
                                        cls.graph.find_one(label=cls.floor, property_key='office_name',
-                                                          property_value=row[21]))
+                                                          property_value=row[11]))
                     cls.graph.create(rel)
-                if row[22].find(u"，")!=-1:
 
-                    card_arr = row[22].split(u"，")
+                if row[12].find(u"，")!=-1:
+
+                    card_arr = row[12].split(u"，")
                     for sub_card in card_arr:
                         if sub_card == "":
                             continue
@@ -636,140 +626,45 @@ class Neo4jPrepare(object):
                                                                property_value=sub_card))
                         cls.graph.create(rel)
                 else:
+                    if row[12] == 'nan':
+                        continue
                     rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
                                                           property_value=row[0]), "证件",
                                        cls.graph.find_one(label=cls.card, property_key='office_name',
-                                                          property_value=row[22]))
+                                                          property_value=row[12]))
 
                     cls.graph.create(rel)
 
-            except AttributeError as e:
-                a=0
-                '''
-                print("11",row[0],e,row[20])
-                print(cls.graph.find_one(label=cls.room, property_key='office_name',
-                                                   property_value=row[0]))
-                '''
-        for i in range(room_sheet.nrows - 5-8, room_sheet.nrows-8):
-            try:
-                row = room_sheet.row_values(i)
-                #print(self.graph.find_one(label=self.building, property_key='area', property_value=row[20]),row[20])
-                rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
-                                                   property_value=row[0]), "处于",
-                               cls.graph.find_one(label=cls.room, property_key='office_name', property_value=row[20]))
-                cls.graph.create(rel)
-                rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
-                                                       property_value=row[0]), "位于",
-                                   cls.graph.find_one(label=cls.floor, property_key='office_name',
-                                                       property_value=row[21]))
-                cls.graph.create(rel)
-            except AttributeError as e:
-                a = 0
-                #print("2",row[0],e,row[20])
-                #print(cls.graph.find_one(label=cls.room, property_key='office_name',
-                                                   #property_value=row[0]))
-                #print(cls.graph.find_one(label=cls.room, property_key='office_name', property_value=row[20]))
-
-
-        """建立楼层联系"""
-        floor_sheet = workbook.sheet_by_index(4)
-        for i in range(1, floor_sheet.nrows):
-            try:
-                row = floor_sheet.row_values(i)
-                rel = Relationship(cls.graph.find_one(label=cls.floor, property_key='office_name',
-                                                   property_value=row[0]), "处于",
-                               cls.graph.find_one(label=cls.building, property_key='office_name', property_value=row[2]))
-                cls.graph.create(rel)
-            except AttributeError as e:
-                a = 0
-                #print("2",row[0],e,row[2])
-
-        """建立资源联系"""
-        res_sheet = workbook.sheet_by_index(3)
-        for i in range(1, res_sheet.nrows):
-            try:
-
-                room_arr = []
-                row = res_sheet.row_values(i)
-
-                rel = Relationship(cls.graph.find_one(label=cls.resource, property_key='office_name',
-                                                      property_value=row[0]), "属于",
-                                   cls.graph.find_one(label=cls.restype, property_key='office_name',
-                                                      property_value=row[5]))
-                cls.graph.create(rel)
-                #print(row[4])
-                if row[4].find(u"，")!=-1:
-                    room_arr = row[4].split(u"，")
-                else:
-                    room_arr.append(row[4])
-
-                for sub_room in room_arr:
-                    #print(sub_room,row[0])
-
-                    rel = Relationship(cls.graph.find_one(label=cls.resource, property_key='office_name',
-                                                       property_value=row[0]), "存放",
-                                   cls.graph.find_one(label=cls.room, property_key='office_name', property_value=sub_room))
-                    cls.graph.create(rel)
-
-            except AttributeError as e:
-                a = 0
-                #print("3", row[0], e, row[4])
-                #print(cls.graph.find_one(label=cls.room, property_key='office_name', property_value=row[4]))
-                #print(self.graph.find_one(label=self.room, property_key='room', property_value=row[4]))
-
-        for i in range(room_sheet.nrows-8, room_sheet.nrows-6):
-            try:
-                row = room_sheet.row_values(i)
-                mark_list = row[28].split(u"，")
-                dis_list = str(row[23]).split("_")
-                dir_list = str(row[27]).split(u";")
-                #print("marklist==================================",mark_list,row[0])
+                mark_list = row[18].split(u"，")
+                dis_list = str(row[13]).split("_")
+                dir_list = str(row[17]).split(u";")
                 for i in range(len(mark_list)):
                     mark = mark_list[i]
                     dis = dis_list[i]
                     dir = dir_list[i]
                     rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
                                                           property_value=row[0]), "相邻",
-                                       cls.graph.find_one(label=cls.mark, property_key='office_name', property_value=mark),
+                                       cls.graph.find_one(label=cls.mark, property_key='office_name',
+                                                          property_value=mark),
                                        dis=dis, dir=dir)
-                    #print(rel)
                     cls.graph.create(rel)
-                #print(self.graph.find_one(label=self.building, property_key='area', property_value=row[20]),row[20])
-                rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
-                                                   property_value=row[0]), "处于",
-                               cls.graph.find_one(label=cls.building, property_key='office_name', property_value=row[20]))
-                cls.graph.create(rel)
-                rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
-                                                      property_value=row[0]), "位于",
-                                   cls.graph.find_one(label=cls.floor, property_key='office_name',
-                                                      property_value=row[21]))
-                cls.graph.create(rel)
-                if row[22].find(u"，"):
-                    card_arr = row[22].split(u"，")
-                    for sub_card in card_arr:
-                        if sub_card == '':
-                            continue
-                        rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
-                                                               property_value=row[0]), "证件",
-                                           cls.graph.find_one(label=cls.card, property_key='office_name',
-                                                               property_value=sub_card))
-                        cls.graph.create(rel)
-                cls.graph.create(rel)
 
             except AttributeError as e:
-                a = 0
-                #print("11",row[0],e,row[20])
-                #print(cls.graph.find_one(label=cls.room, property_key='office_name',
-                #                                  property_value=row[0]))
+                #print("room",e)
 
-        for i in range(room_sheet.nrows-6, room_sheet.nrows):
+                print("11",row[0],e,row[10])
+                print(cls.graph.find_one(label=cls.room, property_key='office_name',
+                                                   property_value=row[0]))
+
+
+        for i in range(len(room_values)-6, len(room_values)):
             try:
-                row = room_sheet.row_values(i)
-                mark_list = row[28].split(u"，")
-                dis_list = str(row[23]).split(u"_")
-                dir_list = str(row[27]).split(u";")
-                x_list = row[25].split(u";")
-                y_list = row[26].split(u";")
+                row = room_values[i].split(" ")
+                mark_list = row[18].split(u"，")
+                dis_list = str(row[13]).split(u"_")
+                dir_list = str(row[17]).split(u";")
+                x_list = row[15].split(u";")
+                y_list = row[16].split(u";")
                 for i in range(len(mark_list)):
                     mark = mark_list[i]
                     dis = dis_list[i]
@@ -787,7 +682,7 @@ class Neo4jPrepare(object):
 
                 rel = Relationship(cls.graph.find_one(label=cls.mark, property_key='office_name',
                                                    property_value=row[0]), "处于",
-                               cls.graph.find_one(label=cls.building, property_key='office_name', property_value=row[20]))
+                               cls.graph.find_one(label=cls.building, property_key='office_name', property_value=row[10]))
                 cls.graph.create(rel)
 
 
@@ -795,37 +690,69 @@ class Neo4jPrepare(object):
                 rel = Relationship(cls.graph.find_one(label=cls.mark, property_key='office_name',
                                                       property_value=row[0]), "位于",
                                    cls.graph.find_one(label=cls.floor, property_key='office_name',
-                                                      property_value=row[21]))
+                                                      property_value=row[11]))
                 cls.graph.create(rel)
-                #print("....")
-                if row[22].find(u"，"):
-                    card_arr = row[22].split(u"，")
-                    for sub_card in card_arr:
-                        if sub_card=='':
-                            continue
-
-                        rel = Relationship(cls.graph.find_one(label=cls.mask, property_key='office_name',
-                                                               property_value=row[0]), "证件",
-                                           cls.graph.find_one(label=cls.card, property_key='office_name',
-                                                               property_value=sub_card))
-                        cls.graph.create(rel)
 
 
             except AttributeError as e:
-                print("1",row[0],e,row[21])
-                print(cls.graph.find_one(label=cls.floor, property_key='office_name',
-                                                   property_value=row[21]))
-        """建立资源类型联系"""
-        restype_sheet = workbook.sheet_by_index(6)
-        for i in range(1, restype_sheet.nrows):
-            try:
+                print("room",e)
 
-                row = restype_sheet.row_values(i)
-                #print("==========================",row[0])
+        """建立楼层联系"""
+        floor_values = floor.split("@")
+
+        for i in range(1, len(floor_values)):
+            try:
+                row = floor_values[i].split(" ")
+                rel = Relationship(cls.graph.find_one(label=cls.floor, property_key='office_name',
+                                                   property_value=row[0]), "处于",
+                               cls.graph.find_one(label=cls.building, property_key='office_name', property_value=row[2]))
+                cls.graph.create(rel)
+            except AttributeError as e:
+                a = 0
+                print("2",row[0],e,row[2])
+
+        """建立资源联系"""
+        res_values = resource.split("@")
+        for i in range(1, len(res_values)):
+            try:
+                room_arr = []
+                row = res_values[i].split(" ")
+                #print(row[5],cls.graph.find_one(label=cls.restype, property_key='office_name',
+                #                                      property_value=row[5]))
+                rel = Relationship(cls.graph.find_one(label=cls.resource, property_key='office_name',
+                                                      property_value=row[0]), "属于",
+                                   cls.graph.find_one(label=cls.restype, property_key='office_name',
+                                                      property_value=row[5]))
+                cls.graph.create(rel)
+                if row[4].find(u"，")!=-1:
+                    room_arr = row[4].split(u"，")
+                else:
+                    room_arr.append(row[4])
+
+                for sub_room in room_arr:
+
+
+                    rel = Relationship(cls.graph.find_one(label=cls.resource, property_key='office_name',
+                                                       property_value=row[0]), "存放",
+                                   cls.graph.find_one(label=cls.room, property_key='office_name', property_value=sub_room))
+                    cls.graph.create(rel)
+
+            except AttributeError as e:
+                a = 0
+                print("3", row[0], e, row[4])
+                #print(cls.graph.find_one(label=cls.room, property_key='office_name', property_value=row[4]))
+                #print(self.graph.find_one(label=self.room, property_key='room', property_value=row[4]))
+
+
+        """建立资源类型联系"""
+        resType_values = resType.split("@")
+        for i in range(1, len(resType_values)):
+            try:
+                row = resType_values[i].split(" ")
 
                 rel = Relationship(cls.graph.find_one(label=cls.restype, property_key='office_name',
                                                       property_value=row[0]), "属于",
-                                   cls.graph.find_one(label=cls.restype, property_key='office_name',
+                                   cls.graph.find_one(label=cls.res, property_key='office_name',
                                                       property_value=row[5]))
 
                 cls.graph.create(rel)
@@ -836,24 +763,18 @@ class Neo4jPrepare(object):
                     room_arr.append(row[4])
 
 
-                for sub_room in room_arr:
-                    #print("===========================================",sub_room,row[0])
 
-                    rel = Relationship(cls.graph.find_one(label=cls.restype, property_key='office_name',
-                                                       property_value=row[0]), "存放",
-                                   cls.graph.find_one(label=cls.room, property_key='office_name', property_value=sub_room))
-                    cls.graph.create(rel)
             except AttributeError as e:
                 a=0
                 print("-----------",row[0],e)
 
         """建立服务联系"""
-        restype_sheet = workbook.sheet_by_index(7)
-        for i in range(1, restype_sheet.nrows):
+        service_values = service.split("@")
+
+        for i in range(1, len(service_values)):
             try:
-                row = restype_sheet.row_values(i)
+                row = service_values[i].split(" ")
                 room_arr = []
-                #print("===========",row[2])
                 if row[2].find(u"，") != -1:
                     room_arr = row[2].split(u"，")
                 else:
@@ -861,8 +782,7 @@ class Neo4jPrepare(object):
 
 
                 for sub_room in room_arr:
-                    if sub_room == '':
-                        print(sub_room)
+                    if sub_room == 'nan':
                         continue
 
                     rel = Relationship(cls.graph.find_one(label=cls.service, property_key='office_name',

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from model.kb_prepare.neo4j_prepare import Neo4jPrepare
-import numpy as np
+from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
 class Task_information():
     '''
     def solve_room_borrow(self,entity):
@@ -65,50 +64,39 @@ class Task_information():
     '''
     def solve_room_phone(self, entity):
         room = entity['room'][0]
-        room_name = room
-        if room.find("_") != -1:
-            room_name = room.split("_")[2]
-
         res = Neo4jPrepare.get_property(room)
-        #print(res)
         ans = "\n"
-        if res['phone'] != '':
-            ans += room_name+"的联系电话为："+res['phone']+"\n"
+        if res['phone'] != 'nan':
+            ans += room+"的联系电话为："+res['phone']+"\n"
         else:
-            ans += "很抱歉，"+room_name+"暂无联系电话\n"
+            ans += "很抱歉，"+room+"暂无联系电话\n"
         return ans
 
     def solve_room_describe(self, entity):
         room = entity['room'][0]
-        room_name = room
-        if room.find("_") != -1:
-            room_name = room.split("_")[2]
-
         res = Neo4jPrepare.get_property(room)
-        #print(res)
         ans = "\n"
-        if res['describe'] != '':
-            ans += room_name + "：" + res['describe']
+        if res['describe'] != 'nan':
+            ans += room + "：" + res['describe']
         else :
-            ans += "对不起，暂时没有"+room_name+"的描述信息\n"
+            ans += "对不起，暂时没有"+room+"的描述信息\n"
 
         return ans
 
     def solve_res_describe(self, entity):
         ans = "\n"
         for resource in entity['res']:
-        #resource = entity['res'][0]
 
             res = Neo4jPrepare.get_property(resource)
-            if res['ctime'] != '':
-                ans += "国家图书馆的"+resource+"始藏于"+str(int(res['ctime']))+"年\n"
-            if res['describe'] != '':
+            if res['collection_time'] != 'nan':
+                ans += "国家图书馆的"+resource+"始藏于"+str(int(res['collection_time']))+"年\n"
+            if res['describe'] != 'nan':
                 ans += res['describe']+"\n"
-            if res['belong'] != '':
+            if res['belong'] != 'nan':
                 ans += resource+"属于"+res['belong']
-            if res['range'] != '':
+            if res['range'] != 'nan':
                 ans += ",图书馆收藏"+resource+"包括:"+res['range']
-            if res['topic'] != '':
+            if res['topic'] != 'nan':
                 ans += "\n涵盖的主题包括"+res['topic']+"\n"
             if ans == "" :
                 ans += "对不起，暂时没有"+resource+"的描述信息\n"
@@ -140,18 +128,22 @@ class Task_information():
         restype = entity['restype'][0]
 
         res = Neo4jPrepare.get_reverse_relation(restype,'资源')
+        ans = "\n"
+        if len(res)<1:
+            ans += "很抱歉，没有"+restype+"的描述信息\n"
+            return ans
         res_arr = []
         yes_room = []
         no_room = []
         describe = []
-        ans = "\n"
+
         for r in res:
             #print(r)
 
             sub_res = Neo4jPrepare.get_property(r['office_name'])
             res_arr.append(sub_res['office_name'])
 
-            if sub_res['describe'] != '':
+            if sub_res['describe'] != 'nan':
                 yes_room.append(sub_res['office_name'])
                 describe.append(sub_res['describe'])
 
@@ -182,12 +174,12 @@ class Task_information():
         res = Neo4jPrepare.get_property(service)
         #print(res.keys())
         ans = ''
-        if res['discribe'] != '':
+        if res['discribe'] != 'nan':
             ans = "\n"+service+"指"+res['discribe']
         else:
             room_res = Neo4jPrepare.get_relation(service,'馆室')
             for r in room_res:
-                if r['describe']!='':
+                if r['describe']!='nan':
                     ans += "\n"+r['office_name']+r['describe']
         if ans == '':
             ans = "很抱歉，暂时没有"+service+"的描述信息\n"

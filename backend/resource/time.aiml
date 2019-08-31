@@ -1,7 +1,7 @@
 <aiml version="1.0.1" encoding="UTF-8">
 <!-- basic_chat.aiml -->
 
-
+    <!-- 国图开放时间 -->
     <category>
         <pattern>#LIBRARY*时*</pattern>
         <template>
@@ -272,13 +272,13 @@
         </template>
     </category>
     <category>
-        <pattern>#ROOM*借*时#</pattern>
+        <pattern>#ROOM#借*时#</pattern>
         <template>
             task_room_res_time
         </template>
     </category>
     <category>
-        <pattern>#ROOM*借*点#</pattern>
+        <pattern>#ROOM#借*点#</pattern>
         <template>
             task_room_res_time
         </template>
@@ -317,6 +317,127 @@
         <pattern>#几点*借#RES#</pattern>
         <template>
             task_res_time
+        </template>
+    </category>
+
+    <category>
+        <pattern>#AREA*时*</pattern>
+        <template>
+            task_area_time
+        </template>
+    </category>
+    <category>
+        <pattern>*时*AREA#</pattern>
+        <template>
+           task_area_time
+        </template>
+    </category>
+
+    <category>
+        <pattern>#AREA#几点*</pattern>
+        <template>
+            task_area_time
+        </template>
+    </category>
+    <category>
+        <pattern>#几点*AREA#</pattern>
+        <template>
+            task_area_time
+        </template>
+    </category>
+
+    <category>
+        <pattern>*天*AREA#</pattern>
+        <template>
+           task_area_time
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA*天*</pattern>
+        <template>
+           task_area_time
+        </template>
+    </category>
+    <category>
+        <pattern>#周*AREA#</pattern>
+        <template>
+           task_area_time
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA#周*</pattern>
+        <template>
+           task_area_time
+        </template>
+    </category>
+
+    <category>
+        <pattern>#星期*AREA#</pattern>
+        <template>
+           task_area_time
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA#星期*</pattern>
+        <template>
+           task_area_time
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA#开放*</pattern>
+        <template>
+           task_area_time
+        </template>
+    </category>
+    <category>
+        <pattern>#现在*AREA#</pattern>
+        <template>
+           task_area_time
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA#现在*</pattern>
+        <template>
+           task_area_time
+        </template>
+    </category>
+
+    <category>
+        <pattern>#AREA#上午*</pattern>
+        <template>
+           task_area_time
+        </template>
+    </category>
+    <category>
+        <pattern>#上午*AREA#</pattern>
+        <template>
+           task_area_time
+        </template>
+    </category>
+
+    <category>
+        <pattern>#AREA#下午*</pattern>
+        <template>
+           task_area_time
+        </template>
+    </category>
+    <category>
+        <pattern>#下午*AREA#</pattern>
+        <template>
+           task_area_time
+        </template>
+    </category>
+
+    <category>
+        <pattern>#AREA#晚上*</pattern>
+        <template>
+           task_area_time
+        </template>
+    </category>
+    <category>
+        <pattern>#晚上*AREA#</pattern>
+        <template>
+           task_area_time
         </template>
     </category>
 

@@ -4,7 +4,7 @@ project_path = os.path.abspath(os.path.join(os.getcwd(), "../.."))
 sys.path.append(project_path)
 
 from model.config.base_config import GraphBaseConfig
-from model.kb_prepare.neo4j_prepare import Neo4jPrepare
+from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
 from model.grapg_QA.Task_time import Task_time
 from model.grapg_QA.Task_contain import Task_contain
 from model.grapg_QA.Task_information import Task_information
@@ -122,6 +122,10 @@ class Bot():
             answer = cls.answer_service_pos(entity_dict)
         elif task == 'task_service_time':
             answer = cls.answer_service_time(entity_dict)
+        elif task == 'task_library_time':
+            answer = cls.answer_library_time(entity_dict)
+        elif task == 'task_area_time':
+            answer = cls.answer_area_time(entity_dict)
         return answer
 
     @classmethod
@@ -389,6 +393,23 @@ class Bot():
         task_time = Task_time()
         res = task_time.solve_service_time(entity_dict)
         return [res]
+
+    @classmethod
+    def answer_area_time(cls, entity_dict):
+        task_time = Task_time()
+        res = task_time.solve_area_time(entity_dict)
+        return [res]
+
+
+    @classmethod
+    def answer_library_time(cls, entity_dict):
+        task_time = Task_time()
+        res = task_time.solve_library_time(entity_dict)
+        return [res]
+
+
+
+
 
 
 

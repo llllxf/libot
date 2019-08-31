@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from model.kb_prepare.neo4j_prepare import Neo4jPrepare
+from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
@@ -311,6 +311,7 @@ class Task_position():
         #####################################################
 
         arr = min_path_list[final_index][0]['self_site'].split("；")
+        #print()
         #print(arr)
         dx.append(arr[0])
         dy.append(arr[1])
