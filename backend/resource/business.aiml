@@ -1,4 +1,61 @@
 <aiml version="1.0.1" encoding="UTF-8">
+    <!-- 音乐电影 -->
+    <category>
+        <pattern>#电影#</pattern>
+        <template>
+           task_music_or_movie
+        </template>
+    </category>
+    <category>
+        <pattern>#音乐#</pattern>
+        <template>
+           task_music_or_movie
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#电影#</pattern>
+        <template>
+           task_music_or_movie
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#音乐#</pattern>
+        <template>
+           task_music_or_movie
+        </template>
+    </category>
+     <category>
+        <pattern>#LIBRARY#音乐#</pattern>
+        <template>
+           task_music_or_movie
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#电影#</pattern>
+        <template>
+           task_music_or_movie
+        </template>
+    </category>
+
+    <!-- 服务查询 -->
+    <category>
+        <pattern>#LIBRARY#有#服务#</pattern>
+        <template>
+           task_service_exit
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#有#服务#</pattern>
+        <template>
+           task_service_room
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#提供#服务#</pattern>
+        <template>
+           task_service_room
+        </template>
+    </category>
     <!-- 借阅 -->
     <category>
         <pattern>#书#借#</pattern>
@@ -20,6 +77,30 @@
     </category>
     <category>
         <pattern>#借#RES#</pattern>
+        <template>
+           task_res_read
+        </template>
+    </category>
+    <category>
+        <pattern>#RES#阅览#</pattern>
+        <template>
+           task_res_read
+        </template>
+    </category>
+    <category>
+        <pattern>#阅览#RES#</pattern>
+        <template>
+           task_res_read
+        </template>
+    </category>
+    <category>
+        <pattern>#RES#看#</pattern>
+        <template>
+           task_res_read
+        </template>
+    </category>
+    <category>
+        <pattern>#看#RES#</pattern>
         <template>
            task_res_read
         </template>
@@ -79,14 +160,14 @@
     </category>
 
     <category>
-        <pattern>#RESTYPE*外借#</pattern>
+        <pattern>#RTYPE*外借#</pattern>
         <template>
            task_restype_borrow
         </template>
     </category>
 
     <category>
-        <pattern>*外借#RESTYPE*</pattern>
+        <pattern>*外借#RTYPE*</pattern>
         <template>
            task_restype_borrow
         </template>
@@ -104,16 +185,128 @@
            task_area_borrow
         </template>
     </category>
+    <category>
+        <pattern>#FLOOR*外借#</pattern>
+        <template>
+           task_floor_borrow
+        </template>
+    </category>
+
+    <category>
+        <pattern>*外借#FLOOR*</pattern>
+        <template>
+           task_floor_borrow
+        </template>
+    </category>
+    <!-- 补卡 -->
+    <!-- ======================================================== -->
+    <category>
+        <pattern>#身份#变*卡#</pattern>
+        <template>
+           本人所在单位、联系电话、职务、通信地址、邮政编码等个人信息发生变更，不需要重新办卡，只需携带读者卡、有效身份证件到我馆办证处变更信息即可。
+        </template>
+    </category>
+    <category>
+        <pattern>#信息#变*卡#</pattern>
+        <template>
+           本人所在单位、联系电话、职务、通信地址、邮政编码等个人信息发生变更，不需要重新办卡，只需携带读者卡、有效身份证件到我馆办证处变更信息即可。
+        </template>
+    </category>
+    <category>
+        <pattern>#卡#身份#变*</pattern>
+        <template>
+           本人所在单位、联系电话、职务、通信地址、邮政编码等个人信息发生变更，不需要重新办卡，只需携带读者卡、有效身份证件到我馆办证处变更信息即可。
+        </template>
+    </category>
+    <category>
+        <pattern>#卡##信息#变*</pattern>
+        <template>
+           本人所在单位、联系电话、职务、通信地址、邮政编码等个人信息发生变更，不需要重新办卡，只需携带读者卡、有效身份证件到我馆办证处变更信息即可。
+        </template>
+    </category>
+    <category>
+        <pattern>#卡#丢#</pattern>
+        <template>
+           是否已经挂失？
+        </template>
+    </category>
+    <category>
+        <pattern>#没#</pattern>
+        <that>
+            是否已经挂失？
+        </that>
+        <template>
+            请先办证处挂失。挂失后，若找到原读者卡，凭本人有效身份证件到办证处解除挂失，继续使用该卡；若未找到原读者卡，凭本人任何一种有效身份证件交纳5元工本费补办新卡，原读者卡同时作废。少年儿童馆读者卡挂失地点在国家图书馆少年儿童馆咨询台。
+        </template>
+    </category>
+    <category>
+        <pattern>#否#</pattern>
+        <that>
+            是否已经挂失？
+        </that>
+        <template>
+            请先办证处挂失。挂失后，若找到原读者卡，凭本人有效身份证件到办证处解除挂失，继续使用该卡；若未找到原读者卡，凭本人任何一种有效身份证件交纳5元工本费补办新卡，原读者卡同时作废。少年儿童馆读者卡挂失地点在国家图书馆少年儿童馆咨询台。
+        </template>
+    </category>
+    <category>
+        <pattern>#是#</pattern>
+        <that>
+            是否已经挂失？
+        </that>
+        <template>
+            挂失后若未找到原读者卡，凭本人任何一种有效身份证件交纳5元工本费补办新卡，原读者卡同时作废。
+        </template>
+    </category>
+    <category>
+        <pattern>#挂#</pattern>
+        <that>
+            是否已经挂失？
+        </that>
+        <template>
+            挂失后若未找到原读者卡，凭本人任何一种有效身份证件交纳5元工本费补办新卡，原读者卡同时作废。
+        </template>
+    </category>
+    <category>
+        <pattern>#解#挂#</pattern>
+        <template>
+            请凭本人有效身份证件到办证处解除挂失。
+        </template>
+    </category>
+    <category>
+        <pattern>#挂失#</pattern>
+        <template>
+            请到办证处挂失，少年儿童馆读者卡挂失地点在国家图书馆少年儿童馆咨询台。
+        </template>
+    </category>
+    <category>
+        <pattern>#卡#过期#</pattern>
+        <template>
+            读者卡过期了需到办证处验证注册，少年儿童图书馆读者卡验证地点在国家图书馆少年儿童图书馆咨询台。
+        </template>
+    </category>
+    <!-- ========================================================== -->
     <!-- 办卡 -->
     <!-- ========================================================== -->
     <category>
-        <pattern>#办#CARD#</pattern>
+        <pattern>#办#卡#</pattern>
         <template>
             请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
         </template>
     </category>
     <category>
-        <pattern>#CARD*办#</pattern>
+        <pattern>#卡*办#</pattern>
+        <template>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </template>
+    </category>
+    <category>
+        <pattern>#补#卡#</pattern>
+        <template>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </template>
+    </category>
+    <category>
+        <pattern>#卡*补#</pattern>
         <template>
             请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
         </template>
@@ -275,64 +468,66 @@
     </category>
     <!-- ========================================================== -->
 
-    <!--  -->
+    <!-- 不经过图谱查询 -->
     <!-- ========================================================== -->
     <category>
-        <pattern>退押金</pattern>
+        <pattern>#注册#</pattern>
         <template>
-            请问押金收据是否还在？
+            持中华人民共和国居民身份证的中国公民，可通过国家图书馆网站或移动互联网提供的各类在线服务平台进行注册，包括：读者门户,文津搜索,网上咨询台,掌上国图,国家图书馆手机应用程序等。注册时，需填写基本信息以及真实姓名、性别、民族、身份证号等身份信息，系统审核通过后，即可成为实名注册用户；填写基本信息，并通过电子邮件或手机验证码进行有效性验证后即可成为非实名注册用户。
         </template>
     </category>
     <category>
-        <pattern>#退押金#怎么#</pattern>
+        <pattern>#AREA#证件#</pattern>
         <template>
-            请问押金收据是否还在？
+            年满十六周岁的读者，凭本人第二代身份证可进入各开架阅览区；年满十六周岁的读者，凭本人国家图书馆读者卡可进入各阅览区、服务点；年满十三至十五周岁（含）的读者，凭国家图书馆读者卡可进入中外文文献开架阅览区。十二周岁及以下少年儿童凭国家图书馆少年儿童读者卡进入少年儿童图书馆。
         </template>
     </category>
     <category>
-        <pattern>#退押金#如何#</pattern>
+        <pattern>#LIBRARY#证件#</pattern>
         <template>
-            请问押金收据是否还在？
+            年满十六周岁的读者，凭本人第二代身份证可进入各开架阅览区；年满十六周岁的读者，凭本人国家图书馆读者卡可进入各阅览区、服务点；年满十三至十五周岁（含）的读者，凭国家图书馆读者卡可进入中外文文献开架阅览区。十二周岁及以下少年儿童凭国家图书馆少年儿童读者卡进入少年儿童图书馆。
         </template>
     </category>
     <category>
-        <pattern>#押金*退#</pattern>
+        <pattern>#意见#</pattern>
         <template>
-            请问押金收据是否还在？
+            对国家图书馆的工作及服务有意见或建议，可以通过以下几个途径反映：向各服务网点工作人员口头反映；在各咨询台摆放的《读者意见簿》上填写；向国图电子邮箱webmaster@nlc.cn或主页“意见建议”信箱反映；拨打业务管理处设置的读者监督电话（010-88545022）反映。
         </template>
     </category>
     <category>
-        <pattern>#是#</pattern>
-        <that>请问押金收据是否还在？</that>
+        <pattern>#建议#</pattern>
         <template>
-            是否本人办理退押金？
+            对国家图书馆的工作及服务有意见或建议，可以通过以下几个途径反映：向各服务网点工作人员口头反映；在各咨询台摆放的《读者意见簿》上填写；向国图电子邮箱webmaster@nlc.cn或主页“意见建议”信箱反映；拨打业务管理处设置的读者监督电话（010-88545022）反映。
         </template>
     </category>
     <category>
-        <pattern>#在#</pattern>
-        <that>
-            请问押金收据是否还在？
-        </that>
+        <pattern>#出售#</pattern>
         <template>
-            是否本人办理退押金？
+            国图所有资源为国家财产，用来为社会提供服务，因此不能出售。
         </template>
     </category>
     <category>
-        <pattern>#是#</pattern>
-        <that>
-            是否本人办理退押金？
-        </that>
+        <pattern>*用别*卡#</pattern>
         <template>
-            task_money_back
+            不可以。国家图书馆读者卡/少年儿童馆读者卡只限本人使用。
         </template>
     </category>
     <category>
-        <pattern>#否#</pattern>
-        <that>
-            是否本人办理退押金？
-        </that>
+        <pattern>#推荐#</pattern>
         <template>
-            task_money_back_no
+            读者发现国家图书馆缺藏的文献，可以采取以下办法推荐：在咨询台填写馆藏推荐单；或直接与我馆采选部门联系，中文图书采访组联系电话：010-88545581，西文图书采访组联系电话：010-88545657。
+        </template>
+    </category>
+    <category>
+        <pattern>#还#书#</pattern>
+        <template>
+            读者在哪里借书就在哪里归还。此外，总馆南区东大门24小时自助还书处也可归还一定规格的中文外借图书。
+        </template>
+    </category>
+    <category>
+        <pattern>#替#还书#</pattern>
+        <template>
+            外借图书可以替他人归还。请在借书处归还。此外，总馆南区东大门24小时自助还书处也可归还一定规格的中文外借图书。
         </template>
     </category>
     <category>
@@ -370,7 +565,38 @@
             请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
         </template>
     </category>
+    <category>
+        <pattern>#改密码#</pattern>
+        <template>
+            请问您想修改借阅密码还是金融交易密码？A.借阅密码 B.金融交易密码 C.都修改
+        </template>
+    </category>
+    <category>
+        <pattern>#A#</pattern>
+        <that>请问您想修改借阅密码还是金融交易密码？A.借阅密码 B.金融交易密码 C.都修改</that>
+        <template>
+            请到办证处由工作人员办理或登录国图主页右侧“馆藏目录检索”或在馆内提供的联机公共目录查询系统（OPAC），用读者卡登录后，选定“更改口令”，按提示修改既可。
+        </template>
+    </category>
+    <category>
+        <pattern>#B#</pattern>
+        <that>请问您想修改借阅密码还是金融交易密码？A.借阅密码 B.金融交易密码 C.都修改</that>
+        <template>
+            请在国家图书馆局域网内登录“中国国家图书馆一卡通系统”修改金融密码，如遗忘金融交易密码，读者需持读者卡、身份证原件到办证处办理密码重置。
+        </template>
+    </category>
+    <category>
+        <pattern>#C#</pattern>
+        <that>请问您想修改借阅密码还是金融交易密码？A.借阅密码 B.金融交易密码 C.都修改</that>
+        <template>
+            密码均可前往办证处修改。借阅密码可登录国图主页右侧“馆藏目录检索”或在馆内提供的联机公共目录查询系统（OPAC），用读者卡登录后，选定“更改口令”，按提示修改既可。金融密码可在国家图书馆局域网内登录“中国国家图书馆一卡通系统”修改金融密码。
+        </template>
+    </category>
+
+
+
     <!-- ========================================================== -->
+
 
 </aiml>
 

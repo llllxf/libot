@@ -4,7 +4,7 @@ import pandas as pd
 
 
 if __name__ == '__main__':
-    df = pd.DataFrame(pd.read_excel("../../resource/neo4j.xlsx",sheet_name="floor"))
+    df = pd.DataFrame(pd.read_excel("../../resource/neo4j.xlsx",sheet_name="area"))
     with open("test.txt","w") as fw:
         keys = df.keys()
         values = df.values

@@ -3,27 +3,52 @@ from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
 import numpy as np
 class Task_business():
 
+
+
     """
-    还书
+    是否提供服务
     """
-    def solve_book_back(self, entity):
-        resource  = entity['res'][0]
-        res = Neo4jPrepare.get_relation(resource,'馆室')
-
-        ans = "\n"+resource+"存放在"
-        for r in res[:-1]:
-            #print(r)
-            ans += r['office_name']+","
-
-        ans += res[-1]['office_name']+"\n"
-        card = Neo4jPrepare.get_relation(res[-1]['office_name'],'证件')
-
-        for c in card:
-            ans += "年龄"+c['age']+"可持"+c['office_name']+"进入馆室\n"
+    def solve_service_exit(self, entity):
+        #print(entity)
+        service = entity['service']
+        #res = Neo4jPrepare.get_property(service)
+        ans = "\n"
+        if len(service)>0:
+            ans += "国家图书馆提供"+service[0]+"\n"
+            room = Neo4jPrepare.get_relation(service[0], "馆室")
+            ans = "\n" + "您可以去"
+            for r in room[:-1]:
+                ans += r['office_name'] + ","
+            ans += room[-1]['office_name'] + "接受该服务\n"
+        else:
+            ans += "很抱歉，国家图书馆不提供该服务"
         return ans
 
     """
-    资源借阅
+    馆室是否提供服务
+    """
+
+    def solve_service_exit(self, entity):
+        # print(entity)
+        service = entity['service']
+        # res = Neo4jPrepare.get_property(service)
+        ans = "\n"
+        if len(service) > 0:
+            ans += "国家图书馆提供" + service[0] + "\n"
+            room = Neo4jPrepare.get_relation(service[0], "馆室")
+            ans = "\n" + "您可以去"
+            for r in room[:-1]:
+                ans += r['office_name'] + ","
+            ans += room[-1]['office_name'] + "接受该服务\n"
+        else:
+            ans += "很抱歉，国家图书馆不提供该服务"
+        return ans
+
+
+
+
+    """
+    资源借阅，描述存放的馆室以及进入馆室的条件
     """
     def solve_res_read(self, entity):
         resource  = entity['res'][0]
@@ -68,7 +93,7 @@ class Task_business():
         return ans
 
     """
-    馆区的资源是否可以外借
+    馆区的资源是否可以外借，考虑该馆区的所有的馆室，得到可以外借的馆室是哪一些，可以复制或扫描的馆室是哪一些，哪些馆室的资源仅供借阅
     """
     def solve_area_borrow(self,entity):
         area = entity['area'][0]
@@ -81,24 +106,26 @@ class Task_business():
         copy_floor=[]
         copy = []
         for r in room_res:
-            if r['borrow'] == 1:
+            #print(r['borrow'])
+            if r['borrow'] == '1':
                 room_name = r['office_name']
-                if r['office_name'].find("_")!=-1:
-                    room_name = r['office_name'].split("_")[2]
+                #print(room_name)
                 borrow_room.append(room_name)
                 borrow_floor.append(r['floor'])
-            elif r['borrow'] == 2:
+            elif r['borrow'] == '2':
                 room_name = r['office_name']
-                if r['office_name'].find("_") != -1:
-                    room_name = r['office_name'].split("_")[2]
                 copy_room.append(room_name)
                 copy_floor.append(r['floor'])
             elif '复制处' in r['variant_name']:
                 if r['floor'] in copy:
                     continue
-
-                copy.append(r['floor'])
-        #copy = np.unique(copy)
+                if r['floor'].find("，")!=-1:
+                    floor_arr = r['floor'].split("，")
+                    for sub_floor in floor_arr:
+                        copy.append(sub_floor)
+                else:
+                    copy.append(r['floor'])
+        copy = np.unique(copy)
         if len(borrow_room)>0:
             for b in range(len(borrow_room)-1):
                 ans += borrow_floor[b]+"的"+borrow_room[b]+","
@@ -107,10 +134,17 @@ class Task_business():
             for c in range(len(copy_room)-1):
                 ans += copy_floor[c]+"的"+copy_room[c]+","
             ans += copy_floor[-1]+"的"+copy_room[-1]+"的书籍材料资源不可以外借，但可以复制或扫描\n"
+
             for f in copy[:-1]:
+                #print(f)
                 ans += f + ","
             ans += copy[-1]
             ans += "提供复制处，可携带读者卡前往该楼层复制处复制或扫描\n"
+        if ans == "\n":
+            ans += area + "的资源不可外借或复制\n"
+        else:
+            ans += "剩余馆室的资源不可复制或外借\n"
+        #print(ans)
 
         return ans
 
@@ -128,7 +162,7 @@ class Task_business():
         res = Neo4jPrepare.get_property(room)
 
         if res['borrow'] == 1:
-            ans+=room_name+"的资源书籍均可以外借\n"
+            ans+=room_name+"的资源书籍均可以外借，外借书籍需去相应的馆室柜台预约\n"
         elif res['borrow'] == 2:
             ans += room_name + "的资源书籍均不允许外借，但可以复制与扫描\n"
         else:
@@ -136,7 +170,7 @@ class Task_business():
         return ans
 
     """
-    资源是否可以外借
+    资源是否可以外借，通过查询馆室得到该馆室的资源是否可以外借来判断资源是否可以外借
     """
     def solve_res_borrow(self,entity):
         res = entity['res'][0]
@@ -151,7 +185,7 @@ class Task_business():
         return ans
 
     """
-    某类资源是否可以外借，需先查出此类资源包括什么资源，具体某个资源是否可以外借
+    某类资源是否可以外借，需先查出此类资源包括什么资源，具体某个资源是否可以外借（需借助馆室的外借信息）
     """
     def solve_restype_borrow(self,entity):
         restype = entity['restype'][0]
@@ -190,6 +224,40 @@ class Task_business():
                 ans += y+","
             ans += no_room[len(no_room)-1]+"的"+restype+"不可以外借，仅供借阅\n"
         return ans
+
+    '''
+    某层的资源是否可以外借（借助馆室的外借信息，查出该层的所有的馆室，得出可以外借资源的馆室有哪些，哪些馆室的资源可以复制和扫描，哪些仅供借阅）
+    '''
+    def solve_floor_borrow(self,entity):
+        floor = entity['floor'][0]
+        ans = "\n"
+
+        room_res = Neo4jPrepare.get_reverse_relation(floor, '馆室')
+        borrow_room = []
+        copy_room = []
+        for r in room_res:
+            # print(r['borrow'])
+            if r['borrow'] == '1':
+                room_name = r['office_name']
+                # print(room_name)
+                borrow_room.append(room_name)
+            elif r['borrow'] == '2':
+                room_name = r['office_name']
+                copy_room.append(room_name)
+        if len(borrow_room) > 0:
+            for b in range(len(borrow_room) - 1):
+                ans += borrow_room[b] + ","
+            ans += borrow_room[-1] + "的书籍材料资源可以外借\n"
+        if len(copy_room) > 0:
+            for c in range(len(copy_room) - 1):
+                ans += copy_room[c] + ","
+            ans += copy_room[-1] + "的书籍材料资源不可以外借，但可以复制或扫描\n"
+        if ans == "\n":
+            ans += floor+"的资源不可外借与复制\n"
+        else:
+            ans += "其余馆室不可复制或外借资源\n"
+        return ans
+        # print(ans)
 
     '''
     办理读者卡

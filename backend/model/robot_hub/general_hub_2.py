@@ -40,16 +40,9 @@ class GeneralHub():
         2.加载结巴的自定义文档
         3.定义停用词
         """
-        '''
-        cls._aiml_kernal = aiml_cn.Kernel()
-        cls._aiml_kernal.learn('../../resource/navi_template.aiml')
-        cls._aiml_kernal.learn('../../resource/contain_template.aiml')
-        cls._aiml_kernal.learn('../../resource/time.aiml')
-        cls._aiml_kernal.learn('../../resource/condition.aiml')
-        cls._aiml_kernal.learn('../../resource/information.aiml')
-        cls._aiml_kernal.learn('../../resource/business.aiml')
-        '''
+
         cls.room_list, cls.room_alias_list, cls.floor_list, cls.floor_alias_list, cls.area_list, cls.area_alias_list, cls.resource_list, cls.resource_alias_list,cls.restype_list,cls.restype_alias_list,cls.card_list,cls.card_alias_list,cls.library,cls.library_alias_list,cls.service_list,cls.service_alias_list = Neo4jPrepare.get_all_varname()
+        #print(cls.library,cls.library_alias_list)
         jieba.load_userdict("../../resource/guotu_dict.txt")
         cls.stopwords = ['什么', '哪里', '怎么', '有', '走', '去', '可以', '如何', '怎样', '的', '地', '得']
         '''
@@ -105,8 +98,8 @@ class GeneralHub():
             for (restype_alias,restype) in zip(cls.restype_alias_list,cls.restype_list):
                 if word in restype_alias:
                     restype_entity.append(restype)
-                    question = question.replace(word, 'RESTYPE')
-                    question2 = question2.replace(word, 'RESTYPE')
+                    question = question.replace(word, 'RTYPE')
+                    question2 = question2.replace(word, 'RTYPE')
                     break
             for (area_alias,area) in zip(cls.area_alias_list,cls.area_list):
                 if word in area_alias:
@@ -117,12 +110,17 @@ class GeneralHub():
             for (card_alias,card) in zip(cls.card_alias_list,cls.card_list):
                 if word in card_alias:
                     card_entity.append(card)
+
+                    #question = question.replace(word, 'CARD')
                     question = question.replace(word, 'CARD')
-                    question2 = question2.replace(word, 'CARD')
                     break
             for (service_alias,service) in zip(cls.service_alias_list,cls.service_list):
-                if word in service:
+                if word in service_alias:
                     service_entity.append(service)
+                    #print(service_entity)
+                    """
+                    由于借书需要优先考虑为借书，所以优先不替换service
+                    """
                     question2 = question2.replace(word, 'SERVICE')
                     break
         """
@@ -157,8 +155,7 @@ class GeneralHub():
 
         question_replaced,question_replaced2,entity_dict = GeneralHub.repalce_question(question_str)
         aiml_response = aiml_kernal.respond(question_replaced)
-        #print(question_replaced,question_replaced2)
-
+        #print("111",aiml_response,question_replaced,entity_dict)
         '''
         由于服务类同时具有共性与特性，所以生产两个模版，即一份模版将服务实体替换为service进行模版匹配，一类模版
         不讲服务实体替换为service直接用原词汇匹配模版
@@ -173,8 +170,11 @@ class GeneralHub():
         else:
 
             aiml_response2 = aiml_kernal.respond(question_replaced2)
+            #print("222",aiml_response2,question_replaced2)
             if 'task_' in aiml_response2:
                 graph_response = Bot.task_response(aiml_response2, entity_dict)
+
+
             elif aiml_response2 != '':
                 graph_response = [aiml_response2]
             else:

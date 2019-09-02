@@ -5,7 +5,7 @@
 """
 from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
 
-class Task_time():
+class Task_time2():
     """
     馆室开放时间
     """

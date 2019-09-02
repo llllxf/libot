@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
-from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
-from skimage import io
 class Task_position():
     '''
     作废
@@ -21,7 +19,7 @@ class Task_position():
         # dx = rdfPrepare.rdf_query_navi_propertiy_pic(machine, 'pro_x', graph)
         # dy = rdfPrepare.rdf_query_navi_propertiy_pic(machine, 'pro_y', graph)
         img = None
-        img = io.imread('../data/1.png')
+        #img = io.imread('../data/1.png')
         # io.imshow(img)
 
         # print(int(dy[final_des_index]))
@@ -80,7 +78,7 @@ class Task_position():
         print(up, down, left, right)
         print(img.shape, img.shape[0], img.shape[1])
         img = img[up:down, left:right]
-        io.imshow(img)
+        #io.imshow(img)
         # plt.axis('off')
         plt.figure()
         plt.axis('off')
@@ -95,7 +93,7 @@ class Task_position():
 
             plt.plot([x - left, int(nx) - left, int(dx) - left],
                      [y - up, int(ny) - up, int(dy) - up])
-        io.imshow(img)
+        #io.imshow(img)
         print(img)
         plt.savefig('../../resource/2.png')
         return
@@ -106,8 +104,8 @@ class Task_position():
     @classmethod
     def draw_pic(cls, x, y):
 
-        #img = None
-        img = io.imread('../../resource/1.png')
+        img = None
+        #img = io.imread('../../resource/1.png')
         #print("=================",x,y)
         x = np.array(x, dtype='int')
         y = np.array(y, dtype='int')
@@ -368,7 +366,8 @@ class Task_position():
 
         # print(dx,dy)
         #####################################################
-        img = self.draw_pic(dx,dy)
+        img = None
+        #img = self.draw_pic(dx,dy)
         #####################################################
         # print(dx,dy)
         return responds,img
@@ -442,10 +441,15 @@ class Task_position():
     def solve_service_pos(self, entity):
         service = entity['service'][0]
         room = Neo4jPrepare.get_relation(service,"馆室")
-        ans = "\n"+"您可以去"
-        for r in room[:-1]:
-            ans += r['office_name']+","
-        ans += room[-1]['office_name']+"接受该服务\n"
+        ans = "\n"
+        if len(room)>0:
+            ans += "您可以去"
+
+            for r in room[:-1]:
+                ans += r['office_name']+","
+            ans += room[-1]['office_name']+"接受该服务\n"
+        else:
+            ans += "很抱歉，国家图书馆不提供"+service+"\n"
         return ans
 
 

@@ -1,22 +1,14 @@
+# -*- coding: utf-8 -*-
 import os
 import sys
 project_path = os.path.abspath(os.path.join(os.getcwd(), "../.."))
 sys.path.append(project_path)
 
-from model.config.base_config import GraphBaseConfig
-from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
-from model.grapg_QA.Task_time import Task_time
 from model.grapg_QA.Task_contain import Task_contain
 from model.grapg_QA.Task_information import Task_information
 from model.grapg_QA.Task_condition import Task_condition
 from model.grapg_QA.Task_business import Task_business
 from model.grapg_QA.Task_position import Task_position
-
-import time
-import datetime
-import matplotlib.pyplot as plt
-from skimage import io
-import numpy as np
 
 class Bot():
     @classmethod
@@ -106,10 +98,8 @@ class Bot():
             answer = cls.answer_money_back_no()
         elif task == "task_restype_pos":
             answer = cls.answer_restype_pos(entity_dict)
-        elif task == "task_music_pos":
-            answer = cls.answer_music_pos()
-        elif task == "task_movie_pos":
-            answer = cls.answer_movie_pos()
+        elif task == "task_music_or_movie":
+            answer = cls.answer_music_or_movie()
         elif task == "task_library_describe":
             answer = cls.answer_library_describe()
         elif task == "task_library_area":
@@ -126,25 +116,46 @@ class Bot():
             answer = cls.answer_library_time(entity_dict)
         elif task == 'task_area_time':
             answer = cls.answer_area_time(entity_dict)
+        elif task == 'task_floor_borrow':
+            answer = cls.answer_floor_borrow(entity_dict)
+        elif task == 'task_library_res_a':
+            answer = cls.answer_library_res_a()
+        elif task == 'task_library_res':
+            answer = cls.answer_library_res()
+        elif task == 'task_area_res_a':
+            answer = cls.answer_area_res_a(entity_dict)
+        elif task == 'task_library_phone':
+            answer = cls.answer_library_phone()
+        elif task == 'task_service_exit':
+            answer = cls.answer_service_exit(entity_dict)
+        elif task == 'task_res_form':
+            answer = cls.answer_res_form(entity_dict)
+        elif task == 'task_res_topic':
+            answer = cls.answer_res_topic(entity_dict)
+        elif task == 'task_service_room':
+            answer = cls.answer_service_room(entity_dict)
+
         return answer
+
+
 
     @classmethod
     def answer_room_time(cls,entity_dict):
 
-        task_time = Task_time()
-        res = task_time.solve_room_time(entity_dict)
+        task_information = Task_information()
+        res = task_information.solve_room_time(entity_dict)
         return [res]
 
     @classmethod
     def answer_room_res_time(cls,entity_dict):
-        task_time = Task_time()
-        res = task_time.solve_room_res_time(entity_dict)
+        task_information = Task_information()
+        res = task_information.solve_room_res_time(entity_dict)
         return [res]
 
     @classmethod
     def answer_res_time(cls, entity_dict):
-        task_time = Task_time()
-        res = task_time.solve_res_time(entity_dict)
+        task_information = Task_information()
+        res = task_information.solve_res_time(entity_dict)
         return [res]
 
     @classmethod
@@ -352,11 +363,12 @@ class Bot():
         return res
 
     @classmethod
-    def answer_movie_pos(cls):
+    def answer_music_or_movie(cls):
         dict = {'room': ['视听阅览区']}
+        res = "\n视听阅览室可以欣赏电影和音乐"
         task_position = Task_position()
-        res = task_position.solve_room_pos(dict)
-        return res
+        res += task_position.solve_room_pos(dict)[0]
+        return [res]
 
     @classmethod
     def answer_library_describe(cls):
@@ -390,22 +402,82 @@ class Bot():
 
     @classmethod
     def answer_service_time(cls, entity_dict):
-        task_time = Task_time()
-        res = task_time.solve_service_time(entity_dict)
+        task_information = Task_information()
+        res = task_information.solve_service_time(entity_dict)
         return [res]
 
     @classmethod
     def answer_area_time(cls, entity_dict):
-        task_time = Task_time()
-        res = task_time.solve_area_time(entity_dict)
+        task_information = Task_information()
+        res = task_information.solve_area_time(entity_dict)
         return [res]
 
 
     @classmethod
     def answer_library_time(cls, entity_dict):
-        task_time = Task_time()
-        res = task_time.solve_library_time(entity_dict)
+        task_information = Task_information()
+        res = task_information.solve_library_time(entity_dict)
         return [res]
+
+    @classmethod
+    def answer_floor_borrow(cls, entity_dict):
+        task_business = Task_business()
+        res = task_business.solve_floor_borrow(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_library_res_a(cls):
+        task_contain = Task_contain()
+        res = task_contain.solve_library_res_a()
+        return [res]
+
+    @classmethod
+    def answer_library_res(cls):
+        task_contain = Task_contain()
+        res = task_contain.solve_library_res()
+        return [res]
+
+    @classmethod
+    def answer_area_res_a(cls,entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_area_res_a(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_library_phone(cls):
+        task_information = Task_information()
+        res = task_information.solve_library_phone()
+        return [res]
+
+    @classmethod
+    def answer_service_exit(cls,entity_dict):
+        task_business = Task_business()
+        res = task_business.solve_service_exit(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_res_form(cls, entity_dict):
+        task_information = Task_information()
+        res = task_information.solve_res_form(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_res_topic(cls, entity_dict):
+        task_information = Task_information()
+        res = task_information.solve_res_topic(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_service_room(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_service_room(entity_dict)
+        return [res]
+
+
+
+
+
+
 
 
 

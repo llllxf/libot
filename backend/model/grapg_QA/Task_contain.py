@@ -2,12 +2,20 @@
 from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
 import numpy as np
 class Task_contain():
+
+    """
+    统计某层馆室数量
+    """
     def solve_floor_count_room(self, entity):
         floor = entity['floor'][0]
         res = Neo4jPrepare.get_reverse_relation(floor, '馆室')
         l = len(res)
         ans = "\n" + floor + "一共有" + str(l) + "间馆室\n"
         return ans
+
+    """
+    查出楼层是否有某一间馆室
+    """
     def solve_floor_room_a(self,entity):
         floor = entity['floor'][0]
         res = Neo4jPrepare.get_reverse_relation(floor,'馆室')
@@ -24,6 +32,9 @@ class Task_contain():
         #print(ans)
         return ans
 
+    """
+    查出楼层所有的馆室
+    """
     def solve_room_floor(self,entity):
         floor = entity['floor'][0]
         room = entity['room'][0]
@@ -38,6 +49,9 @@ class Task_contain():
             ans += room_name+"不在"+floor+"\n"+room_name+"在"+res[0]['office_name']+"\n"
         return ans
 
+    """
+    处理资源是否在某个楼层的问题，查询资源所在的馆室以及馆室所在的楼层来得到判断结果
+    """
     def solve_res_floor(self, entity):
         resource = entity['res'][0]
         floor = entity['floor'][0]
@@ -49,10 +63,14 @@ class Task_contain():
         ans = "\n"
         if floor == des_floor[0]['office_name']:
             ans += resource+"存放在"+floor
+            ans += self.solve_count_res(entity)
         else:
             ans += resource+"不存放在"+floor+"\n"+resource+"存放在"+des_floor[0]['office_name']+"的"+room_name
         return ans
 
+    """
+    楼层包括什么资源，通过查询楼层包含馆室的资源类型来汇总得到楼层包含的资源类型
+    """
     def solve_res_floor_a(self, entity):
 
         floor = entity['floor'][0]
@@ -72,24 +90,27 @@ class Task_contain():
         ans += resource_arr[-1]+"等类型的资源\n"
         return ans
 
-
+    """
+    查出馆室所具有的全部资源
+    """
     def solve_res_room(self, entity):
         room = entity['room'][0]
+
         resource = entity['res'][0]
         res = Neo4jPrepare.get_relation(resource, '馆室')
-        room_name = room
         ans = "\n"
-        if room.find("_")!=-1:
-            room_name = room.split("_")[2]
         if res[0]['office_name'] == room:
-            ans += resource+"存放在"+room_name
+            ans += resource+"存放在"+room
+            ans += self.solve_count_res(entity)
         else:
             des_room = res[0]['office_name']
             if res[0]['office_name'].find(u"_")!=-1:
                 des_room = res[0]['office_name'].split("_")[2]
-            ans += resource+"不存放在"+room_name+"\n"+resource+"存放在"+des_room+"\n"
+            ans += resource+"不存放在"+room+"\n"+resource+"存放在"+des_room+"\n"
         return ans
-
+    """
+    处理馆室是否有某个资源的问题
+    """
     def solve_room_res_a(self, entity):
         room = entity['room'][0]
         room_name = room
@@ -118,6 +139,10 @@ class Task_contain():
             ans += res_dict[t][-1] +"\n"
         return ans
 
+    """
+    资源数量问题
+    """
+
     def solve_count_res(self, entity):
         resource = entity['res'][0]
         res = Neo4jPrepare.get_property(resource)
@@ -128,6 +153,9 @@ class Task_contain():
             ans += "很抱歉，"+resource+"暂时没有数据信息\n"
         return ans
 
+    """
+    某一类资源数量问题
+    """
     def solve_count_restype(self, entity):
         restype = entity['restype'][0]
         #res = Neo4jPrepare.get_property(restype)
@@ -152,7 +180,7 @@ class Task_contain():
         #print(res_res)
         other_num = 0
         for r in res_res:
-            if r['count'] == '':
+            if r['count'] == 'nan':
                 continue
             num += int(r['count'])
             other_num += int(r['count'])
@@ -167,6 +195,9 @@ class Task_contain():
             ans += "很抱歉，"+restype+"暂时没有数据信息\n"
         return ans
 
+    """
+    某资源是否是某类资源问题
+    """
     def solve_res_res_h(self, entity):
         restype = entity['restype'][0]
         resource = entity['res'][0]
@@ -182,6 +213,9 @@ class Task_contain():
             ans += "很抱歉," + resource + "不属于" + restype + "\n"
         return ans
 
+    """
+    某类资源包含的所有资源
+    """
     def solve_res_res_a(self, entity):
         restype = entity['restype'][0]
         res = Neo4jPrepare.get_reverse_relation(restype,'资源')
@@ -191,12 +225,18 @@ class Task_contain():
         ans += res[-1]['office_name'] + "\n"
         return ans
 
+    """
+    资源类型（资源的中级类别）属于哪一大类问题（资源的最高类别）
+    """
     def solve_res_res_t(self, entity):
         restype = entity['restype'][0]
         res = Neo4jPrepare.get_property(restype)
         ans = "\n"+restype+"属于"+res['belong']
         return ans
 
+    """
+    馆室有几楼的
+    """
     def solve_count_floor(self, entity):
         area = entity['area'][0]
         res = Neo4jPrepare.get_reverse_relation(area,'楼层')
@@ -205,6 +245,9 @@ class Task_contain():
         ans = "\n"+area+"一共有"+str(l)+"层\n"
         return ans
 
+    """
+    国图有几个馆区
+    """
     def solve_library_area(self):
         res = Neo4jPrepare.get_relation("国家图书馆","馆区")
         print(res)
@@ -213,6 +256,73 @@ class Task_contain():
             ans += r['office_name']+","
         ans += res[-1]['office_name']+"\n"
         return ans
+
+    """
+    国图包含哪些资源类型，查出所有的资源类别
+    """
+
+    def solve_library_res_a(self):
+        res = Neo4jPrepare.get_entity("资源类型")
+        ans = "\n国家图书馆馆藏的资源类别包括:\n"
+        for r in res[:-1]:
+            ans += r['office_name']+","
+        ans += res[-1]['office_name']+"\n"
+        return ans
+
+    """
+    查出国图资源分布，即查出国图所有馆区所包含的资源
+    """
+    def solve_library_res(self):
+        res = Neo4jPrepare.get_relation("国家图书馆","馆区")
+        ans = ""
+        for r in res:
+            area_dict = {'area':[r['office_name']]}
+            ans += self.solve_area_res_a(area_dict)
+        return ans
+
+    """"
+    馆区包含什么资源类型
+    """
+    def solve_area_res_a(self,entity):
+        area = entity['area'][0]
+        res = Neo4jPrepare.get_reverse_relation(area, '馆室')
+        resource_arr = []
+        for r in res:
+            res_arr = Neo4jPrepare.get_reverse_relation(r['office_name'], '资源')
+            for sub_r in res_arr:
+                resource_arr.append(sub_r['belong'])
+
+        resource_arr = np.unique(resource_arr)
+
+        ans = "\n"
+        ans += area + "存放有"
+        for sub_r in resource_arr[:-1]:
+            ans += sub_r + ","
+        ans += resource_arr[-1] + "等类型的资源\n"
+        return ans
+
+    """
+    馆室有什么服务
+    """
+    def solve_service_room(self,entity):
+        room = entity['room'][0]
+        res = Neo4jPrepare.get_reverse_relation(room, '服务')
+        ans = "\n"
+        if len(res)>0:
+            ans += room+"提供的服务包括"
+            for r in res[:-1]:
+                ans+=r['office_name']+","
+            ans += res[-1]['office_name']+"\n"
+        else:
+            ans += room+"不提供任何服务\n"
+        return ans
+
+
+
+
+
+
+
 
 
 

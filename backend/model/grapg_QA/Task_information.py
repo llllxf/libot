@@ -72,6 +72,13 @@ class Task_information():
             ans += "很抱歉，"+room+"暂无联系电话\n"
         return ans
 
+    def solve_library_phone(self):
+        res = Neo4jPrepare.get_property("国家图书馆")
+        #print(res)
+        ans = "\n国家图书馆联系电话为"+res['phone']+"\n"
+        return ans
+
+
     def solve_room_describe(self, entity):
         room = entity['room'][0]
         res = Neo4jPrepare.get_property(room)
@@ -89,13 +96,13 @@ class Task_information():
 
             res = Neo4jPrepare.get_property(resource)
             if res['collection_time'] != 'nan':
-                ans += "国家图书馆的"+resource+"始藏于"+str(int(res['collection_time']))+"年\n"
+                ans += "国家图书馆的"+resource+"始藏于"+str(int(float(res['collection_time'])))+"年\n"
             if res['describe'] != 'nan':
                 ans += res['describe']+"\n"
             if res['belong'] != 'nan':
                 ans += resource+"属于"+res['belong']
-            if res['range'] != 'nan':
-                ans += ",图书馆收藏"+resource+"包括:"+res['range']
+            if res['form'] != 'nan':
+                ans += ",图书馆收藏"+resource+"包括:"+res['form']
             if res['topic'] != 'nan':
                 ans += "\n涵盖的主题包括"+res['topic']+"\n"
             if ans == "" :
@@ -138,8 +145,6 @@ class Task_information():
         describe = []
 
         for r in res:
-            #print(r)
-
             sub_res = Neo4jPrepare.get_property(r['office_name'])
             res_arr.append(sub_res['office_name'])
 
@@ -185,17 +190,159 @@ class Task_information():
             ans = "很抱歉，暂时没有"+service+"的描述信息\n"
         return ans
 
+    """
+        馆室开放时间
+        """
 
-    '''
-    def solve_library_area(self):
-        res = Neo4jPrepare.get_relation("国家图书馆","馆区")
-        #print(res)
-        ans = "\n国家图书馆包括"
-        for r in res[:-1]:
-            ans += r['office_name']+","
-        ans += res[-1]['office_name']+"\n"
+    def solve_room_time(self, entity):
+        room = entity['room'][0]
+        res = Neo4jPrepare.get_property(room)
+        # print(res)
+        open_day = res['open_date']
+        ans = "\n"
+        if open_day != 'nan':
+            ans += room + "开放日为：" + open_day + "\n"
+        workday_time = res['work_open']
+        weekend_time = res['week_open']
+        if workday_time != 'nan':
+            ans += "工作日开放时间为：" + workday_time + "\n"
+        if weekend_time != 'nan':
+            ans += "周末开放时间为：" + weekend_time + "\n"
+        if ans == "\n":
+            ans += "很抱歉，没有" + room + "的时间信息\n"
+
         return ans
-    '''
+
+    """
+    馆室的资源借阅时间
+    """
+
+    def solve_room_res_time(self, entity):
+        room = entity['room'][0]
+        # print(entity)
+        res = Neo4jPrepare.get_property(room)
+        # print("================================",res)
+        workday_time = res['work_borrow']
+        weekend_time = res['week_borrow']
+        if workday_time == 'nan' and weekend_time == 'nan':
+            return "很抱歉，" + room + "的资源材料不提供借阅\n"
+        ans = "\n" + room + "的书籍材料借阅时间为："
+        if workday_time != 'nan':
+            ans += "\n工作日：" + workday_time
+        if weekend_time != 'nan':
+            ans += "\n周未：" + weekend_time
+        return ans + "\n"
+
+    """
+    资源借阅时间
+    """
+
+    def solve_res_time(self, entity):
+        resource = entity['res'][0]
+        # print(Neo4jPrepare.get_property(resource))
+        room = Neo4jPrepare.get_property(resource)['room']
+        res = Neo4jPrepare.get_property(room)
+        workday_time = res['work_borrow']
+        weekend_time = res['week_borrow']
+        if workday_time == 'nan' and weekend_time == 'nan':
+            return "很抱歉，" + room + "的资源材料不提供借阅\n"
+        # ans = "\n" + resource + "的借阅时间为：\n工作日：" + workday_time + "\n周未：" + weekend_time + "\n"
+        ans = "\n" + resource + "存放在" + room + ","
+        ans += room + "的借阅时间为："
+        if workday_time != 'nan':
+            ans += "\n工作日：" + workday_time
+        if weekend_time != 'nan':
+            ans += "\n周未：" + weekend_time
+        return ans + "\n"
+
+    """
+    服务时间
+    """
+
+    def solve_service_time(self, entity):
+        service = entity['service'][0]
+        res = Neo4jPrepare.get_property(service)
+        ans = "\n"
+        if res['date'] != 'nan':
+            ans += "服务日期：" + res['date'] + "\n"
+        if res['worktime'] != 'nan':
+            ans += "工作日服务时间为" + str(res['worktime']) + "\n"
+        if res['weektime'] != 'nan':
+            ans += "工作日服务时间为" + str(res['weektime']) + "\n"
+        if ans == "\n":
+            res_room = Neo4jPrepare.get_relation(service,"馆室")
+            for room in res_room:
+                if room['open_date'] != 'nan':
+                    ans += room['office_name']+"的开放日为"+room['open_date']
+                if room['work_open'] != 'nan':
+                    ans += ",工作日开放时间为"+room['work_open']
+                if room['week_open'] != 'nan':
+                    ans += ",周末或节假日开放时间为"+room['week_open']+"\n"
+        return ans
+
+    """
+    国家图书馆开放时间
+    """
+
+    def solve_library_time(self, entity):
+        library = entity['library'][0]
+        res = Neo4jPrepare.get_relation(library, '馆区')
+        # print(res)
+        ans = "\n"
+        ans += library + "包括" + str(len(res)) + "个馆区\n"
+        for r in res:
+            ans += r['office_name'] + "开放日期为" + r['date'] + "\n"
+            ans += "工作开放时间为" + r['worktime'] + "\n"
+            ans += "周末开放时间为" + r['weektime'] + "\n"
+        return ans
+
+    """
+    馆区开放时间
+    """
+
+    def solve_area_time(self, entity):
+        area = entity['area'][0]
+        res = Neo4jPrepare.get_property(area)
+        # print(res)
+        ans = "\n"
+        if res['date'] != 'nan':
+            ans += area + "开放日期为" + res['date'] + "\n"
+        if res['worktime'] != 'nan':
+            ans += "工作日开放时间为" + res['worktime'] + "\n"
+        if res['weektime'] != 'nan':
+            ans += "周末开放是时间为" + res['weektime'] + "\n"
+        return ans
+
+    """
+    资源形式
+    """
+    def solve_res_form(self, entity):
+        resource = entity['res'][0]
+        res = Neo4jPrepare.get_property(resource)
+        ans = "\n"
+        if res['form'] != 'nan':
+            ans +=" 图书馆收藏的"+resource+"包括"+res['form']+"\n"
+        else:
+            ans += "很抱歉，暂时没有"+resource+"的形式信息\n"
+        return ans
+
+    """
+    资源主题
+    """
+
+    def solve_res_topic(self, entity):
+        resource = entity['res'][0]
+        res = Neo4jPrepare.get_property(resource)
+        ans = "\n"
+        if res['topic'] != 'nan':
+            ans += resource + "涵盖的主题包括" + res['form'] + "\n"
+        else:
+            ans += "很抱歉，暂时没有" + resource + "的主题信息\n"
+        return ans
+
+
+
+
 
 
 

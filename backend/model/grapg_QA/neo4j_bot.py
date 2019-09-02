@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import sys
 project_path = os.path.abspath(os.path.join(os.getcwd(), "../.."))
@@ -6,9 +7,8 @@ sys.path.append(project_path)
 from model.config.base_config import GraphBaseConfig
 from model.kb_prepare.neo4j_prepare import Neo4jPrepare
 import time
-import datetime
 import matplotlib.pyplot as plt
-from skimage import io
+#from skimage import io
 import numpy as np
 
 class neo4jBot():

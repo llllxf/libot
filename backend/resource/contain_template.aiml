@@ -13,16 +13,28 @@
             task_count_floor
         </template>
     </category>
+    <category>
+        <pattern>#AREA#多少#楼#</pattern>
+        <template>
+            task_count_floor
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA#几#楼#</pattern>
+        <template>
+            task_count_floor
+        </template>
+    </category>
 
     <!-- 楼层馆室询问 -->
     <category>
-        <pattern>#FLOOR#有多少*</pattern>
+        <pattern>#FLOOR#有多少#馆#</pattern>
         <template>
             task_floor_count_room
         </template>
     </category>
     <category>
-        <pattern>#FLOOR#有几*</pattern>
+        <pattern>#FLOOR#有几*馆#</pattern>
         <template>
             task_floor_count_room
         </template>
@@ -47,6 +59,63 @@
         </template>
     </category>
 
+    <!-- 馆区资源询问 -->
+    <category>
+        <pattern>#介绍#AREA#</pattern>
+        <template>
+            task_area_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA#馆藏#</pattern>
+        <template>
+            task_area_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA#收藏#</pattern>
+        <template>
+            task_area_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA#有*资源#</pattern>
+        <template>
+            task_area_res_a
+        </template>
+    </category>
+
+    <category>
+        <pattern>#AREA#存*资源#</pattern>
+        <template>
+            task_area_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>*资源#存*AREA</pattern>
+        <template>
+            task_area_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA#有*看#</pattern>
+        <template>
+            task_area_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA#有*书#</pattern>
+        <template>
+            task_area_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>*书#存*AREA</pattern>
+        <template>
+            task_area_res_a
+        </template>
+    </category>
+
     <!-- 楼层资源询问 -->
     <category>
         <pattern>#FLOOR#有#RES#</pattern>
@@ -61,7 +130,6 @@
             task_res_floor
         </template>
     </category>
-
     <category>
         <pattern>#FLOOR#有*资源#</pattern>
         <template>
@@ -97,6 +165,12 @@
         <pattern>*书#存*FLOOR</pattern>
         <template>
             task_floor_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#FLOOR#包*资源#</pattern>
+        <template>
+            task_room_res_a
         </template>
     </category>
 
@@ -166,25 +240,25 @@
         </template>
     </category>
     <category>
-        <pattern>*多少#RESTYPE#</pattern>
+        <pattern>*多少#RTYPE#</pattern>
         <template>
             task_count_restype
         </template>
     </category>
     <category>
-        <pattern>*几*RESTYPE#</pattern>
+        <pattern>*几*RTYPE#</pattern>
         <template>
             task_count_restype
         </template>
     </category>
     <category>
-        <pattern>#RESTYPE*多少#</pattern>
+        <pattern>#RTYPE*多少#</pattern>
         <template>
             task_count_restype
         </template>
     </category>
     <category>
-        <pattern>#RESTYPE*几*</pattern>
+        <pattern>#RTYPE*几*</pattern>
         <template>
             task_count_restype
         </template>
@@ -192,73 +266,73 @@
 
     <!-- 资源包含情况 -->
     <category>
-        <pattern>#RESTYPE#包*RES#</pattern>
+        <pattern>#RTYPE#包*RES#</pattern>
         <template>
             task_res_res_h
         </template>
     </category>
     <category>
-        <pattern>#RES#属于#RESTYPE#</pattern>
+        <pattern>#RES#属于#RTYPE#</pattern>
         <template>
             task_res_res_h
         </template>
     </category>
     <category>
-        <pattern>#RES#是#RESTYPE#</pattern>
+        <pattern>#RES#是#RTYPE#</pattern>
         <template>
             task_res_res_h
         </template>
     </category>
     <category>
-        <pattern>#RES#算#RESTYPE#</pattern>
+        <pattern>#RES#算#RTYPE#</pattern>
         <template>
             task_res_res_h
         </template>
     </category>
     <category>
-        <pattern>#RESTYPE#包*</pattern>
+        <pattern>#RTYPE#包*</pattern>
         <template>
             task_res_res_a
         </template>
     </category>
     <category>
-        <pattern>#RESTYPE#有哪些#</pattern>
+        <pattern>#RTYPE#有哪些#</pattern>
         <template>
             task_res_res_a
         </template>
     </category>
     <category>
-        <pattern>#有哪些#ESTYPE</pattern>
+        <pattern>#有哪些#RTYPE</pattern>
         <template>
             task_res_res_a
         </template>
     </category>
     <category>
-        <pattern>#RESTYPE#有什么*</pattern>
+        <pattern>#RTYPE#有什么*</pattern>
         <template>
             task_res_res_a
         </template>
     </category>
     <category>
-        <pattern>#RESTYPE#有*RES#</pattern>
+        <pattern>#RTYPE#有*RES#</pattern>
         <template>
             task_res_res_h
         </template>
     </category>
     <category>
-        <pattern>*包*RESTYPE#</pattern>
+        <pattern>*包*RTYPE#</pattern>
         <template>
             task_res_res_t
         </template>
     </category>
     <category>
-        <pattern>#RESTYPE#属于*</pattern>
+        <pattern>#RTYPE#属于*</pattern>
         <template>
             task_res_res_t
         </template>
     </category>
 
-    <!-- 国家图书馆 -->
+    <!-- 国家图书馆馆区-->
     <category>
         <pattern>#LIBRARY*馆舍#</pattern>
         <template>
@@ -271,6 +345,64 @@
            task_library_area
         </template>
     </category>
+
+    <!-- 国家图书馆资源 -->
+    <category>
+        <pattern>#LIBRARY#馆藏#</pattern>
+        <template>
+            task_library_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#有*资源#</pattern>
+        <template>
+            task_library_res_a
+        </template>
+    </category>
+
+    <category>
+        <pattern>#LIBRARY#存*资源#</pattern>
+        <template>
+            task_library_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#收藏*资源#</pattern>
+        <template>
+            task_library_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>*资源#存*LIBRARY</pattern>
+        <template>
+            task_library_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#有*看#</pattern>
+        <template>
+            task_library_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#有*书#</pattern>
+        <template>
+            task_library_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>*书#存*LIBRARY</pattern>
+        <template>
+            task_library_res_a
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#资源#分布</pattern>
+        <template>
+            task_library_res
+        </template>
+    </category>
+
     <!--
     <category>
         <pattern>#ROOM#含*</pattern>
