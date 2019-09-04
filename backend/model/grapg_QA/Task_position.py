@@ -452,6 +452,15 @@ class Task_position():
             ans += "很抱歉，国家图书馆不提供"+service+"\n"
         return ans
 
+    """
+    馆区位置    
+    """
+    def solve_area_pos(self, entity):
+        area = entity['area'][0]
+        res =  Neo4jPrepare.get_property(area)
+        ans = "\n"+area+"位于"+res['position']+"\n"
+        return ans
+
 
 
 

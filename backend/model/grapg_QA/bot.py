@@ -134,6 +134,8 @@ class Bot():
             answer = cls.answer_res_topic(entity_dict)
         elif task == 'task_service_room':
             answer = cls.answer_service_room(entity_dict)
+        elif task == "task_area_pos":
+            answer = cls.answer_area_pos(entity_dict)
 
         return answer
 
@@ -472,6 +474,14 @@ class Bot():
         task_contain = Task_contain()
         res = task_contain.solve_service_room(entity_dict)
         return [res]
+
+    @classmethod
+    def answer_area_pos(cls, entity_dict):
+        task_position = Task_position()
+        res = task_position.solve_area_pos(entity_dict)
+        return [res]
+
+
 
 
 

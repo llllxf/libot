@@ -78,6 +78,43 @@
     </category>
     <!-- 馆室位置 -->
     <category>
+        <pattern>#AREA#在*</pattern>
+        <template>
+           task_area_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA#位置#</pattern>
+        <template>
+           task_area_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA*走#</pattern>
+        <template>
+           task_area_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#AREA*去#</pattern>
+        <template>
+           task_area_pos
+        </template>
+    </category>
+    <category>
+        <pattern>*去#AREA#</pattern>
+        <template>
+           task_area_pos
+        </template>
+    </category>
+    <category>
+        <pattern>*到#AREA#</pattern>
+        <template>
+           task_area_pos
+        </template>
+    </category>
+    <!-- 馆室位置 -->
+    <category>
         <pattern>#ROOM#在*</pattern>
         <template>
            task_room_pos
@@ -102,13 +139,13 @@
         </template>
     </category>
     <category>
-        <pattern>*去#ROOM</pattern>
+        <pattern>*去#ROOM#</pattern>
         <template>
            task_room_pos
         </template>
     </category>
     <category>
-        <pattern>*到#ROOM</pattern>
+        <pattern>*到#ROOM#</pattern>
         <template>
            task_room_pos
         </template>

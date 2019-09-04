@@ -32,12 +32,12 @@ class Neo4jPrepare(object):
         cls.attribute = '属性'
         cls.res = '资源大类'
 
-        #cls.graph.delete_all()
+        cls.graph.delete_all()
 
         """建图"""
         #workbook = xlrd.open_workbook(r'../../resource/neo4j2.xlsx')
-        #cls.create_node()
-        #cls.create_relation()
+        cls.create_node()
+        cls.create_relation()
 
 
 
@@ -847,7 +847,7 @@ class Neo4jPrepare(object):
         cls.graph.create(rel)
 
 
-
+'''
 if __name__ == '__main__':
     Neo4jPrepare()
 
@@ -855,6 +855,7 @@ if __name__ == '__main__':
     res = Neo4jPrepare.get_reverse_relation('基藏外文图书外借出纳台','资源')
     for r in res:
         print(r['office_name'])
+'''
 
 
 

@@ -869,13 +869,13 @@
         </template>
     </category>
     <category>
-        <pattern>#时间#SERVICE#</pattern>
+        <pattern>#时#SERVICE#</pattern>
         <template>
            task_service_time
         </template>
     </category>
     <category>
-        <pattern>#SERVICE#时间#</pattern>
+        <pattern>#SERVICE#时#</pattern>
         <template>
            task_service_time
         </template>

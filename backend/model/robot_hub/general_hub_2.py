@@ -15,16 +15,7 @@ from model import aiml_cn
 from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
 import jieba
 
-"""
-加载aiml模块
-"""
-aiml_kernal = aiml_cn.Kernel()
-aiml_kernal.learn('../../resource/navi_template.aiml')
-aiml_kernal.learn('../../resource/contain_template.aiml')
-aiml_kernal.learn('../../resource/time.aiml')
-aiml_kernal.learn('../../resource/condition.aiml')
-aiml_kernal.learn('../../resource/information.aiml')
-aiml_kernal.learn('../../resource/business.aiml')
+
 
 class GeneralHub():
     """
@@ -40,10 +31,31 @@ class GeneralHub():
         2.加载结巴的自定义文档
         3.定义停用词
         """
+        """
+        加载aiml模块
+        """
+        cls.aiml_kernal = aiml_cn.Kernel()
+        '''
+        cls.aiml_kernal.learn('../resource/navi_template.aiml')
+        cls.aiml_kernal.learn('../resource/contain_template.aiml')
+        cls.aiml_kernal.learn('../resource/time.aiml')
+        cls.aiml_kernal.learn('../resource/condition.aiml')
+        cls.aiml_kernal.learn('../resource/information.aiml')
+        cls.aiml_kernal.learn('../resource/business.aiml')
+        jieba.load_userdict("../resource/guotu_dict.txt")
+        '''
+        cls.aiml_kernal.learn('../../resource/navi_template.aiml')
+        cls.aiml_kernal.learn('../../resource/contain_template.aiml')
+        cls.aiml_kernal.learn('../../resource/time.aiml')
+        cls.aiml_kernal.learn('../../resource/condition.aiml')
+        cls.aiml_kernal.learn('../../resource/information.aiml')
+        cls.aiml_kernal.learn('../../resource/business.aiml')
+        jieba.load_userdict("../../resource/guotu_dict.txt")
+
 
         cls.room_list, cls.room_alias_list, cls.floor_list, cls.floor_alias_list, cls.area_list, cls.area_alias_list, cls.resource_list, cls.resource_alias_list,cls.restype_list,cls.restype_alias_list,cls.card_list,cls.card_alias_list,cls.library,cls.library_alias_list,cls.service_list,cls.service_alias_list = Neo4jPrepare.get_all_varname()
         #print(cls.library,cls.library_alias_list)
-        jieba.load_userdict("../../resource/guotu_dict.txt")
+
         cls.stopwords = ['什么', '哪里', '怎么', '有', '走', '去', '可以', '如何', '怎样', '的', '地', '得']
         '''
         print("=======================================")
@@ -154,8 +166,8 @@ class GeneralHub():
 
 
         question_replaced,question_replaced2,entity_dict = GeneralHub.repalce_question(question_str)
-        aiml_response = aiml_kernal.respond(question_replaced)
-        #print("111",aiml_response,question_replaced,entity_dict)
+        aiml_response = self.aiml_kernal.respond(question_replaced)
+        print("111",aiml_response,question_replaced,entity_dict,aiml_response)
         '''
         由于服务类同时具有共性与特性，所以生产两个模版，即一份模版将服务实体替换为service进行模版匹配，一类模版
         不讲服务实体替换为service直接用原词汇匹配模版
@@ -169,7 +181,7 @@ class GeneralHub():
             graph_response=[aiml_response]
         else:
 
-            aiml_response2 = aiml_kernal.respond(question_replaced2)
+            aiml_response2 = self.aiml_kernal.respond(question_replaced2)
             #print("222",aiml_response2,question_replaced2)
             if 'task_' in aiml_response2:
                 graph_response = Bot.task_response(aiml_response2, entity_dict)
@@ -199,6 +211,7 @@ if __name__ == '__main__':
             time_start = time.time()
             print('Libot:', gh.question_answer_hub(question_str)[0])
             time_end = time.time()
+
 
 
 
