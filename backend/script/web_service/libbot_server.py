@@ -64,6 +64,8 @@ class MainHandler(tornado.web.RequestHandler):
             self.write(res_json)
             #simpleLog.log_something('graph_answer:' + graph_respons)
             #simpleLog.log_something('search_answer:' + str(answer_list))
+        #elif target == 'chat':
+
 
 
 

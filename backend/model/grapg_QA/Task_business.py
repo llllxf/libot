@@ -4,7 +4,9 @@ import numpy as np
 class Task_business():
 
 
-
+    '''
+    作废
+    '''
     """
     是否提供服务
     """
@@ -56,7 +58,6 @@ class Task_business():
 
         ans = "\n"+resource+"存放在"
         for r in res[:-1]:
-            #print(r)
             ans += r['office_name']+","
 
         ans += res[-1]['office_name']+"\n"
@@ -258,6 +259,53 @@ class Task_business():
             ans += "其余馆室不可复制或外借资源\n"
         return ans
         # print(ans)
+
+    """
+    还书手续
+    """
+    def solve_return_back_res(self,entity):
+        resource = entity['res'][0]
+        ans = "\n"
+        res_res = Neo4jPrepare.get_relation(resource,'馆室')
+        print(res_res)
+        if len(res_res)>0:
+            ans += resource+"存放于"+res_res[0]['office_name']+",请前往"+res_res[0]['office_name']+"归还书籍,同时你也可以前往总馆南区24小时自助还书处归还书籍\n"
+        else:
+            ans += '你可以前往总馆南区24小时自助还书处归还书籍\n'
+        return ans
+
+    """
+    资源查找
+    实体资源返回目录查询地点
+    电子资源加上数字共享空间
+    """
+    def solve_res_search(self,entity):
+        resource = entity['res'][0]
+        #sprint(resource)
+        ans = "\n国家图书馆提供目录查询服务，您可以前往"
+        room_res = Neo4jPrepare.get_relation('目录服务', '馆室')
+        for sub_room in room_res[:-1]:
+            ans += sub_room['office_name']+","
+        ans += sub_room['office_name']+"\n"
+
+        room = Neo4jPrepare.get_relation(resource, '馆室')
+
+        #room = Neo4jPrepare.get_reverse_relation(resource,'馆室')
+        #print(room)
+        if room[0]['office_name'] == '数字共享空间':
+            ans += "您也可以前往数字共享空间查找\n"
+            return ans
+        else:
+            return ans
+
+
+
+
+
+
+
+
+
 
     '''
     办理读者卡

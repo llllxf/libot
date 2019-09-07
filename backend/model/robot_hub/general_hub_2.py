@@ -34,6 +34,7 @@ class GeneralHub():
         """
         加载aiml模块
         """
+
         cls.aiml_kernal = aiml_cn.Kernel()
         '''
         cls.aiml_kernal.learn('../resource/navi_template.aiml')
@@ -51,6 +52,7 @@ class GeneralHub():
         cls.aiml_kernal.learn('../../resource/information.aiml')
         cls.aiml_kernal.learn('../../resource/business.aiml')
         jieba.load_userdict("../../resource/guotu_dict.txt")
+
 
 
         cls.room_list, cls.room_alias_list, cls.floor_list, cls.floor_alias_list, cls.area_list, cls.area_alias_list, cls.resource_list, cls.resource_alias_list,cls.restype_list,cls.restype_alias_list,cls.card_list,cls.card_alias_list,cls.library,cls.library_alias_list,cls.service_list,cls.service_alias_list = Neo4jPrepare.get_all_varname()
@@ -124,7 +126,7 @@ class GeneralHub():
                     card_entity.append(card)
 
                     #question = question.replace(word, 'CARD')
-                    question = question.replace(word, 'CARD')
+                    question2 = question2.replace(word, 'CARD')
                     break
             for (service_alias,service) in zip(cls.service_alias_list,cls.service_list):
                 if word in service_alias:
@@ -133,7 +135,7 @@ class GeneralHub():
                     """
                     由于借书需要优先考虑为借书，所以优先不替换service
                     """
-                    question2 = question2.replace(word, 'SERVICE')
+                    question = question.replace(word, 'SERVICE')
                     break
         """
         如果句子不存在除了国家图书馆以外的实体，则将国家图书馆考虑为实体处理
@@ -182,7 +184,7 @@ class GeneralHub():
         else:
 
             aiml_response2 = self.aiml_kernal.respond(question_replaced2)
-            #print("222",aiml_response2,question_replaced2)
+            print("222",aiml_response2,question_replaced2)
             if 'task_' in aiml_response2:
                 graph_response = Bot.task_response(aiml_response2, entity_dict)
 

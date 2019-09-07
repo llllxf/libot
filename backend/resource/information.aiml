@@ -607,13 +607,19 @@
     <!-- 馆室介绍 -->
 
     <category>
-        <pattern>#ROOM#</pattern>
+        <pattern>#介绍#ROOM#</pattern>
         <template>
            task_room_describe
         </template>
     </category>
     <category>
         <pattern>ROOM</pattern>
+        <template>
+           task_room_describe
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#是#</pattern>
         <template>
            task_room_describe
         </template>
@@ -635,24 +641,6 @@
     <!-- 介绍资源 -->
     <category>
         <pattern>RES</pattern>
-        <template>
-           task_res_describe
-        </template>
-    </category>
-    <category>
-        <pattern>RES*</pattern>
-        <template>
-           task_res_describe
-        </template>
-    </category>
-    <category>
-        <pattern>*RES*</pattern>
-        <template>
-           task_res_describe
-        </template>
-    </category>
-    <category>
-        <pattern>*RES</pattern>
         <template>
            task_res_describe
         </template>
@@ -802,37 +790,13 @@
         </template>
     </category>
     <category>
-        <pattern>LIBRARY*</pattern>
-        <template>
-           task_library_describe
-        </template>
-    </category>
-    <category>
-        <pattern>*LIBRARY</pattern>
-        <template>
-           task_library_describe
-        </template>
-    </category>
-    <category>
-        <pattern>*LIBRARY*</pattern>
-        <template>
-           task_library_describe
-        </template>
-    </category>
-    <category>
-        <pattern>#LIBRARY*</pattern>
-        <template>
-           task_library_describe
-        </template>
-    </category>
-    <category>
-        <pattern>*LIBRARY#</pattern>
-        <template>
-           task_library_describe
-        </template>
-    </category>
-    <category>
         <pattern>#介绍#LIBRARY#</pattern>
+        <template>
+           task_library_describe
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#是#</pattern>
         <template>
            task_library_describe
         </template>
@@ -881,17 +845,87 @@
         </template>
     </category>
     <category>
-        <pattern>#CARD#为什么#过期#</pattern>
+        <pattern>#卡#为什么#过期#</pattern>
         <template>
            读者卡/第二代身份证功能实行注册制度，持卡三年后，需到办证处验证注册；少年儿童馆读者卡实行注册制度，每年注册一次。未能如期注册的读者卡借阅功能置停。
         </template>
     </category>
     <category>
-        <pattern>#CARD#怎么#过期#</pattern>
+        <pattern>#卡#怎么#过期#</pattern>
         <template>
            读者卡/第二代身份证功能实行注册制度，持卡三年后，需到办证处验证注册；少年儿童馆读者卡实行注册制度，每年注册一次。未能如期注册的读者卡借阅功能置停。
         </template>
     </category>
+    <category>
+        <pattern>#证#为什么#过期#</pattern>
+        <template>
+           读者卡/第二代身份证功能实行注册制度，持卡三年后，需到办证处验证注册；少年儿童馆读者卡实行注册制度，每年注册一次。未能如期注册的读者卡借阅功能置停。
+        </template>
+    </category>
+    <category>
+        <pattern>#证#怎么#过期#</pattern>
+        <template>
+           读者卡/第二代身份证功能实行注册制度，持卡三年后，需到办证处验证注册；少年儿童馆读者卡实行注册制度，每年注册一次。未能如期注册的读者卡借阅功能置停。
+        </template>
+    </category>
+
+    <category>
+        <pattern>#OPAC#</pattern>
+        <template>
+           OPAC是ONLINE PUBLIC ACCESS CATALOGUE的缩写，即为联机公共目录查询系统，多数图书馆都有自己的馆藏联机公共目录查询系统。
+        </template>
+    </category>
+    <category>
+        <pattern>#是#开架阅览#闭架阅览#</pattern>
+        <template>
+           OPAC是ONLINE PUBLIC ACCESS CATALOGUE的缩写，即为联机公共目录查询系统，多数图书馆都有自己的馆藏联机公共目录查询系统。
+        </template>
+    </category>
+    <category>
+        <pattern>#开架阅览#闭架阅览#是#</pattern>
+        <template>
+           所谓开架阅览，即读者进入文献摆放区自行提取文献阅览；所谓闭架阅览，即读者填写阅览室提供的文献索取单，按要求填写文献索取号、题名（连续出版物还应提交期/卷数）等相关信息或通过联机公共目录查询系统发送预约请求，由工作人员提取文献再交由读者阅览。
+        </template>
+    </category>
+    <category>
+        <pattern>#开架阅览#是#</pattern>
+        <template>
+           所谓开架阅览，即读者进入文献摆放区自行提取文献阅览
+        </template>
+    </category>
+    <category>
+        <pattern>#是#开架阅览#</pattern>
+        <template>
+           所谓开架阅览，即读者进入文献摆放区自行提取文献阅览
+        </template>
+    </category>
+    <category>
+        <pattern>#闭架阅览#是#</pattern>
+        <template>
+           所谓闭架阅览，即读者填写阅览室提供的文献索取单，按要求填写文献索取号、题名（连续出版物还应提交期/卷数）等相关信息或通过联机公共目录查询系统发送预约请求，由工作人员提取文献再交由读者阅览。
+        </template>
+    </category>
+    <category>
+        <pattern>#是#闭架阅览#</pattern>
+        <template>
+           所谓闭架阅览，即读者填写阅览室提供的文献索取单，按要求填写文献索取号、题名（连续出版物还应提交期/卷数）等相关信息或通过联机公共目录查询系统发送预约请求，由工作人员提取文献再交由读者阅览。
+        </template>
+    </category>
+    <category>
+        <pattern>#开架阅览#</pattern>
+        <template>
+            task_open_room
+        </template>
+    </category>
+    <category>
+        <pattern>#查#专利文献#</pattern>
+        <template>
+            国家图书馆不收藏专利说明书，从1995年开始，专利检索刊物也陆续停订。目前，国家知识产权局的专利文献馆较为全面地收藏中外文专利说明书及有关检索工具。
+        </template>
+    </category>
+
+
+
 
 
 

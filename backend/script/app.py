@@ -47,20 +47,35 @@ app = Flask(__name__,static_url_path="/static")
 @app.route('/message', methods=['POST'])
 def reply():
 
-    req_msg = request.form['msg']
+    question = request.form['msg']
     #res_msg = '^_^'
     #print(req_msg)
     #print(''.join([f+' ' for fh in req_msg for f in fh]))
     #req_msg=''.join([f+' ' for fh in req_msg for f in fh])
     #print(req_msg)
-    res_msg = generalHub.question_answer_hub(req_msg)[0]
+    res_msg = generalHub.question_answer_hub(question)[0]
     
     #res_msg = res_msg.replace('_UNK', '^_^')
     res_msg=res_msg.strip()
     
     # 如果接受到的内容为空，则给出相应的恢复
-    if res_msg == '':
-      res_msg = '请与我聊聊天吧'
+    if res_msg == '很抱歉，我好像不明白，请您换一种说法':
+        import requests, json
+        github_url = "http://openapi.tuling123.com/openapi/api/v2"
+        data = json.dumps({
+            "reqType": 0,
+            "perception": {
+                "inputText": {
+                    "text": question
+                },
+            },
+            "userInfo": {
+                "apiKey": "3e0a308b56c845708e57415e51b77c1b",
+                "userId": "504027"
+            }
+        })
+        r = requests.post(github_url, data)
+        res_msg = r.json()['results'][0]['values']['text']
 
     return jsonify( { 'text': res_msg } )
 

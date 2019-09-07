@@ -268,6 +268,42 @@ class Task_contain():
             ans += r['office_name']+","
         ans += res[-1]['office_name']+"\n"
         return ans
+    """
+    国图是否提供某一服务
+    """
+
+    def solve_service_exit(self, entity):
+        # print(entity)
+        service = entity['service']
+        # res = Neo4jPrepare.get_property(service)
+        ans = "\n"
+        if len(service) > 0:
+            ans += "国家图书馆提供" + service[0] + "\n"
+            #print("aaa",ans)
+            room = Neo4jPrepare.get_relation(service[0], "馆室")
+            if len(room)<=0:
+                return ans
+            ans += "您可以去"
+            for r in room[:-1]:
+                ans += r['office_name'] + ","
+            ans += room[-1]['office_name'] + "接受该服务\n"
+        else:
+            ans += "很抱歉，国家图书馆不提供该服务"
+        return ans
+
+    """
+    国图提供什么服务
+    """
+
+    def solve_service_exit_all(self):
+        # print(entity)
+        #service = entity['service']
+        res = Neo4jPrepare.get_entity('服务')
+        ans = "\n国家图书馆提供的服务包括"
+        for sub_result in res[:-1]:
+            ans += sub_result['office_name']+","
+        ans += res[-1]['office_name']+"\n"
+        return ans
 
     """
     查出国图资源分布，即查出国图所有馆区所包含的资源
@@ -304,7 +340,7 @@ class Task_contain():
     """
     馆室有什么服务
     """
-    def solve_service_room(self,entity):
+    def solve_service_room_all(self,entity):
         room = entity['room'][0]
         res = Neo4jPrepare.get_reverse_relation(room, '服务')
         ans = "\n"
@@ -316,6 +352,42 @@ class Task_contain():
         else:
             ans += room+"不提供任何服务\n"
         return ans
+
+    """
+    馆室有没有某一服务
+    """
+
+    def solve_service_room_exit(self, entity):
+        room = entity['room'][0]
+        service = entity['service'][0]
+        res = Neo4jPrepare.get_reverse_relation(room, '服务')
+        ans = "\n"
+        for r in res:
+            if r['office_name'] == service:
+                ans += room + "提供"+service+"\n"
+                return ans
+
+        ans += room + "不提供"+service+"\n"
+        #print(ans)
+        return ans
+
+    """
+    开架阅览室有哪些
+    """
+
+    def solve_open_room(self):
+        res = Neo4jPrepare.get_entity('馆室')
+        room_arr = []
+        for r in res:
+            if r['open'] == '1':
+                room_arr.append(r['office_name'])
+        ans = "\n开架阅览室包括"
+        for sub_room in room_arr[:-1]:
+            ans += sub_room + ","
+        ans += room_arr[-1] + "\n"
+        return ans
+
+
 
 
 

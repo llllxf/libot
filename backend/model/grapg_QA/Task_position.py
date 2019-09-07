@@ -404,19 +404,16 @@ class Task_position():
     
     """
     def solve_res_pos(self,entity):
-        response = "\n"
-        res = entity['res'][0]
-        ans = Neo4jPrepare.get_relation(res,'馆室')
-        ans_room = ans[0]['office_name']
-        if ans[0]['office_name'].find("_")!=-1:
-            arr = ans[0]['office_name'].split("_")
-            ans_room = arr[2]
-        response += res + "存放于" + ans_room + "\n"
-        #print(ans)
-        dict = {}
-        dict['room'] = [ans[0]['office_name']]
-        ans = self.solve_room_pos(dict)[0]
-        response += ans[0]
+
+        resource = entity['res'][0]
+        response = "\n" + resource + "存放于"
+        res = Neo4jPrepare.get_relation(resource,'馆室')
+        for r in res:
+            response += r['office_name'] + "\n"
+        #dict = {}
+        #dict['room'] = [ans[0]['office_name']]
+        #ans = self.solve_room_pos(dict)[0]
+        #response += ans[0]
         return response
     """
     一类资源地点问询，需查出该类所有资源以及其对应的馆室
@@ -447,7 +444,11 @@ class Task_position():
 
             for r in room[:-1]:
                 ans += r['office_name']+","
-            ans += room[-1]['office_name']+"接受该服务\n"
+            ans += room[-1]['office_name']
+            if '服务' in service:
+                ans += "进行"+service[0:service.find("服")]+"\n"
+            else:
+                ans += "进行"+service+"\n"
         else:
             ans += "很抱歉，国家图书馆不提供"+service+"\n"
         return ans

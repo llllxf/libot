@@ -32,12 +32,12 @@ class Neo4jPrepare(object):
         cls.attribute = '属性'
         cls.res = '资源大类'
 
-        cls.graph.delete_all()
+        #cls.graph.delete_all()
 
         """建图"""
         #workbook = xlrd.open_workbook(r'../../resource/neo4j2.xlsx')
-        cls.create_node()
-        cls.create_relation()
+        #cls.create_node()
+        #cls.create_relation()
 
 
 
@@ -503,13 +503,14 @@ class Neo4jPrepare(object):
                              card=row[12],
                              des_x=row[15],
                              des_y=row[16],
-                             borrow=row[19]
+                             borrow=row[19],
+                             open=row[20]
 
                              )
             cls.graph.create(room_node)
         for i in range(len(room_values)-6,len(room_values)):
             row = room_values[i].split(" ")
-            print(row[14])
+            #print(row[14])
             mark_node = Node(cls.mark, type=cls.mark,name=row[0], office_name=row[0],self_site=row[14])
             cls.graph.create(mark_node)
 
@@ -767,8 +768,8 @@ class Neo4jPrepare(object):
             except AttributeError as e:
                 a = 0
                 print("3", row[0], e, row[4])
-                #print(cls.graph.find_one(label=cls.room, property_key='office_name', property_value=row[4]))
-                #print(self.graph.find_one(label=self.room, property_key='room', property_value=row[4]))
+                print(cls.graph.find_one(label=cls.room, property_key='office_name', property_value=row[4]))
+                print(cls.graph.find_one(label=cls.room, property_key='room', property_value=row[4]))
 
 
         """建立资源类型联系"""

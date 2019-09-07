@@ -19,7 +19,7 @@ class Bot():
         :return:
         """
 
-        answer = "GraphQA 还不清楚您的问题"
+        answer = ""
         if task == 'task_res_pos':
             answer = cls.answer_res_pos(entity_dict)
         elif task == 'task_room_pos':
@@ -132,10 +132,21 @@ class Bot():
             answer = cls.answer_res_form(entity_dict)
         elif task == 'task_res_topic':
             answer = cls.answer_res_topic(entity_dict)
-        elif task == 'task_service_room':
-            answer = cls.answer_service_room(entity_dict)
+        elif task == 'task_service_room_all':
+            answer = cls.answer_service_room_all(entity_dict)
         elif task == "task_area_pos":
             answer = cls.answer_area_pos(entity_dict)
+        elif task == 'task_return_back_res':
+            answer = cls.answer_return_back_res(entity_dict)
+        elif task == 'task_service_exit_all':
+            answer = cls.answer_service_exit_all()
+        elif task == 'task_service_room_exit':
+            answer = cls.answer_service_room_exit(entity_dict)
+        elif task == 'task_open_room':
+            answer = cls.answer_open_room()
+        elif task == 'task_res_search':
+            answer = cls.answer_res_search(entity_dict)
+
 
         return answer
 
@@ -453,8 +464,8 @@ class Bot():
 
     @classmethod
     def answer_service_exit(cls,entity_dict):
-        task_business = Task_business()
-        res = task_business.solve_service_exit(entity_dict)
+        task_contain = Task_contain()
+        res = task_contain.solve_service_exit(entity_dict)
         return [res]
 
     @classmethod
@@ -470,16 +481,53 @@ class Bot():
         return [res]
 
     @classmethod
-    def answer_service_room(cls, entity_dict):
+    def answer_service_room_all(cls, entity_dict):
         task_contain = Task_contain()
-        res = task_contain.solve_service_room(entity_dict)
+        res = task_contain.solve_service_room_all(entity_dict)
         return [res]
+
+    @classmethod
+    def answer_service_room_exit(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_service_room_exit(entity_dict)
+        #print(res)
+        return [res]
+
 
     @classmethod
     def answer_area_pos(cls, entity_dict):
         task_position = Task_position()
         res = task_position.solve_area_pos(entity_dict)
         return [res]
+
+    @classmethod
+    def answer_return_back_res(cls, entity_dict):
+        task_business = Task_business()
+        res = task_business.solve_return_back_res(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_service_exit_all(cls):
+        task_contain = Task_contain()
+        res = task_contain.solve_service_exit_all()
+        return [res]
+
+    @classmethod
+    def answer_open_room(cls):
+        task_contain = Task_contain()
+        res = task_contain.solve_open_room()
+        return [res]
+
+    @classmethod
+    def answer_res_search(cls,entity_dict):
+        task_business = Task_business()
+        res = task_business.solve_res_search(entity_dict)
+        return [res]
+
+
+
+
+
 
 
 

@@ -354,6 +354,13 @@
         </template>
     </category>
     <category>
+        <pattern>#LIBRARY#资源#有*</pattern>
+        <template>
+            task_library_res_a
+        </template>
+    </category>
+
+    <category>
         <pattern>#LIBRARY#有*资源#</pattern>
         <template>
             task_library_res_a
@@ -402,6 +409,178 @@
             task_library_res
         </template>
     </category>
+
+    <!-- 音乐电影 -->
+    <category>
+        <pattern>#电影#</pattern>
+        <template>
+           task_music_or_movie
+        </template>
+    </category>
+    <category>
+        <pattern>#音乐#</pattern>
+        <template>
+           task_music_or_movie
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#电影#</pattern>
+        <template>
+           task_music_or_movie
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#音乐#</pattern>
+        <template>
+           task_music_or_movie
+        </template>
+    </category>
+     <category>
+        <pattern>#LIBRARY#音乐#</pattern>
+        <template>
+           task_music_or_movie
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#电影#</pattern>
+        <template>
+           task_music_or_movie
+        </template>
+    </category>
+
+    <!-- 服务查询 -->
+    <category>
+        <pattern>#国家图书馆#有#什么服务#</pattern>
+        <template>
+           task_service_exit_all
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#有#什么服务#</pattern>
+        <template>
+           task_service_exit_all
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#有#哪些服务#</pattern>
+        <template>
+           task_service_exit_all
+        </template>
+    </category>
+    <category>
+        <pattern>#图书馆#可#SERVICE#</pattern>
+
+        <template>
+           task_service_exit
+        </template>
+    </category>
+    <category>
+        <pattern>#国图#可#SERVICE#</pattern>
+
+        <template>
+           task_service_exit
+        </template>
+    </category>
+    <category>
+        <pattern>#图书馆#提供#SERVICE#</pattern>
+
+        <template>
+           task_service_exit
+        </template>
+    </category>
+    <category>
+        <pattern>#国图#提供#SERVICE#</pattern>
+
+        <template>
+           task_service_exit
+        </template>
+    </category>
+    <category>
+        <pattern>#图书馆#能#SERVICE#</pattern>
+
+        <template>
+           task_service_exit
+        </template>
+    </category>
+    <category>
+        <pattern>#国图#能#SERVICE#</pattern>
+
+        <template>
+           task_service_exit
+        </template>
+    </category>
+    <category>
+        <pattern>#国图#有#SERVICE#</pattern>
+
+        <template>
+           task_service_exit
+        </template>
+    </category>
+    <category>
+        <pattern>#图书馆#有#SERVICE#</pattern>
+
+        <template>
+           task_service_exit
+        </template>
+    </category>
+    <category>
+        <pattern>#国#服务#</pattern>
+
+        <template>
+           很抱歉，国家图书馆不提供改服务
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#有#哪些服务#</pattern>
+        <template>
+           task_service_room_all
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#提供#哪些服务#</pattern>
+        <template>
+           task_service_room_all
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#有#什么服务#</pattern>
+        <template>
+           task_service_room_all
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#提供#什么服务#</pattern>
+        <template>
+           task_service_room_all
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#提供#SERVICE#</pattern>
+        <template>
+           task_service_room_exit
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#有#SERVICE#</pattern>
+        <template>
+           task_service_room_exit
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#可#SERVICE#</pattern>
+        <template>
+           task_service_room_exit
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM#能#SERVICE#</pattern>
+        <template>
+           task_service_room_exit
+        </template>
+    </category>
+
+
+
 
     <!--
     <category>
