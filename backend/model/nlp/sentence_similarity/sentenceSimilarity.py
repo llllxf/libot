@@ -40,10 +40,13 @@ class SentenceSimilarity():
             for token in text:
                 frequency[token] += 1
 
+        #词汇至少出现一次
         self.texts = [[token for token in text if frequency[token] > min_frequency] for text in self.texts]
 
         self.dictionary = corpora.Dictionary(self.texts)
+        print(self.dictionary)
         self.corpus_simple = [self.dictionary.doc2bow(text) for text in self.texts]
+        print(self.corpus_simple)
 
     # tfidf模型
     def TfidfModel(self):

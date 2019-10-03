@@ -14,6 +14,20 @@
         </template>
     </category>
     <category>
+        <pattern>#借#书#丢#</pattern>
+        <template>
+           按照规定，国家图书馆的馆藏属于国有资产，读者丢失必须赔偿。具体赔偿及善后办法，请详见国图主页“读者指南”——“借阅须知”——“违规处理办法”
+        </template>
+    </category>
+    <category>
+        <pattern>#书#丢#</pattern>
+        <template>
+           按照规定，国家图书馆的馆藏属于国有资产，读者丢失必须赔偿。具体赔偿及善后办法，请详见国图主页“读者指南”——“借阅须知”——“违规处理办法”
+        </template>
+    </category>
+
+    <!-- 借阅资源 -->
+    <category>
         <pattern>#RES#借#</pattern>
         <template>
            task_res_read
@@ -61,31 +75,60 @@
            task_res_read
         </template>
     </category>
-    <!-- 文献 -->
+
+    <!-- 借阅资源 -->
     <category>
-        <pattern>#书#借#</pattern>
+        <pattern>#RTYPE#借#</pattern>
         <template>
-           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。
+           task_restype_read
         </template>
     </category>
     <category>
-        <pattern>#借#书#</pattern>
+        <pattern>#借#RTYPE#</pattern>
         <template>
-           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。
+           task_restype_read
+        </template>
+    </category>
+
+    <category>
+        <pattern>#RTYPE#查#</pattern>
+        <template>
+           国家图书馆提供目录查询服务，您可以前往目录查询区查询
         </template>
     </category>
     <category>
-        <pattern>#RES#借#</pattern>
+        <pattern>#查#RTYPE#</pattern>
         <template>
-           task_res_read
+           国家图书馆提供目录查询服务，您可以前往目录查询区查询
+        </template>
+    </category>
+
+    <category>
+        <pattern>#RTYPE#阅览#</pattern>
+        <template>
+           task_restype_read
         </template>
     </category>
     <category>
-        <pattern>#借#RES#</pattern>
+        <pattern>#阅览#RTYPE#</pattern>
         <template>
-           task_res_read
+           task_restype_read
         </template>
     </category>
+    <category>
+        <pattern>#RTYPE#看#</pattern>
+        <template>
+           task_restype_read
+        </template>
+    </category>
+    <category>
+        <pattern>#看#RTYPE#</pattern>
+        <template>
+           task_restype_read
+        </template>
+    </category>
+
+
     <!-- 外借 -->
     <category>
         <pattern>#ROOM*外借#</pattern>
@@ -115,6 +158,7 @@
         </template>
     </category>
 
+    <!-- 资源类型外借-->
     <category>
         <pattern>#RTYPE*外借#</pattern>
         <template>
@@ -128,19 +172,194 @@
            task_restype_borrow
         </template>
     </category>
+
+
+    <!-- 资源类型外借（中级）-->
+    <category>
+        <pattern>#报纸*外借#</pattern>
+        <template>
+           报纸包括中文报纸外文报纸数字报纸您具体说的是哪一种
+        </template>
+    </category>
+    <category>
+        <pattern>*外借#报纸#</pattern>
+        <template>
+           报纸包括中文报纸外文报纸数字报纸您具体说的是哪一种
+        </template>
+    </category>
+
+    <category>
+        <pattern>#图书*外借#</pattern>
+        <template>
+           图书包括中文图书外文图书数字图书您具体说的是哪一种
+        </template>
+    </category>
+    <category>
+        <pattern>*外借#图书#</pattern>
+        <template>
+           图书包括中文图书外文图书数字图书您具体说的是哪一种
+        </template>
+    </category>
+
+    <category>
+        <pattern>#期刊*外借#</pattern>
+        <template>
+           期刊包括中文期刊外文期刊数字期刊您具体说的是哪一种
+        </template>
+    </category>
+    <category>
+        <pattern>*外借#期刊#</pattern>
+        <template>
+           期刊包括中文期刊外文期刊数字期刊您具体说的是哪一种
+        </template>
+    </category>
+
+    <category>
+        <pattern>#特藏专藏*外借#</pattern>
+        <template>
+           特藏专藏包括实体特藏专藏数字特藏专藏您具体说的是哪一种
+        </template>
+    </category>
+    <category>
+        <pattern>*外借#特藏专藏*</pattern>
+        <template>
+           特藏专藏包括实体特藏专藏数字特藏专藏您具体说的是哪一种
+        </template>
+    </category>
+
+    <category>
+        <pattern>#RTYPE#</pattern>
+        <that>特藏专藏包括实体特藏专藏数字特藏专藏您具体说的是哪一种</that>
+        <template>
+            task_restype_borrow
+        </template>
+    </category>
+
+    <category>
+        <pattern>#RTYPE#</pattern>
+        <that>期刊包括中文期刊外文期刊数字期刊您具体说的是哪一种</that>
+        <template>
+            task_restype_borrow
+        </template>
+    </category>
+
+    <category>
+        <pattern>#RTYPE#</pattern>
+        <that>报纸包括中文报纸外文报纸数字报纸您具体说的是哪一种</that>
+        <template>
+            task_restype_borrow
+        </template>
+    </category>
+    <category>
+        <pattern>#RTYPE#</pattern>
+        <that>图书包括中文图书外文图书数字图书您具体说的是哪一种</that>
+        <template>
+            task_restype_borrow
+        </template>
+    </category>
+
+    <!-- 资源类型借阅（中级）-->
+
+    <category>
+        <pattern>#报纸*借#</pattern>
+        <template>
+           报纸包括中文报纸外文报纸数字报纸您具体借阅的是哪一种
+        </template>
+    </category>
+    <category>
+        <pattern>*借#报纸#</pattern>
+        <template>
+           报纸包括中文报纸外文报纸数字报纸您具体借阅的是哪一种
+        </template>
+    </category>
+
+    <category>
+        <pattern>#图书*借#</pattern>
+        <template>
+           图书包括中文图书外文图书数字图书您具体借阅的是哪一种
+        </template>
+    </category>
+    <category>
+        <pattern>*借#图书#</pattern>
+        <template>
+           图书包括中文图书外文图书数字图书您具体借阅的是哪一种
+        </template>
+    </category>
+
+    <category>
+        <pattern>#期刊*借#</pattern>
+        <template>
+           期刊包括中文期刊外文期刊数字期刊您具体借阅的是哪一种
+        </template>
+    </category>
+    <category>
+        <pattern>*借#期刊#</pattern>
+        <template>
+           期刊包括中文期刊外文期刊数字期刊您具体借阅的是哪一种
+        </template>
+    </category>
+
+    <category>
+        <pattern>#特藏专藏*借#</pattern>
+        <template>
+           特藏专藏包括实体特藏专藏数字特藏专藏您具体借阅的是哪一种
+        </template>
+    </category>
+    <category>
+        <pattern>*借#特藏专藏#</pattern>
+        <template>
+           特藏专藏包括实体特藏专藏数字特藏专藏您具体借阅的是哪一种
+        </template>
+    </category>
+
+    <category>
+        <pattern>#RTYPE#</pattern>
+        <that>特藏专藏包括实体特藏专藏数字特藏专藏您具体借阅的是哪一种</that>
+        <template>
+            task_restype_read
+        </template>
+    </category>
+
+    <category>
+        <pattern>#RTYPE#</pattern>
+        <that>图书包括中文图书外文图书数字图书您具体借阅的是哪一种</that>
+        <template>
+            task_restype_read
+        </template>
+    </category>
+
+    <category>
+        <pattern>#RTYPE#</pattern>
+        <that>期刊包括中文期刊外文期刊数字期刊您具体借阅的是哪一种</that>
+        <template>
+            task_restype_read
+        </template>
+    </category>
+
+    <category>
+        <pattern>#RTYPE#</pattern>
+        <that>报纸包括中文报纸外文报纸数字报纸您具体借阅的是哪一种</that>
+        <template>
+            task_restype_read
+        </template>
+    </category>
+
+
+    <!-- 馆区外借 -->
     <category>
         <pattern>#AREA*外借#</pattern>
         <template>
            task_area_borrow
         </template>
     </category>
-
     <category>
         <pattern>*外借#AREA*</pattern>
         <template>
            task_area_borrow
         </template>
     </category>
+
+    <!-- 楼层外借 -->
     <category>
         <pattern>#FLOOR*外借#</pattern>
         <template>
@@ -413,6 +632,48 @@
             请问押金收据是否还在？
         </template>
     </category>
+
+
+    <category>
+        <pattern>#怎么#退#卡#押金#</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+    <category>
+        <pattern>#如何#退#卡#押金#</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+
+    <category>
+        <pattern>#卡#押金#退#</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+    <category>
+        <pattern>#怎么#退#卡#押金#</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+    <category>
+        <pattern>#如何#退#卡#押金#</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+
+    <category>
+        <pattern>#办#卡#押金#</pattern>
+        <template>
+            请问押金收据是否还在？
+        </template>
+    </category>
+
+
     <category>
         <pattern>#是#</pattern>
         <that>请问押金收据是否还在？</that>
@@ -628,6 +889,89 @@
 
 
     <!-- ========================================================== -->
+    <category>
+        <pattern>#得#未收藏#</pattern>
+        <template>读者可以通过我馆文献提供中心的馆际互借和国际互借业务，向国内外其它图书馆或文献机构代为借入我馆缺藏图书文献。需要该项服务的可向该中心办理申请手续，具体费用向该中心咨询</template>
+    </category>
+    <category>
+        <pattern>#如何#远程#咨询#</pattern>
+        <template>
+            电话咨询：国图呼叫中心4006006988，网上咨询，读者信箱
+        </template>
+    </category>
+    <category>
+        <pattern>#怎么#远程#咨询#</pattern>
+        <template>
+            电话咨询：国图呼叫中心4006006988，网上咨询，读者信箱
+        </template>
+    </category>
+    <category>
+        <pattern>没#办#卡#查#目录#</pattern>
+        <template>
+            可以。没有办理国家图书馆读者卡的读者，可通过匿名方式登录我馆联机公共目录查询系统，但只能进行书目信息检索与浏览，没有预约提书等功能；已办理读者卡的读者可使用读者卡卡号和密码登录该系统，除具有普通检索功能外，还可实现预约、查看读者信息、修改密码等功能。
+        </template>
+    </category>
+    <category>
+        <pattern>没#办#证#查#目录#</pattern>
+        <template>
+            可以。没有办理国家图书馆读者卡的读者，可通过匿名方式登录我馆联机公共目录查询系统，但只能进行书目信息检索与浏览，没有预约提书等功能；已办理读者卡的读者可使用读者卡卡号和密码登录该系统，除具有普通检索功能外，还可实现预约、查看读者信息、修改密码等功能。
+        </template>
+    </category>
+
+    <category>
+        <pattern>#怎么#查#资源#</pattern>
+        <template>
+            通过登录国图主页，浏览和检索主页中提供的电子资源，或持读者卡或二代身份证（持二代身份证只能去开架阅览室）按网页导引去馆内相应服务点查找书刊资料；在各咨询台咨询；可到文献提供中心（电话010-88545382）、社科咨询室（电话010-88545270）或科技咨询室（电话010-88545237）办理委托代检代查业务
+        </template>
+    </category>
+    <category>
+        <pattern>#如何#查#文献#</pattern>
+        <template>
+            通过登录国图主页，浏览和检索主页中提供的电子资源，或持读者卡或二代身份证（持二代身份证只能去开架阅览室）按网页导引去馆内相应服务点查找书刊资料；在各咨询台咨询；可到文献提供中心（电话010-88545382）、社科咨询室（电话010-88545270）或科技咨询室（电话010-88545237）办理委托代检代查业务
+        </template>
+    </category>
+    <category>
+        <pattern>#如何#查#资源#</pattern>
+        <template>
+            通过登录国图主页，浏览和检索主页中提供的电子资源，或持读者卡或二代身份证（持二代身份证只能去开架阅览室）按网页导引去馆内相应服务点查找书刊资料；在各咨询台咨询；可到文献提供中心（电话010-88545382）、社科咨询室（电话010-88545270）或科技咨询室（电话010-88545237）办理委托代检代查业务
+        </template>
+    </category>
+    <category>
+        <pattern>#怎么#查#文献#</pattern>
+        <template>
+            通过登录国图主页，浏览和检索主页中提供的电子资源，或持读者卡或二代身份证（持二代身份证只能去开架阅览室）按网页导引去馆内相应服务点查找书刊资料；在各咨询台咨询；可到文献提供中心（电话010-88545382）、社科咨询室（电话010-88545270）或科技咨询室（电话010-88545237）办理委托代检代查业务
+        </template>
+    </category>
+    <category>
+        <pattern>#MTYPE#规则排架#</pattern>
+        <template>
+            国家图书馆1975年以后的图书采用《中国图书馆分类法》简称《中图法》进行分类编目，使用字母与数字相结合的混合号码进行编号。图书按照分类索书号进行排架，索书号是每种图书的唯一标识符号，它指明了图书在书架上的位置。索书号一般由“中图分类号/图书的入藏顺序号或种次号”构成。
+        </template>
+    </category>
+    <category>
+        <pattern>#MTYPE#基本大类#</pattern>
+        <template>
+            马克思主义、列宁主义、毛泽东思想、邓小平理论、哲学、宗教、社会科学总论、政治、法律、军事、经济、文化、科学、教育、体育、语言、文字、文学、艺术、历史、地理、自然科学总论、数理科学和化学、天文学、地球科学、生物科学、医药、卫生、农业科学、工业技术、交通运输、航空、航天、环境科学、综合性图书
+        </template>
+    </category>
+    <category>
+        <pattern>#复制#规定#</pattern>
+        <template>
+            读者如需复制文献，须完整填写《文献复制委托单》，由工作人员代为复制或由读者利用我馆提供的自助复制设备复制，禁止读者自带复制设备（含数码相机）复制文献。禁止读者将阅览文献携带出馆复制；在无复印设备的阅览室，读者须办理出室复制手续到指定地点复制。
+        </template>
+    </category>
+    <category>
+        <pattern>#复印#规定#</pattern>
+        <template>
+            读者如需复制文献，须完整填写《文献复制委托单》，由工作人员代为复制或由读者利用我馆提供的自助复制设备复制，禁止读者自带复制设备（含数码相机）复制文献。禁止读者将阅览文献携带出馆复制；在无复印设备的阅览室，读者须办理出室复制手续到指定地点复制。
+        </template>
+    </category>
+
+
+
+
+
+
 
 
 </aiml>

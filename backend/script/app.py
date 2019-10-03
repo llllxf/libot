@@ -12,19 +12,7 @@ from flask import jsonify
 import time
 import threading
 from model.robot_hub.general_hub_2 import GeneralHub
-from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
-from model import aiml_cn
 
-#from robot_hub import general_hub2
-#robot_hub.general_hub2.GeneralHub()
-
-#from backend.model.robot_hub.general_hub2 import GeneralHub
-#from backend.model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
-
-#import kb_prepare.neo4j_prepare2
-
-
-Neo4jPrepare()
 generalHub = GeneralHub()
 def heartbeat():
     print (time.strftime('%Y-%m-%d %H:%M:%S - heartbeat', time.localtime(time.time())))
@@ -70,12 +58,26 @@ def reply():
                 },
             },
             "userInfo": {
-                "apiKey": "3e0a308b56c845708e57415e51b77c1b",
-                "userId": "504027"
+                "apiKey": "62f1c8991a6d499c8b22e497de6cdd11",
+                "userId": "219315"
             }
         })
+
         r = requests.post(github_url, data)
+        print(r.json())
         res_msg = r.json()['results'][0]['values']['text']
+        '''
+        if r.json()['intent']['code'] == 10004:
+            res_msg = r.json()['results'][0]['values']['text']
+        else:
+            import requests, json
+            github_url = "http://openapi.tuling123.com/openapi/api/v2"
+            data = r
+            r = requests.post(github_url, data)
+            print(r.json())
+            if r.json()['intent']['code'] == 10004:
+                res_msg = r.json()['results'][0]['values']['text']
+        '''
 
     return jsonify( { 'text': res_msg } )
 
@@ -88,6 +90,6 @@ def index():
 
 # 启动APP
 if (__name__ == "__main__"): 
-    app.run(host = '0.0.0.0', port = 8808)
+    app.run(host = '0.0.0.0', port = 8809)
 
 

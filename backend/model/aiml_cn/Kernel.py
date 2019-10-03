@@ -413,7 +413,10 @@ class Kernel:
             return u""
         # Decode the input (assumed to be an encoded string) into a unicode
         # string. Note that if encoding is False, this will be a no-op
-        try: input_ = self._cod.dec(input_)
+        try:
+            print("===")
+            input_ = self._cod.dec(input_)
+            print("input",input_)
         except UnicodeError: pass
         except AttributeError: pass
         
@@ -427,7 +430,8 @@ class Kernel:
             # split the input into discrete sentences
             #print("input_",input_)
             sentences = Utils.sentences(input_)
-            #print("sentences",sentences)
+
+            print("sentences",sentences,"input",input_)
             finalResponse = u""
             for index,s in enumerate(sentences):
                 if not self._check_all_english(s):

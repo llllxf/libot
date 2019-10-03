@@ -129,50 +129,70 @@ class Task_information():
         ans = '\n'+'读者卡的金融功能指读者卡'+res['function']+'的功能\n'
         return ans
 
-
-
     def solve_restype_describe(self, entity):
+
         restype = entity['restype'][0]
 
-        res = Neo4jPrepare.get_reverse_relation(restype,'资源')
-        ans = "\n"
-        if len(res)<1:
-            ans += "很抱歉，没有"+restype+"的描述信息\n"
-            return ans
-        res_arr = []
-        yes_room = []
-        no_room = []
-        describe = []
+        restype_search = Neo4jPrepare.get_property(restype)
 
+        res = Neo4jPrepare.get_reverse_relation(restype,'资源')
+        res_arr=[]
+        yes_res=[]
+        no_res = []
+        describe=[]
+        ans="\n"
+
+        if restype_search['count'] != 'nan':
+            ans += restype+"在国家图书馆的馆藏数量为:"+restype_search['count']+"\n"
+        if restype_search['describe'] != 'nan':
+            ans += restype_search['describe']+"\n"
+            return ans
         for r in res:
             sub_res = Neo4jPrepare.get_property(r['office_name'])
+
             res_arr.append(sub_res['office_name'])
 
             if sub_res['describe'] != 'nan':
-                yes_room.append(sub_res['office_name'])
+
+                yes_res.append(sub_res['office_name'])
                 describe.append(sub_res['describe'])
 
             else :
-                no_room.append(sub_res['office_name'])
-        ans += restype+"包括"
-        for r in res_arr[:-1]:
-            ans+=r+","
-        ans += res_arr[-1]
-        #ans+=res_arr[-1]+"\n很抱歉，没有"
+                no_res.append(sub_res['office_name'])
+        if len(res)>0:
+            ans += restype+"包括"
+            for r in res_arr[:-1]:
+                ans+=r+","
+            ans += res_arr[-1]
+            for y in range(len(yes_res)):
+                ans += yes_res[y]+":"+describe[y]+"\n"
+        return ans
 
-        for y in range(len(yes_room)):
-            ans += yes_room[y]+":"+describe[y]+"\n"
-
+    def solve_multype_describe(self, entity):
+        multype = entity['multype'][0]
+        restype_search = Neo4jPrepare.get_reverse_relation(multype,'资源类型')
+        restype_arr = [x['office_name'] for x in restype_search]
+        ans = "\n"
+        if len(restype_arr)>0:
+            ans += multype+"包括"
+        else:
+            return "很抱歉，没有"+multype+"的具体信息\n"
+        for restype in restype_arr[:-1]:
+            ans += restype+","
+        ans += restype_arr[-1]+"\n"
+        for restype in restype_arr:
+            entity['restype'] = [restype]
+            ans += self.solve_restype_describe(entity)[1:]
         return ans
 
     def solve_library_describe(self):
         res = Neo4jPrepare.get_entity("国家图书馆")
-        #print(res)
-
         ans = "\n"+res[0]['describe']
-
         return ans
 
+    """
+    服务实体介绍
+    """
     def solve_service_describe(self,entity):
         service = entity['service'][0]
         #print(service)
@@ -191,8 +211,30 @@ class Task_information():
         return ans
 
     """
-        馆室开放时间
-        """
+    业务实体介绍
+    """
+    def solve_task_describe(self,entity):
+        task = entity['task'][0]
+        #print(service)
+        res = Neo4jPrepare.get_property(task)
+        #print(res.keys())
+        ans = ''
+        if res['discribe'] != 'nan':
+            ans = "\n"+task+"指"+res['discribe']
+        else:
+            room_res = Neo4jPrepare.get_relation(task,'馆室')
+            for r in room_res:
+                if r['describe']!='nan':
+                    ans += "\n"+r['office_name']+r['describe']
+        if ans == '':
+            ans = "很抱歉，暂时没有"+task+"的描述信息\n"
+        return ans
+
+
+
+    """
+    馆室开放时间
+    """
 
     def solve_room_time(self, entity):
         room = entity['room'][0]
@@ -278,6 +320,31 @@ class Task_information():
                     ans += ",工作日开放时间为"+room['work_open']
                 if room['week_open'] != 'nan':
                     ans += ",周末或节假日开放时间为"+room['week_open']+"\n"
+        return ans
+
+    """
+    业务时间
+    """
+
+    def solve_task_time(self, entity):
+        task = entity['task'][0]
+        res = Neo4jPrepare.get_property(task)
+        ans = "\n"
+        if res['date'] != 'nan':
+            ans += "业务日期：" + res['date'] + "\n"
+        if res['worktime'] != 'nan':
+            ans += "工作日服务时间为" + str(res['worktime']) + "\n"
+        if res['weektime'] != 'nan':
+            ans += "工作日服务时间为" + str(res['weektime']) + "\n"
+        if ans == "\n":
+            res_room = Neo4jPrepare.get_relation(task, "馆室")
+            for room in res_room:
+                if room['open_date'] != 'nan':
+                    ans += room['office_name'] + "的开放日为" + room['open_date']
+                if room['work_open'] != 'nan':
+                    ans += ",工作日开放时间为" + room['work_open']
+                if room['week_open'] != 'nan':
+                    ans += ",周末或节假日开放时间为" + room['week_open'] + "\n"
         return ans
 
     """

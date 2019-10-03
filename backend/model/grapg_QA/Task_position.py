@@ -2,6 +2,7 @@
 from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
 import numpy as np
 import matplotlib.pyplot as plt
+import skimage.io as io
 class Task_position():
     '''
     作废
@@ -19,7 +20,7 @@ class Task_position():
         # dx = rdfPrepare.rdf_query_navi_propertiy_pic(machine, 'pro_x', graph)
         # dy = rdfPrepare.rdf_query_navi_propertiy_pic(machine, 'pro_y', graph)
         img = None
-        #img = io.imread('../data/1.png')
+        img = io.imread('../data/1.png')
         # io.imshow(img)
 
         # print(int(dy[final_des_index]))
@@ -93,7 +94,7 @@ class Task_position():
 
             plt.plot([x - left, int(nx) - left, int(dx) - left],
                      [y - up, int(ny) - up, int(dy) - up])
-        #io.imshow(img)
+        io.imshow(img)
         print(img)
         plt.savefig('../../resource/2.png')
         return
@@ -104,8 +105,8 @@ class Task_position():
     @classmethod
     def draw_pic(cls, x, y):
 
-        img = None
-        #img = io.imread('../../resource/1.png')
+        #img = None
+        img = io.imread('../../resource/1.png')
         #print("=================",x,y)
         x = np.array(x, dtype='int')
         y = np.array(y, dtype='int')
@@ -170,9 +171,9 @@ class Task_position():
             dir_list.append(res2['dir'])
             #print("?",record['x_list'])
 
-            if record['x_list'].find("；")!=-1:
-                x_list=record['x_list'].split("；")
-                y_list=record['y_list'].split("；")
+            if record['x_list'].find(";")!=-1:
+                x_list=record['x_list'].split(";")
+                y_list=record['y_list'].split(";")
             else :
                 x_list=record['x_list']
                 y_list = record['y_list']
@@ -186,8 +187,10 @@ class Task_position():
     def form_answern_list(self,cursor):
         path_list=[]
         dis_list=[]
+        dis_dir_list=[]
         while cursor.forward():
             record = cursor.current()
+            print(record)
             path_list = record['p']
             #print("?",path_list,record['p'])
             dis_dir_list = record['r']
@@ -212,7 +215,7 @@ class Task_position():
         cursor = Neo4jPrepare.graph.run(
             "MATCH (a {office_name:{a}})-[r:相邻]->(b) return a.des_x as x_list ,a.des_y as y_list,b,r", a=desroom)
         destination_mark, dis_mark, x_list, y_list, dir_list = self.form_answern(cursor)
-        # print(destination_mark,dis_mark,x_list,y_list)
+        print("qqq",destination_mark,dis_mark,x_list,y_list)
 
         des_name = []
         for i in range(len(destination_mark)):
@@ -223,30 +226,31 @@ class Task_position():
             dx = []
             dy = []
 
-            arr = destination_mark[m_index]['self_site'].split("；")
+            arr = destination_mark[m_index]['self_site'].split(";")
 
             dx.append(int(arr[0]))
             dy.append(int(arr[1]))
             f_x = x_list[len(x_list) - m_index - 1]
             f_y = y_list[len(y_list) - m_index - 1]
-            if f_x.find("，") != -1:
-                arr = f_x.split("，")
+            if f_x.find(",") != -1:
+                arr = f_x.split(",")
                 for i in arr:
                     dx.append(int(i))
             else:
 
                 dx.append(int(f_x))
-            if f_y.find("，") != -1:
-                arr = f_y.split("，")
+            if f_y.find(",") != -1:
+                arr = f_y.split(",")
                 for i in arr:
                     dy.append(int(i))
             else:
 
                 dy.append(int(f_y))
+            print("dx,dy",dx,dy)
             dir = dir_list[m_index]
             # print(dir)
-            if dis_mark[m_index].find("，") != -1:
-                arr = dis_mark[m_index].split("，")
+            if dis_mark[m_index].find(",") != -1:
+                arr = dis_mark[m_index].split(",")
                 responds += '先向' + dir[0] + '走' + str(int(arr[0])) + "米\n"
                 # print('先向'+dir[0]+'走'+str(int(arr[0]))+"米")
                 for i in range(1, len(arr)):
@@ -261,6 +265,7 @@ class Task_position():
             #print("==============================")
             img = self.draw_pic(dx, dy)
             return responds,img;
+
         # print(des_name,dis_mark)
         min_path_list = []
         min_dis_list = []
@@ -271,9 +276,8 @@ class Task_position():
             cursor = Neo4jPrepare.graph.run(
                 "MATCH p=(a {office_name:{a}})-[r:互连*..5]->(b {office_name:{b}}) return nodes(p) as p,r,size(nodes(p)) as s order by s limit 1",
                 a=machine, b=des_name[sub])
-            #b = time.time()
-            # print(b - a)
             path_list, dis_list = self.form_answern_list(cursor)
+            print(path_list,dis_list,"path_list,dis_list")
 
             min_path_list.append(path_list)
             min_dis_list.append(dis_list)
@@ -285,9 +289,10 @@ class Task_position():
 
             tmp_sum = int(dis_mark[i])
             for j in min_dis_list[i]:
+                print(dict(j)['dis'])
                 temp_sub = 0
-                if dict(j)['dis'].find("，") != -1:
-                    arr = dict(j)['dis'].split("，")
+                if dict(j)['dis'].find(",") != -1:
+                    arr = dict(j)['dis'].split(",")
                     for sub_arr in arr:
                         temp_sub += int(sub_arr)
                 else:
@@ -308,7 +313,8 @@ class Task_position():
 
         #####################################################
 
-        arr = min_path_list[final_index][0]['self_site'].split("；")
+        arr = min_path_list[final_index][0]['self_site'].split(";")
+        print(arr)
         #print()
         #print(arr)
         dx.append(arr[0])
@@ -325,8 +331,8 @@ class Task_position():
                 dis = dict(min_dis_list[final_index][i - 1])['dis']
                 dir = min_dis_list[final_index][i - 1]['dir']
                 # print(dir)
-                if dis.find("，") != -1:
-                    arr = dis.split("，")
+                if dis.find(",") != -1:
+                    arr = dis.split(",")
                     responds += "向" + dir[0] + "走" + arr[0] + "米\n"
                     # print("先向" + dir[0]+"走" + arr[0]+"米")
                     for arr_index in range(1, len(arr)):
@@ -350,7 +356,7 @@ class Task_position():
                     dy.append(dict(min_dis_list[final_index][i - 1])['y'])
                     
                 
-                site = dict(min_path_list[final_index][i])['self_site'].split("；")
+                site = dict(min_path_list[final_index][i])['self_site'].split(";")
                 dx.append(site[0])
                 dy.append(site[1])
 
@@ -360,14 +366,17 @@ class Task_position():
             # print("qqq",modify_index,final_index)
             responds += "最后向" + dir_list[des_index] + "走" + str(int(dis_mark[des_index])) + "就能到" + ans_desroom + "\n"
             # print("最后向"+dir_list[des_index]+"走"+str(int(dis_mark[des_index]))+"就能到"+desroom)
+            print("x_list,y_list",x_list,y_list)
 
             dx.append(x_list[1])
             dy.append(y_list[1])
 
         # print(dx,dy)
         #####################################################
-        img = None
-        #img = self.draw_pic(dx,dy)
+        #img = None
+        print("dxdy",dx,dy)
+        img = self.draw_pic(dx,dy)
+
         #####################################################
         # print(dx,dy)
         return responds,img
@@ -376,7 +385,7 @@ class Task_position():
     馆室位置查询
     """
     def solve_room_pos(self,entity):
-        response = "\n您当前在总馆北区一层\n"
+        response = "\n您当前在总馆北区五层\n"
         room = entity['room'][0]
         #print(entity)
         ans_room = room
@@ -393,7 +402,7 @@ class Task_position():
         floor = Neo4jPrepare.get_relation(room,'楼层')
 
         #print(floor)
-        if floor[0]['office_name'] != '总馆北区一层':
+        if floor[0]['office_name'] != '总馆北区五层':
             response += ans_room+'在'+ floor[0]['office_name']+", 直走340米您就能找到最近的电梯。\n"
             return [response]
         respo,img = self.navi(room)
@@ -420,24 +429,71 @@ class Task_position():
     """
     def solve_restype_pos(self, entity):
         restype = entity['restype'][0]
-        res = Neo4jPrepare.get_reverse_relation(restype,'资源')
-        #print(res)
-        ans = "\n"+restype+"包括:\n"
-        for r in res:
-            #print(r)
-            room = Neo4jPrepare.get_relation(r['office_name'],'馆室')
-            ans += r['office_name']+",存放在"
+        ans = "\n"
+        room = Neo4jPrepare.get_relation(restype,'馆室')
+        if len(room)>0:
+            ans += restype + "存放在"
             for sub_room in room[:-1]:
                 ans += sub_room['office_name']+","
             ans += room[-1]['office_name']+"\n"
+        """
+        res = Neo4jPrepare.get_reverse_relation(restype,'资源')
+        if len(res) > 0:
+            ans += restype+"包括:\n"
+            for r in res:
+                #print(r)
+                room = Neo4jPrepare.get_relation(r['office_name'],'馆室')
+                ans += r['office_name']+",存放在"
+                for sub_room in room[:-1]:
+                    ans += sub_room['office_name']+","
+                ans += room[-1]['office_name']+"\n"
+        """
+        return ans
+
+    """
+    一类资源地点问询，需查出该类所有资源以及其对应的馆室
+    """
+
+    def solve_multype_pos(self, entity):
+        multype = entity['multype'][0]
+
+        restype_search = Neo4jPrepare.get_reverse_relation(multype, '资源类型')
+        restype_arr = [x['office_name'] for x in restype_search]
+        ans = "\n"
+
+        if len(restype_arr) > 0:
+            ans += multype + "包括"
+        else:
+            return "很抱歉，没有" + multype + "的具体信息\n"
+        for restype in restype_arr[:-1]:
+            ans += restype + ","
+        ans += restype_arr[-1] + "\n"
+        for restype in restype_arr:
+            entity['restype'] = [restype]
+            ans += self.solve_restype_pos(entity)[1:]
+        '''
+        return ans
+        restype = entity['multype'][0]
+        res = Neo4jPrepare.get_reverse_relation(restype, '资源')
+        ans = "\n" + restype + "包括:\n"
+        for r in res:
+            # print(r)
+            room = Neo4jPrepare.get_relation(r['office_name'], '馆室')
+            ans += r['office_name'] + ",存放在"
+            for sub_room in room[:-1]:
+                ans += sub_room['office_name'] + ","
+            ans += room[-1]['office_name'] + "\n"
+        '''
         return ans
 
     """
     服务地点问询
     """
     def solve_service_pos(self, entity):
+        #print(entity)
         service = entity['service'][0]
         room = Neo4jPrepare.get_relation(service,"馆室")
+        print(room)
         ans = "\n"
         if len(room)>0:
             ans += "您可以去"
@@ -450,7 +506,29 @@ class Task_position():
             else:
                 ans += "进行"+service+"\n"
         else:
-            ans += "很抱歉，国家图书馆不提供"+service+"\n"
+            ans += "图书馆提供"+service+"\n"
+        return ans
+
+    """
+    业务地点问询
+    """
+
+    def solve_task_pos(self, entity):
+        service = entity['task'][0]
+        room = Neo4jPrepare.get_relation(service, "馆室")
+        ans = "\n"
+        if len(room) > 0:
+            ans += "您可以去"
+
+            for r in room[:-1]:
+                ans += r['office_name'] + ","
+            ans += room[-1]['office_name']
+            if '服务' in service:
+                ans += "进行" + service[0:service.find("服")] + "\n"
+            else:
+                ans += "进行" + service + "\n"
+        else:
+            ans += "很抱歉，国家图书馆不提供" + service + "\n"
         return ans
 
     """

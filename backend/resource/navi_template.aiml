@@ -1,14 +1,14 @@
 <aiml version="1.0.1" encoding="UTF-8">
     <!-- 资源位置 -->
     <category>
-        <pattern>#RES#哪#</pattern>
+        <pattern>#RES#在哪#</pattern>
 
         <template>
             task_res_pos
         </template>
     </category>
     <category>
-        <pattern>#哪#RES#</pattern>
+        <pattern>#去哪#RES#</pattern>
 
         <template>
             task_res_pos
@@ -80,7 +80,7 @@
         </template>
     </category>
     <category>
-        <pattern>#哪*RTYPE#</pattern>
+        <pattern>#去哪*RTYPE#</pattern>
         <template>
            task_restype_pos
         </template>
@@ -101,6 +101,45 @@
         <pattern>#RTYPE*地方#</pattern>
         <template>
            task_restype_pos
+        </template>
+    </category>
+
+
+    <!-- 资源中级类型位置 -->
+    <category>
+        <pattern>#MTYPE#哪#看#</pattern>
+        <template>
+           task_multype_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#MTYPE*哪#</pattern>
+        <template>
+           task_multype_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#哪*MTYPE#</pattern>
+        <template>
+           task_multype_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#MTYPE*位置#</pattern>
+        <template>
+           task_multype_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#MTYPE*馆室#</pattern>
+        <template>
+           task_multype_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#MTYPE*地方#</pattern>
+        <template>
+           task_multype_pos
         </template>
     </category>
     <!-- 馆室位置 -->
@@ -180,13 +219,61 @@
 
     <!-- 服务位置 -->
     <category>
-        <pattern>#哪#SERVICE#</pattern>
+        <pattern>#去#哪#SERVICE#</pattern>
         <template>
            task_service_pos
         </template>
     </category>
     <category>
-        <pattern>#SERVICE#哪#</pattern>
+        <pattern>#在#哪#SERVICE#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#网点#SERVICE#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#哪#RES#SERVICE#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#SERVICE#网点#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#去#哪#RES#SERVICE#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#在#哪#RES#SERVICE#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#怎么#SERVICE#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#如何#SERVICE#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#SERVICE#在#哪#</pattern>
         <template>
            task_service_pos
         </template>
@@ -233,13 +320,91 @@
     <category>
         <pattern>#室#SERVICE#</pattern>
         <template>
-           task_service_pos
+           task_task_pos
         </template>
     </category>
     <category>
         <pattern>#SERVICE#室#</pattern>
         <template>
+           task_task_pos
+        </template>
+    </category>
+
+    <!-- 业务位置 -->
+    <category>
+        <pattern>#哪#TASK#</pattern>
+        <template>
+           task_task_pos
+        </template>
+    </category>
+
+    <category>
+        <pattern>#怎么#TASK#</pattern>
+        <template>
+           task_task_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#如何#TASK#</pattern>
+        <template>
+           task_task_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#TASK#哪#</pattern>
+        <template>
+           task_task_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#TASK#位置#</pattern>
+        <template>
+           task_task_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#TASK#地方#</pattern>
+        <template>
+           task_task_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#地方#TASK#</pattern>
+        <template>
+           task_task_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#TASK#地方#</pattern>
+        <template>
+           task_task_pos
+        </template>
+    </category>
+    <!--
+    <category>
+        <pattern>#馆#SERVICE#</pattern>
+        <template>
            task_service_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#SERVICE#馆#</pattern>
+        <template>
+           task_service_pos
+        </template>
+    </category>
+    -->
+
+    <category>
+        <pattern>#室#TASK#</pattern>
+        <template>
+           task_task_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#TASK#室#</pattern>
+        <template>
+           task_task_pos
         </template>
     </category>
 </aiml>

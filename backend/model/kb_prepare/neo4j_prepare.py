@@ -2,7 +2,7 @@
 
 from py2neo import Node, Graph, Relationship
 import xlrd
-class Neo4jPrepare(object):
+class Neo4jPrepareforbake(object):
 
 
     @classmethod
@@ -30,8 +30,8 @@ class Neo4jPrepare(object):
         """建图"""
         workbook = xlrd.open_workbook(r'../../resource/neo4j2.xlsx')
         #cls.create()
-        cls.create_node(workbook)
-        cls.create_relation(workbook)
+        #cls.create_node(workbook)
+        #cls.create_relation(workbook)
 
 
 

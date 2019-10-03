@@ -32,6 +32,8 @@ class MainHandler(tornado.web.RequestHandler):
             print(graph_respons)
             if len(graph_respons)>1:
                 print(graph_respons)
+            #print(graph_respons)
+
                 res_dict = {'graph_answer': graph_respons[0],'img':graph_respons[1].tolist()}
             elif len(graph_respons)==1:
                 res_dict = {'graph_answer': graph_respons[0]}
@@ -43,6 +45,20 @@ class MainHandler(tornado.web.RequestHandler):
             res_json = json.dumps(res_dict)
             self.write(res_json)
             #simpleLog.log_something('graph_answer:'+graph_respons)
+
+        elif target == 'search_qa':
+            answer_list = search_bot.answer_question(question_str)
+            res_dict = {'search_answer': answer_list}
+            res_json = json.dumps(res_dict)
+            self.write(res_json)
+            #simpleLog.log_something('search_answer:' + str(answer_list))
+        
+        elif target == 'all':
+            graph_respons = graph_qa_hub.question_answer_hub(question_str)
+            answer_list = search_bot.answer_question(question_str)
+            res_dict = {'graph_answer': graph_respons, 'search_answer': answer_list}
+            res_json = json.dumps(res_dict)
+            self.write(res_json)
             #simpleLog.log_something('graph_answer:' + graph_respons)
             #simpleLog.log_something('search_answer:' + str(answer_list))
         #elif target == 'chat':

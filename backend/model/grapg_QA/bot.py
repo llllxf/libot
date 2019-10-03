@@ -60,10 +60,18 @@ class Bot():
             answer = cls.answer_count_res(entity_dict)
         elif task == "task_count_restype":
             answer = cls.answer_count_restype(entity_dict)
+        elif task == "task_count_multype":
+            answer = cls.answer_count_multype(entity_dict)
         elif task == "task_res_res_h":
             answer = cls.answer_res_res_h(entity_dict)
         elif task == "task_res_res_a":
             answer = cls.answer_res_res_a(entity_dict)
+        elif task == "task_mul_res_h":
+            answer = cls.answer_mul_res_h(entity_dict)
+        elif task == "task_mul_res_a":
+            answer = cls.answer_mul_res_a(entity_dict)
+        elif task == "task_mul_res_a2":
+            answer = cls.answer_mul_res_a2(entity_dict)
         elif task == "task_res_res_t":
             answer = cls.answer_res_res_t(entity_dict)
         elif task == "task_room_card_a":
@@ -78,8 +86,12 @@ class Bot():
             answer = cls.answer_card_twelve()
         elif task == "task_restype_borrow":
             answer = cls.answer_restype_borrow(entity_dict)
+        elif task == "task_multype_borrow":
+            answer = cls.answer_multype_borrow(entity_dict)
         elif task == "task_restype_describe":
             answer = cls.answer_restype_describe(entity_dict)
+        elif task == "task_multype_describe":
+            answer = cls.answer_multype_describe(entity_dict)
         elif task == "task_count_floor":
             answer = cls.answer_count_floor(entity_dict)
         elif task == "task_floor_count_room":
@@ -98,6 +110,8 @@ class Bot():
             answer = cls.answer_money_back_no()
         elif task == "task_restype_pos":
             answer = cls.answer_restype_pos(entity_dict)
+        elif task == "task_multype_pos":
+            answer = cls.answer_multype_pos(entity_dict)
         elif task == "task_music_or_movie":
             answer = cls.answer_music_or_movie()
         elif task == "task_library_describe":
@@ -106,12 +120,20 @@ class Bot():
             answer = cls.answer_library_area()
         elif task == "task_res_read":
             answer = cls.answer_res_read(entity_dict)
+        elif task == "task_restype_read":
+            answer = cls.answer_restype_read(entity_dict)
         elif task == 'task_service_describe':
             answer = cls.answer_service_describe(entity_dict)
+        elif task == 'task_task_describe':
+            answer = cls.answer_task_describe(entity_dict)
         elif task == 'task_service_pos':
             answer = cls.answer_service_pos(entity_dict)
+        elif task == 'task_task_pos':
+            answer = cls.answer_task_pos(entity_dict)
         elif task == 'task_service_time':
             answer = cls.answer_service_time(entity_dict)
+        elif task == 'task_task_time':
+            answer = cls.answer_task_time(entity_dict)
         elif task == 'task_library_time':
             answer = cls.answer_library_time(entity_dict)
         elif task == 'task_area_time':
@@ -128,6 +150,8 @@ class Bot():
             answer = cls.answer_library_phone()
         elif task == 'task_service_exit':
             answer = cls.answer_service_exit(entity_dict)
+        elif task == 'task_task_exit':
+            answer = cls.answer_task_exit(entity_dict)
         elif task == 'task_res_form':
             answer = cls.answer_res_form(entity_dict)
         elif task == 'task_res_topic':
@@ -140,14 +164,36 @@ class Bot():
             answer = cls.answer_return_back_res(entity_dict)
         elif task == 'task_service_exit_all':
             answer = cls.answer_service_exit_all()
+        elif task == 'task_service_area_all':
+            answer = cls.answer_service_area_all(entity_dict)
         elif task == 'task_service_room_exit':
             answer = cls.answer_service_room_exit(entity_dict)
+        elif task == 'task_service_area_exit':
+            answer = cls.answer_service_area_exit(entity_dict)
         elif task == 'task_open_room':
             answer = cls.answer_open_room()
         elif task == 'task_res_search':
             answer = cls.answer_res_search(entity_dict)
-
-
+        elif task == 'task_restype_room':
+            answer = cls.answer_restype_room(entity_dict)
+        elif task == 'task_restype_area':
+            answer = cls.answer_restype_area(entity_dict)
+        elif task == 'task_restype_area':
+            answer = cls.answer_restype_library(entity_dict)
+        elif task == 'task_multype_room':
+            answer = cls.answer_multype_room(entity_dict)
+        elif task == 'task_multype_area':
+            answer = cls.answer_multype_area(entity_dict)
+        elif task == 'task_multype_library':
+            answer = cls.answer_multype_library(entity_dict)
+        elif task == 'task_restype_library':
+            answer = cls.answer_restype_library(entity_dict)
+        elif task == 'task_ttype_area':
+            answer = cls.answer_ttype_area(entity_dict)
+        elif task == 'task_ttype_library':
+            answer = cls.answer_ttype_library(entity_dict)
+        elif task == 'task_res_library':
+            answer = cls.answer_res_library(entity_dict)
         return answer
 
 
@@ -187,6 +233,66 @@ class Bot():
     def answer_res_room(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_res_room(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_restype_room(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_restype_room(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_multype_room(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_multype_room(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_restype_area(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_restype_area(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_restype_library(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_restype_library(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_multype_area(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_multype_area(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_multype_library(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_multype_library(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_restype_library(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_restype_library(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_ttype_area(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_ttype_area(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_ttype_library(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_ttype_library(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_res_library(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_res_library(entity_dict)
         return [res]
 
     @classmethod
@@ -250,6 +356,12 @@ class Bot():
         return [res]
 
     @classmethod
+    def answer_count_multype(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_count_multype(entity_dict)
+        return [res]
+
+    @classmethod
     def answer_res_res_h(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_res_res_h(entity_dict)
@@ -259,6 +371,28 @@ class Bot():
     def answer_res_res_a(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_res_res_a(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_mul_res_h(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_mul_res_h(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_mul_res_a(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_mul_res_a(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_mul_res_a2(cls, entity_dict):
+        task_contain = Task_contain()
+        print("==========",entity_dict)
+        res = task_contain.solve_mul_res_a(entity_dict)
+        print(res[:-1])
+        res += ",您具体说的是哪一种"
+        print(res)
         return [res]
 
     @classmethod
@@ -301,15 +435,28 @@ class Bot():
         return [res]
 
     @classmethod
+    def answer_multype_borrow(cls, entity_dict):
+
+        task_business = Task_business()
+        res = task_business.solve_multype_borrow(entity_dict)
+        return [res]
+
+    @classmethod
     def answer_restype_describe(cls, entity_dict):
         task_information = Task_information()
         res = task_information.solve_restype_describe(entity_dict)
         return [res]
 
     @classmethod
+    def answer_multype_describe(cls, entity_dict):
+        task_information = Task_information()
+        res = task_information.solve_multype_describe(entity_dict)
+        return [res]
+
+    @classmethod
     def answer_count_floor(cls, entity_dict):
-        task_condition = Task_condition()
-        res = task_condition.solve_count_floor(entity_dict)
+        task_contain = Task_contain()
+        res = task_contain.solve_count_floor(entity_dict)
         return [res]
 
     @classmethod
@@ -368,9 +515,14 @@ class Bot():
         return [res]
 
     @classmethod
+    def answer_multype_pos(cls, entity):
+        task_position = Task_position()
+        res = task_position.solve_multype_pos(entity)
+        return [res]
+
+    @classmethod
     def answer_music_pos(cls):
         dict = {'room':'视听阅览区'}
-        #print("====================")
         task_position = Task_position()
         res = task_position.solve_room_pos(dict)
         return res
@@ -402,9 +554,23 @@ class Bot():
         return [res]
 
     @classmethod
+    def answer_restype_read(cls, entity_dict):
+        task_business = Task_business()
+        res = task_business.solve_restype_read(entity_dict)
+        return [res]
+
+    @classmethod
     def answer_service_describe(cls,entity_dict):
+        print("entity_dict",entity_dict)
         task_information = Task_information()
         res = task_information.solve_service_describe(entity_dict)
+        print(res)
+        return [res]
+
+    @classmethod
+    def answer_task_describe(cls, entity_dict):
+        task_information = Task_information()
+        res = task_information.solve_task_describe(entity_dict)
         return [res]
 
     @classmethod
@@ -414,9 +580,21 @@ class Bot():
         return [res]
 
     @classmethod
+    def answer_task_pos(cls, entity_dict):
+        task_position = Task_position()
+        res = task_position.solve_task_pos(entity_dict)
+        return [res]
+
+    @classmethod
     def answer_service_time(cls, entity_dict):
         task_information = Task_information()
         res = task_information.solve_service_time(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_task_time(cls, entity_dict):
+        task_information = Task_information()
+        res = task_information.solve_task_time(entity_dict)
         return [res]
 
     @classmethod
@@ -469,6 +647,12 @@ class Bot():
         return [res]
 
     @classmethod
+    def answer_task_exit(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_task_exit(entity_dict)
+        return [res]
+
+    @classmethod
     def answer_res_form(cls, entity_dict):
         task_information = Task_information()
         res = task_information.solve_res_form(entity_dict)
@@ -490,7 +674,12 @@ class Bot():
     def answer_service_room_exit(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_service_room_exit(entity_dict)
-        #print(res)
+        return [res]
+
+    @classmethod
+    def answer_service_area_exit(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_service_area_exit(entity_dict)
         return [res]
 
 
@@ -510,6 +699,12 @@ class Bot():
     def answer_service_exit_all(cls):
         task_contain = Task_contain()
         res = task_contain.solve_service_exit_all()
+        return [res]
+
+    @classmethod
+    def answer_service_area_all(cls,entity):
+        task_contain = Task_contain()
+        res = task_contain.solve_service_area_all(entity)
         return [res]
 
     @classmethod

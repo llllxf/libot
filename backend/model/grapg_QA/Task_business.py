@@ -68,6 +68,25 @@ class Task_business():
         return ans
 
     """
+    资源借阅，描述存放的馆室以及进入馆室的条件
+    """
+
+    def solve_restype_read(self, entity):
+        restype = entity['restype'][0]
+        res = Neo4jPrepare.get_relation(restype, '馆室')
+
+        ans = "\n" + restype + "存放在"
+        for r in res[:-1]:
+            ans += r['office_name'] + ","
+
+        ans += res[-1]['office_name'] + "\n"
+        card = Neo4jPrepare.get_relation(res[-1]['office_name'], '证件')
+
+        for c in card:
+            ans += "年龄" + c['age'] + "可持" + c['office_name'] + "进入馆室\n"
+        return ans
+
+    """
     作废了
     """
     def solve_money_back(self):
@@ -226,6 +245,10 @@ class Task_business():
             ans += no_room[len(no_room)-1]+"的"+restype+"不可以外借，仅供借阅\n"
         return ans
 
+    #def solve_multype_borrow(self, entity):
+
+
+
     '''
     某层的资源是否可以外借（借助馆室的外借信息，查出该层的所有的馆室，得出可以外借资源的馆室有哪些，哪些馆室的资源可以复制和扫描，哪些仅供借阅）
     '''
@@ -281,22 +304,32 @@ class Task_business():
     """
     def solve_res_search(self,entity):
         resource = entity['res'][0]
-        #sprint(resource)
-        ans = "\n国家图书馆提供目录查询服务，您可以前往"
-        room_res = Neo4jPrepare.get_relation('目录服务', '馆室')
-        for sub_room in room_res[:-1]:
-            ans += sub_room['office_name']+","
-        ans += sub_room['office_name']+"\n"
 
+        ans = "\n国家图书馆提供目录查询服务，您可以前往目录查询区查询\n"
+        room_res_search = Neo4jPrepare.get_relation('目录服务', '馆室')
+        res_search = [x['office_name'] for x in room_res_search]
         room = Neo4jPrepare.get_relation(resource, '馆室')
+        room_arr = [x['office_name'] for x in room]
 
-        #room = Neo4jPrepare.get_reverse_relation(resource,'馆室')
-        #print(room)
-        if room[0]['office_name'] == '数字共享空间':
-            ans += "您也可以前往数字共享空间查找\n"
-            return ans
-        else:
-            return ans
+        ans_arr=[]
+        for sub_room in room_arr:
+            if sub_room in res_search:
+                ans_arr.append(sub_room)
+        if '数字共享空间' in room_arr:
+            ans_arr.append("数字共享空间")
+
+        if len(ans_arr)>0:
+            ans += "您还可以去:\n"
+            for sub_ans in ans_arr[:-1]:
+                ans += sub_ans+","
+            ans += ans_arr[-1]+"进行目录查询\n"
+
+        return ans
+
+
+
+
+
 
 
 

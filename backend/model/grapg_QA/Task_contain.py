@@ -29,7 +29,7 @@ class Task_contain():
         if room_name.find(u"_") != -1:
             room_name = room_name.split("_")[2]
             ans += room_name + "\n"
-        #print(ans)
+
         return ans
 
     """
@@ -91,7 +91,7 @@ class Task_contain():
         return ans
 
     """
-    查出馆室所具有的全部资源
+    查出馆室是否有某个资源
     """
     def solve_res_room(self, entity):
         room = entity['room'][0]
@@ -108,8 +108,264 @@ class Task_contain():
                 des_room = res[0]['office_name'].split("_")[2]
             ans += resource+"不存放在"+room+"\n"+resource+"存放在"+des_room+"\n"
         return ans
+
     """
-    处理馆室是否有某个资源的问题
+    查出馆室是否有某种资源的
+    """
+    def solve_restype_room(self, entity):
+
+        room = entity['room'][0]
+        restype = entity['restype'][0]
+        res = Neo4jPrepare.get_relation_mul(restype, '馆室')
+        ans = "\n"
+        room_arr = [r['office_name'] for r in res]
+        print(room_arr)
+
+        if room in room_arr:
+            ans += room + "存有" + restype
+            ans += self.solve_count_res(entity)
+        else:
+            ans += restype + "不存放在" + room + "\n" + restype + "存放在"
+            for r in room_arr[:-1]:
+                ans += r +","
+            ans += room_arr[-1]+"\n"
+
+        return ans
+
+    """
+    查出馆区是否有某种资源的
+    """
+
+    def solve_restype_area(self, entity):
+        ans = "\n"
+        area = entity['area'][0]
+
+        restype = entity['restype'][0]
+
+        resource = Neo4jPrepare.get_reverse_relation(restype,'资源')
+        resource_arr = [x['office_name'] for x in resource]
+        ans += restype+"包括"
+        for sub_res in resource_arr:
+            ans += sub_res+","
+        res = Neo4jPrepare.get_relation_triple(restype, '馆区')
+
+        area_arr = [r['office_name'] for r in res]
+
+        if area in area_arr:
+            ans += area + "存有" + restype+"\n"
+
+        else:
+            ans += restype + "不存放在" + area + "\n" + restype + "存放在"
+            for r in area_arr[:-1]:
+                ans += r + ","
+            ans += area_arr[-1] + "\n"
+
+        return ans
+
+    """
+    查出国图是否有某种资源的
+    """
+
+    def solve_restype_library(self, entity):
+        ans = ""
+        entity['area'] = ['总馆北区']
+        temp = self.solve_restype_area(entity)
+        ans += temp.split("\n")[0]
+        if '不' in temp.split("\n")[1]:
+            pass
+        else:
+            ans += temp.split("\n")[1]
+            return ans
+
+        entity['area'] = ['总馆南区']
+        temp = self.solve_restype_area(entity)
+        if '不' in temp.split("\n")[1]:
+            pass
+        else:
+            ans += temp.split("\n")[1]
+            return ans
+
+        entity['area'] = ['文津楼']
+        temp = self.solve_restype_area(entity)
+        if '不' in temp.split("\n")[1]:
+            pass
+        else:
+            ans += temp.split("\n")[1]
+            return ans
+
+        entity['area'] = ['临琼楼']
+        temp = self.solve_restype_area(entity)
+        if '不' in temp.split("\n")[1]:
+            pass
+        else:
+            ans += temp.split("\n")[1]
+            return ans
+
+        return ans
+
+
+    """
+    查出馆区是否有某种资源的（中级）
+    """
+
+    def solve_multype_area(self, entity):
+
+        area = entity['area'][0]
+        multype = entity['multype'][0]
+        restype_res = Neo4jPrepare.get_reverse_relation(multype, '资源类型')
+
+        restype_arr_orgin = [x['office_name'] for x in restype_res]
+        restype_arr = restype_arr_orgin
+        ans = multype+"包括"
+
+        for restype in restype_arr[:-1]:
+
+            ans+=restype+","
+
+        ans += restype_arr[-1]+"\n"
+        yes_restype = []
+        for restype in restype_arr:
+            res = Neo4jPrepare.get_relation_triple(restype, '馆区')
+            area_arr = [x['office_name'] for x in res]
+            if area in area_arr:
+                yes_restype.append(restype)
+        if len(yes_restype)>0:
+
+            ans += '其中'
+            for r in yes_restype[:-1]:
+                ans += r+","
+            ans += yes_restype[-1]+"在"+area+"\n"
+        return ans
+
+    """
+    查看某馆区时候有什么大类资源
+    """
+    def solve_ttype_area(self, entity):
+
+        area = entity['area'][0]
+        ttype = entity['ttype'][0]
+        restype_res = Neo4jPrepare.get_reverse_relation(ttype, '资源类型')
+
+        restype_arr_orgin = [x['office_name'] for x in restype_res]
+        restype_arr = restype_arr_orgin
+        ans = ttype+"包括"
+
+        for restype in restype_arr[:-1]:
+
+            ans+=restype+","
+
+        ans += restype_arr[-1]+"\n"
+        yes_restype = []
+        for restype in restype_arr:
+            res = Neo4jPrepare.get_relation_triple(restype, '馆区')
+            area_arr = [x['office_name'] for x in res]
+            if area in area_arr:
+                yes_restype.append(restype)
+        if len(yes_restype)>0:
+
+            ans += '其中'
+            for r in yes_restype[:-1]:
+                ans += r+","
+            ans += yes_restype[-1]+"在"+area+"\n"
+        else:
+            ans += area + "没有" + ttype+"\n"
+        return ans
+
+    """
+    查看国图有么有某中类
+    """
+
+    def solve_multype_library(self, entity):
+
+        ans = ""
+        entity['area'] = ['总馆北区']
+        ans += self.solve_multype_area(entity)
+        entity['area'] = ['总馆南区']
+        temp = self.solve_multype_area(entity)
+        temp = temp.split("\n")[1]
+        ans += temp+"\n"
+        entity['area'] = ['文津楼']
+        temp = self.solve_multype_area(entity)
+        temp = temp.split("\n")[1]
+        ans += temp+"\n"
+        entity['area'] = ['临琼楼']
+        temp = self.solve_multype_area(entity)
+        temp = temp.split("\n")[1]
+        ans += temp
+        return ans
+
+    """
+    查看国图有么有某中类
+    """
+    def solve_ttype_library(self, entity):
+
+        ans = ""
+        entity['area'] = ['总馆北区']
+        ans += self.solve_ttype_area(entity)
+        entity['area'] = ['总馆南区']
+        temp = self.solve_ttype_area(entity)
+        temp = temp.split("\n")[1]
+        ans += temp+"\n"
+        entity['area'] = ['文津楼']
+        temp = self.solve_ttype_area(entity)
+        temp = temp.split("\n")[1]
+        ans += temp+"\n"
+        entity['area'] = ['临琼楼']
+        temp = self.solve_ttype_area(entity)
+        temp = temp.split("\n")[1]
+        ans += temp
+        return ans
+
+    """
+    查看国图有么有某中类
+    """
+
+    def solve_res_library(self, entity):
+
+        res = entity['res'][0]
+        ans = "国家图书馆有"+res+",存放在"
+        room = Neo4jPrepare.get_relation(res,'馆室')
+        room_arr = [x['office_name'] for x in room]
+        for room_name in room_arr[:-1]:
+            ans += room_name+","
+        ans += room_arr[-1]+"\n"
+        return ans
+    """
+    查出馆室是否有某种资源的（中级）
+    """
+
+    def solve_multype_room(self, entity):
+
+        room = entity['room'][0]
+        multype = entity['multype'][0]
+        restype_search = Neo4jPrepare.get_reverse_relation(multype, '资源类型')
+        restype_arr = [x['office_name'] for x in restype_search]
+        ans = "\n"
+        if len(restype_arr) > 0:
+            ans += multype + "包括"
+        else:
+            return "很抱歉，没有" + multype + "的具体信息\n"
+        for restype in restype_arr[:-1]:
+            ans += restype + ","
+        ans += restype_arr[-1] + "\n"
+        #print("===",restype_arr)
+        for restype in restype_arr:
+            #print(restype)
+            res = Neo4jPrepare.get_relation_mul(restype, '馆室')
+            #print(res)
+
+            room_arr = [r['office_name'] for r in res]
+            #print(room_arr)
+
+            if room in room_arr:
+                ans += room + "存有" + restype
+                return ans
+
+        ans += multype + "不存放在" + room + "\n"
+        return ans
+
+    """
+    处理馆室所有资源的问题
     """
     def solve_room_res_a(self, entity):
         room = entity['room'][0]
@@ -146,7 +402,15 @@ class Task_contain():
     def solve_count_res(self, entity):
         resource = entity['res'][0]
         res = Neo4jPrepare.get_property(resource)
-        ans = "\n"
+        ans = "\n"+resource+"存放在"
+        room = Neo4jPrepare.get_relation(resource,'馆室')
+        room_arr = [x['office_name'] for x in room]
+        #print(room)
+
+        for room_name in room_arr[:-1]:
+            ans += room_name + ","
+        ans += room_arr[-1] + "\n"
+
         if res['count']!='nan':
             ans += resource+"的数量是:"+str(res['count'])+"本（份）\n"
         else:
@@ -160,39 +424,29 @@ class Task_contain():
         restype = entity['restype'][0]
         #res = Neo4jPrepare.get_property(restype)
         ans = "\n"
-        describe = ""
-        num = 0
+        type = Neo4jPrepare.get_property(restype)
 
-        type = Neo4jPrepare.get_reverse_relation(restype,'资源类型')
-        #print(type)
-        for t in type:
-            type_num = 0
-            res_r = Neo4jPrepare.get_reverse_relation(t['office_name'],'资源')
-            for r in res_r:
-                if r['count'] =='nan':
-                    continue
-                type_num += int(r['count'])
-                num += int(r['count'])
-            if type_num != 0:
-                describe = "其中包括:\n"+t['office_name'] + str(type_num) + "份\n"
-
-        res_res = Neo4jPrepare.get_reverse_relation(restype, '资源')
-        #print(res_res)
-        other_num = 0
-        for r in res_res:
-            if r['count'] == 'nan':
-                continue
-            num += int(r['count'])
-            other_num += int(r['count'])
-        if other_num != 0 and describe != 'nan':
-            describe += "以及其他" + restype + str(other_num) + "份\n"
-
-        # print(num)
-        if num!=0:
-            ans += restype+"的数量是:"+str(num)+"本（份）\n"
-            ans += describe
+        if type['count'] != 'nan':
+            ans += restype+"的数量是:"+str(int(float(type['count'])))+"本（份）\n"
         else:
             ans += "很抱歉，"+restype+"暂时没有数据信息\n"
+        return ans
+
+    def solve_count_multype(self, entity):
+        multype = entity['multype'][0]
+        restype_search = Neo4jPrepare.get_reverse_relation(multype, '资源类型')
+        restype_arr = [x['office_name'] for x in restype_search]
+        ans = "\n"
+        if len(restype_arr) > 0:
+            ans += multype + "包括"
+        else:
+            return "很抱歉，没有" + multype + "的具体信息\n"
+        for restype in restype_arr[:-1]:
+            ans += restype + ","
+        ans += restype_arr[-1] + "\n"
+        for restype in restype_arr:
+            entity['restype'] = [restype]
+            ans += self.solve_count_restype(entity)[1:]
         return ans
 
     """
@@ -214,16 +468,51 @@ class Task_contain():
         return ans
 
     """
+    某资源是否是某类资源问题
+    """
+
+    def solve_mul_res_h(self, entity):
+        restype = entity['restype'][0]
+        multype = entity['multype'][0]
+        res_arr = []
+        res = Neo4jPrepare.get_reverse_relation(multype, '资源类型')
+        ans = "\n"
+        for r in res[:-1]:
+            res_arr.append(r['office_name'])
+        if restype in res_arr:
+
+            ans += "是的," + restype + "属于" + multype + "\n"
+        else:
+            ans += "很抱歉," + restype + "不属于" + multype + "\n"
+        return ans
+
+    """
     某类资源包含的所有资源
     """
     def solve_res_res_a(self, entity):
         restype = entity['restype'][0]
         res = Neo4jPrepare.get_reverse_relation(restype,'资源')
+        if len(res)<=0:
+            return "很抱歉，暂时没有"+restype+"下属资源的信息\n"
         ans = "\n"+restype+"包含的资源有：\n"
         for r in res[:-1]:
             ans += r['office_name']+","
         ans += res[-1]['office_name'] + "\n"
         return ans
+
+    """
+    某类资源包含的所有资源
+    """
+
+    def solve_mul_res_a(self, entity):
+        multype = entity['multype'][0]
+        res = Neo4jPrepare.get_reverse_relation(multype, '资源类型')
+        ans = "\n" + multype + "包含的资源有:"
+        for r in res[:-1]:
+            ans += r['office_name'] + ","
+        ans += res[-1]['office_name'] + "\n"
+        return ans
+
 
     """
     资源类型（资源的中级类别）属于哪一大类问题（资源的最高类别）
@@ -262,11 +551,18 @@ class Task_contain():
     """
 
     def solve_library_res_a(self):
-        res = Neo4jPrepare.get_entity("资源类型")
-        ans = "\n国家图书馆馆藏的资源类别包括:\n"
-        for r in res[:-1]:
-            ans += r['office_name']+","
-        ans += res[-1]['office_name']+"\n"
+        area = Neo4jPrepare.get_entity("馆区")
+        area_arr = [sub_area['office_name'] for sub_area in area]
+        ans = "三个馆舍在资源和服务方面各有侧重。\n"
+
+        for sub_area in area_arr:
+            resource_arr = Neo4jPrepare.get_area_resource_type(sub_area)
+            if len(resource_arr)>0:
+                ans += sub_area+": "
+                for r in resource_arr[:-1]:
+                    #print(r)
+                    ans += r['office_name']+","
+                ans += resource_arr[-1]['office_name']+"\n"
         return ans
     """
     国图是否提供某一服务
@@ -292,18 +588,55 @@ class Task_contain():
         return ans
 
     """
+    国图是否提供某一业务
+    """
+
+    def solve_task_exit(self, entity):
+        # print(entity)
+        service = entity['task']
+        # res = Neo4jPrepare.get_property(service)
+        ans = "\n"
+        if len(service) > 0:
+            ans += "国家图书馆提供" + service[0] + "\n"
+            # print("aaa",ans)
+            room = Neo4jPrepare.get_relation(service[0], "馆室")
+            if len(room) <= 0:
+                return ans
+            ans += "您可以去"
+            for r in room[:-1]:
+                ans += r['office_name'] + ","
+            ans += room[-1]['office_name'] + "办理该业务\n"
+        else:
+            ans += "很抱歉，国家图书馆不能办理该业务"
+        return ans
+
+    """
     国图提供什么服务
     """
 
     def solve_service_exit_all(self):
-        # print(entity)
-        #service = entity['service']
+
         res = Neo4jPrepare.get_entity('服务')
         ans = "\n国家图书馆提供的服务包括"
         for sub_result in res[:-1]:
             ans += sub_result['office_name']+","
         ans += res[-1]['office_name']+"\n"
         return ans
+
+    def solve_service_area_all(self,entity):
+
+        area = entity['area'][0]
+        res = Neo4jPrepare.get_reverse_relation_mul(area, '服务')
+        ans = "\n"
+        if len(res) > 0:
+            ans += area + "提供的服务包括"
+            for r in res[:-1]:
+                ans += r['office_name'] + ","
+            ans += res[-1]['office_name'] + "\n"
+        else:
+            ans += area + "不提供任何服务\n"
+        return ans
+
 
     """
     查出国图资源分布，即查出国图所有馆区所包含的资源
@@ -368,7 +701,23 @@ class Task_contain():
                 return ans
 
         ans += room + "不提供"+service+"\n"
-        #print(ans)
+        return ans
+
+    """
+    馆室有没有某一服务
+    """
+
+    def solve_service_area_exit(self, entity):
+        area = entity['area'][0]
+        service = entity['service'][0]
+        res = Neo4jPrepare.get_reverse_relation_mul(area, '服务')
+        ans = "\n"
+        for r in res:
+            if r['office_name'] == service:
+                ans += area + "提供" + service + "\n"
+                return ans
+
+        ans += area + "不提供" + service + "\n"
         return ans
 
     """

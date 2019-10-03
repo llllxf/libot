@@ -18,38 +18,29 @@ class similarQuestionBot():
     """
     通过检索相似问题的方式回复
     """
-    def __init__(self):
+
+    @classmethod
+    def __init__(cls):
         """
         初始化，加载问答列表
         """
-        self.qa_pair_dict = {}
-        self.q_list = []
+        cls.qa_pair_dict = {}
+        cls.q_list = []
         with open('../../resource/pair_for_reading_qa.txt', 'r', encoding='utf8') as in_file:
+        #with open('../resource/pair_for_reading_qa.txt', 'r', encoding='utf8') as in_file:
             for line in in_file.readlines():
                 q_str = line.split('\t')[0]
                 a_str = line.split('\t')[-1].strip()
-                self.q_list.append(q_str)
-                self.qa_pair_dict[q_str] = a_str
-        with open('../../resource/pair_for_banzheng.txt', 'r', encoding='utf8') as in_file:
-            for line in in_file.readlines():
-                q_str = line.split('\t')[0]
-                a_str = line.split('\t')[-1].strip()
-                self.q_list.append(q_str)
-                self.qa_pair_dict[q_str] = a_str
-        with open('../../resource/pair_for_jieyue.txt', 'r', encoding='utf8') as in_file:
-            for line in in_file.readlines():
-                q_str = line.split('\t')[0]
-                a_str = line.split('\t')[-1].strip()
-                self.q_list.append(q_str)
-                self.qa_pair_dict[q_str] = a_str
+                cls.q_list.append(q_str)
+                cls.qa_pair_dict[q_str] = a_str
 
         zhcn_seg = zhcnSeg()
-        self.sent_sim = SentenceSimilarity(zhcn_seg)
-        self.sent_sim.set_sentences(self.q_list)
+        cls.sent_sim = SentenceSimilarity(zhcn_seg)
+        cls.sent_sim.set_sentences(cls.q_list)
         # 默认用tfidf
-        self.sent_sim.TfidfModel()
-
-
+        cls.sent_sim.TfidfModel()
+        #cls.sent_sim.LsiModel()
+        #cls.sent_sim.LdaModel()
 
     def answer_question(self, question_str):
         """
@@ -64,16 +55,14 @@ class similarQuestionBot():
             answer_list.append({"question": item[0], "answer": answer, "score": str(item[1])})
         return answer_list
 
-
-
-
 if __name__ == '__main__':
     test_bot = similarQuestionBot()
-    print(test_bot.answer_question('怎么办证？'))
-    print(test_bot.answer_question('什么是OPAC系统？'))
-    print(test_bot.answer_question('如何利用国家图书馆网站检索国内外图书馆的公共书目？'))
-    print(test_bot.answer_question('实体资源的查找方法？'))
-    print(test_bot.answer_question('在哪里查阅工具书？'))
+    #print(test_bot.answer_question('怎么办证？'))
+    #print(test_bot.answer_question('什么是OPAC系统？'))
+    #print(test_bot.answer_question('如何利用国家图书馆网站检索国内外图书馆的公共书目？'))
+    #print(test_bot.answer_question('书怎么借？'))#0.6
+    #print(test_bot.answer_question('实体资源的查找方法？'))
+    #print(test_bot.answer_question('在哪里查阅工具书？'))
 
 
 
