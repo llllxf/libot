@@ -21,17 +21,17 @@ class ChatterbotChat():
         :return:
         """
         cn_chatter = ChatBot("National Lib Chatter",
-                             storage_adapter='chatterbot.storage.SQLStorageAdapter',
+                             #storage_adapter='chatterbot.storage.SQLStorageAdapter',
                              input_adapter='chatterbot.input.TerminalAdapter',
                              output_adapter='chatterbot.output.TerminalAdapter',
                              logic_adapters=[
                                  'chatterbot.logic.BestMatch',
                                  'chatterbot.logic.MathematicalEvaluation',
                              ],
-                             database='./db.sqlite3'
+                             #database='./db.sqlite3'
         )
         trainer = ChatterBotCorpusTrainer(cn_chatter)
-        trainer.train('./xiaohuangji_chatterbot_corpus.json')
+        trainer.train("chatterbot.corpus.chinese")
 
         # trainer.export_for_training('./my_export.json')
 
@@ -43,14 +43,14 @@ class ChatterbotChat():
         :return:
         """
         cn_chatterbot = ChatBot('National Lib Chatter',
-                                storage_adapter='chatterbot.storage.SQLStorageAdapter',
+                                #storage_adapter='chatterbot.storage.SQLStorageAdapter',
                                 input_adapter = 'chatterbot.input.TerminalAdapter',
                                 output_adapter = 'chatterbot.output.TerminalAdapter',
                                 logic_adapters = [
                                                 'chatterbot.logic.BestMatch',
                                                 'chatterbot.logic.MathematicalEvaluation',
                                 ],
-                                database = './db.sqlite3'
+                                #database = './db.sqlite3'
         )
         return cn_chatterbot
 

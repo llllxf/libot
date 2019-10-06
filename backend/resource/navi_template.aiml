@@ -179,6 +179,18 @@
            task_area_pos
         </template>
     </category>
+    <category>
+        <pattern>AREA</pattern>
+        <template>
+           task_area_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#介绍#AREA#</pattern>
+        <template>
+           task_area_pos
+        </template>
+    </category>
     <!-- 馆室位置 -->
     <category>
         <pattern>#ROOM#在*</pattern>

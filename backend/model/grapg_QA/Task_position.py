@@ -3,6 +3,7 @@ from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
 import numpy as np
 import matplotlib.pyplot as plt
 import skimage.io as io
+import base64
 class Task_position():
     '''
     作废
@@ -76,8 +77,8 @@ class Task_position():
         else:
             down = img.shape[0]
         # print(x,ex,left,right)
-        print(up, down, left, right)
-        print(img.shape, img.shape[0], img.shape[1])
+        #print(up, down, left, right)
+        #print(img.shape, img.shape[0], img.shape[1])
         img = img[up:down, left:right]
         #io.imshow(img)
         # plt.axis('off')
@@ -95,7 +96,7 @@ class Task_position():
             plt.plot([x - left, int(nx) - left, int(dx) - left],
                      [y - up, int(ny) - up, int(dy) - up])
         io.imshow(img)
-        print(img)
+        #print(img)
         plt.savefig('../../resource/2.png')
         return
 
@@ -190,7 +191,7 @@ class Task_position():
         dis_dir_list=[]
         while cursor.forward():
             record = cursor.current()
-            print(record)
+            #print(record)
             path_list = record['p']
             #print("?",path_list,record['p'])
             dis_dir_list = record['r']
@@ -215,7 +216,7 @@ class Task_position():
         cursor = Neo4jPrepare.graph.run(
             "MATCH (a {office_name:{a}})-[r:相邻]->(b) return a.des_x as x_list ,a.des_y as y_list,b,r", a=desroom)
         destination_mark, dis_mark, x_list, y_list, dir_list = self.form_answern(cursor)
-        print("qqq",destination_mark,dis_mark,x_list,y_list)
+        #print("qqq",destination_mark,dis_mark,x_list,y_list)
 
         des_name = []
         for i in range(len(destination_mark)):
@@ -246,7 +247,7 @@ class Task_position():
             else:
 
                 dy.append(int(f_y))
-            print("dx,dy",dx,dy)
+            #print("dx,dy",dx,dy)
             dir = dir_list[m_index]
             # print(dir)
             if dis_mark[m_index].find(",") != -1:
@@ -274,10 +275,11 @@ class Task_position():
             min_index = 0
             #a = time.time()
             cursor = Neo4jPrepare.graph.run(
-                "MATCH p=(a {office_name:{a}})-[r:互连*..5]->(b {office_name:{b}}) return nodes(p) as p,r,size(nodes(p)) as s order by s limit 1",
+                "MATCH p=(a {office_name:{a}})-[r:互连*..5]->(b {office_name:{b}}) \
+                return nodes(p) as p,r,size(nodes(p)) as s order by s limit 1",
                 a=machine, b=des_name[sub])
             path_list, dis_list = self.form_answern_list(cursor)
-            print(path_list,dis_list,"path_list,dis_list")
+            #print(path_list,dis_list,"path_list,dis_list")
 
             min_path_list.append(path_list)
             min_dis_list.append(dis_list)
@@ -289,7 +291,7 @@ class Task_position():
 
             tmp_sum = int(dis_mark[i])
             for j in min_dis_list[i]:
-                print(dict(j)['dis'])
+                #print(dict(j)['dis'])
                 temp_sub = 0
                 if dict(j)['dis'].find(",") != -1:
                     arr = dict(j)['dis'].split(",")
@@ -314,7 +316,7 @@ class Task_position():
         #####################################################
 
         arr = min_path_list[final_index][0]['self_site'].split(";")
-        print(arr)
+        #print(arr)
         #print()
         #print(arr)
         dx.append(arr[0])
@@ -366,7 +368,7 @@ class Task_position():
             # print("qqq",modify_index,final_index)
             responds += "最后向" + dir_list[des_index] + "走" + str(int(dis_mark[des_index])) + "就能到" + ans_desroom + "\n"
             # print("最后向"+dir_list[des_index]+"走"+str(int(dis_mark[des_index]))+"就能到"+desroom)
-            print("x_list,y_list",x_list,y_list)
+            #print("x_list,y_list",x_list,y_list)
 
             dx.append(x_list[1])
             dy.append(y_list[1])
@@ -374,12 +376,12 @@ class Task_position():
         # print(dx,dy)
         #####################################################
         #img = None
-        print("dxdy",dx,dy)
-        img = self.draw_pic(dx,dy)
+        #print("dxdy",dx,dy)
+        self.draw_pic(dx,dy)
 
         #####################################################
         # print(dx,dy)
-        return responds,img
+        return responds
 
     """
     馆室位置查询
@@ -405,10 +407,17 @@ class Task_position():
         if floor[0]['office_name'] != '总馆北区五层':
             response += ans_room+'在'+ floor[0]['office_name']+", 直走340米您就能找到最近的电梯。\n"
             return [response]
-        respo,img = self.navi(room)
+        respo = self.navi(room)
 
         response += respo
+        img = self.get_pic()
         return [response,img]
+
+    def get_pic(self):
+        with open("../../resource/2.png", 'rb') as f:
+            base64_data = base64.b64encode(f.read())
+            img = base64_data.decode()
+            return img
     """
     
     """
@@ -493,7 +502,7 @@ class Task_position():
         #print(entity)
         service = entity['service'][0]
         room = Neo4jPrepare.get_relation(service,"馆室")
-        print(room)
+        #print(room)
         ans = "\n"
         if len(room)>0:
             ans += "您可以去"

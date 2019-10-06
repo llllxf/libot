@@ -6,6 +6,7 @@ import os
 import sys
 # 模块路径引用统一回退到Libbot目录下
 project_path = os.path.abspath(os.path.join(os.getcwd(), "../.."))
+print("server",project_path)
 sys.path.append(project_path)
 
 
@@ -13,6 +14,7 @@ import tornado.web
 import tornado.ioloop
 import tornado.escape
 import json
+
 
 from model.robot_hub.general_hub_2 import GeneralHub
 
@@ -29,17 +31,12 @@ class MainHandler(tornado.web.RequestHandler):
         #simpleLog.log_something('question:'+question_str)
         if target == 'graph_qa':
             graph_respons = graph_qa_hub.question_answer_hub(question_str)
-            print(graph_respons)
+            #print(graph_respons)
             if len(graph_respons)>1:
-                print(graph_respons)
-                res_dict = {'graph_answer': graph_respons[0],'img':graph_respons[1].tolist()}
+                #print(graph_respons)
+                res_dict = {'graph_answer': graph_respons[0],'img':graph_respons[1]}
             elif len(graph_respons)==1:
                 res_dict = {'graph_answer': graph_respons[0]}
-
-            '''
-            if img != None:
-                res_dict = {'img': img}
-            '''
             res_json = json.dumps(res_dict)
             self.write(res_json)
             #simpleLog.log_something('graph_answer:'+graph_respons)

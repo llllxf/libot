@@ -3,12 +3,21 @@ import os
 import sys
 # 模块路径引用统一回退到Libbot目录下
 project_path = os.path.abspath(os.path.join(os.getcwd(), "../.."))
+print("hub",project_path)
 sys.path.append(project_path)
 
+"""
 from model.grapg_QA.bot import Bot
-from model.search_QA.similar_question_bot import similarQuestionBot
+from model.search_QA import similarQuestionBot
 from model.aiml_cn import AIMLUtil
 from model.nlp import NLPUtil
+from model.pedia import TaskManager
+"""
+from model.grapg_QA.bot import Bot
+from model.search_QA import similarQuestionBot
+from model.aiml_cn import AIMLUtil
+from model.nlp import NLPUtil
+from model.pedia.manager import TaskManager
 import skimage.io as io
 import scipy
 import matplotlib.pyplot as plt
@@ -28,7 +37,7 @@ class GeneralHub():
         2.得到NLP工具类
         """
         cls.aiml_util = AIMLUtil()
-        cls.nlp_util = NLPUtil()
+        cls.nlp_util = NLPUtil('ltp_data_v3.4.0')
         cls.search_bot = similarQuestionBot()
 
 
@@ -41,7 +50,7 @@ class GeneralHub():
 
         question_first,question_replaced_normal,question_replaced_spcify,entity_dict = self.nlp_util.repalce_question(question_str)
         aiml_response = self.aiml_util.response(question_first)
-        print(aiml_response,question_first)
+        #print(aiml_response,question_first)
         
         if 'task_' in aiml_response:
 
@@ -51,7 +60,7 @@ class GeneralHub():
             graph_response = [aiml_response]
         else:
             aiml_response_normal = self.aiml_util.response(question_replaced_normal)
-            print(aiml_response_normal, question_replaced_normal)
+            #print(aiml_response_normal, question_replaced_normal)
 
             if 'task_' in aiml_response_normal:
                 graph_response = Bot.task_response(aiml_response_normal, entity_dict)
@@ -59,7 +68,7 @@ class GeneralHub():
                 graph_response = [aiml_response_normal]
             else:
                 aiml_response_specify = self.aiml_util.response(question_replaced_spcify)
-                print(aiml_response_specify, question_replaced_spcify)
+                #print(aiml_response_specify, question_replaced_spcify)
 
                 if 'task_' in aiml_response_specify:
                     graph_response = Bot.task_response(aiml_response_specify, entity_dict)
@@ -67,13 +76,42 @@ class GeneralHub():
                     graph_response = [aiml_response_specify]
                 else:
                     response = dict(self.search_bot.answer_question(question_str)[0])
-                    print(response['answer'], response['score'], question_str, "===")
+                    #print(response['answer'], response['score'], question_str, "===")
 
-                    if float(response['score']) > 0.6:
-                        print(response['score'])
+                    if float(response['score']) > 0.68:
+                        #print(response['score'])
                         graph_response = [response['answer']]
+
                     else:
-                        graph_response = ['很抱歉，我好像不明白，请您换一种说法']
+                        words, pattern, arcs_dict, postags, hed_index = NLPUtil.get_sentence_pattern(question_str)
+                        #print(words, pattern, arcs_dict, postags, hed_index)
+                        aiml_reponse = AIMLUtil.response(pattern)
+                        # print(pattern,aiml_reponse)
+                        answer = TaskManager.task_response(aiml_reponse, words, arcs_dict, postags, hed_index)
+                        if answer != None:
+                            return [answer]
+                        else:
+                            import requests, json
+                            github_url = "http://openapi.tuling123.com/openapi/api/v2"
+                            data = json.dumps({
+                                "reqType": 0,
+                                "perception": {
+                                    "inputText": {
+                                        "text": question_str
+                                    },
+                                },
+                                "userInfo": {
+                                    "apiKey": "62f1c8991a6d499c8b22e497de6cdd11",
+                                    "userId": "219315"
+                                }
+                            })
+
+                            r = requests.post(github_url, data)
+                            print(r.json())
+                            res_msg = r.json()['results'][0]['values']['text']
+                            return [res_msg]
+
+
 
 
         '''
@@ -128,8 +166,9 @@ if __name__ == '__main__':
         else:
             time_start = time.time()
             response = gh.question_answer_hub(question_str)
-            print("resp",response)
-            #print('Libot:', response[0])
+            #print("resp",response)
+            print('Libot:', response[0])
+            #print(response[1])
             #img = io.imread('../../resource/2.png')
             #print(img)
             #scipy.misc.imsave('meelo.png', response[1])

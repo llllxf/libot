@@ -9,9 +9,9 @@ project_path = os.path.abspath(os.path.join(os.getcwd(), "../.."))
 sys.path.append(project_path)
 
 
-from model.nlp.sentence_similarity.zhcnSegment import zhcnSeg
-from model.nlp.sentence_similarity.sentence import Sentence
-from model.nlp.sentence_similarity.sentenceSimilarity import SentenceSimilarity
+from model.nlp import zhcnSeg
+#from nlp import Sentence
+from model.nlp import SentenceSimilarity
 
 
 class similarQuestionBot():
@@ -31,6 +31,23 @@ class similarQuestionBot():
             for line in in_file.readlines():
                 q_str = line.split('\t')[0]
                 a_str = line.split('\t')[-1].strip()
+                #print(q_str,"====",a_str)
+                cls.q_list.append(q_str)
+                cls.qa_pair_dict[q_str] = a_str
+        with open('../../resource/pair_for_banzheng.txt', 'r', encoding='utf8') as in_file:
+        #with open('../resource/pair_for_reading_qa.txt', 'r', encoding='utf8') as in_file:
+            for line in in_file.readlines():
+                q_str = line.split('\t')[0]
+                a_str = line.split('\t')[-1].strip()
+                #print(q_str,"====",a_str)
+                cls.q_list.append(q_str)
+                cls.qa_pair_dict[q_str] = a_str
+        with open('../../resource/pair_for_jieyue.txt', 'r', encoding='utf8') as in_file:
+        #with open('../resource/pair_for_reading_qa.txt', 'r', encoding='utf8') as in_file:
+            for line in in_file.readlines():
+                q_str = line.split('\t')[0]
+                a_str = line.split('\t')[-1].strip()
+                #print(q_str,"====",a_str)
                 cls.q_list.append(q_str)
                 cls.qa_pair_dict[q_str] = a_str
 
@@ -60,7 +77,7 @@ if __name__ == '__main__':
     #print(test_bot.answer_question('怎么办证？'))
     #print(test_bot.answer_question('什么是OPAC系统？'))
     #print(test_bot.answer_question('如何利用国家图书馆网站检索国内外图书馆的公共书目？'))
-    #print(test_bot.answer_question('书怎么借？'))#0.6
+    print(test_bot.answer_question('书怎么借？'))#0.6
     #print(test_bot.answer_question('实体资源的查找方法？'))
     #print(test_bot.answer_question('在哪里查阅工具书？'))
 

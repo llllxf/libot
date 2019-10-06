@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: latin-1 -*-
 # ReEdited By: Hualong Zhang <nankaizhl@gmail.com>
 # UpdateDate: 19-03-19
 """This file contains the public interface to the aiml module."""
@@ -346,23 +346,14 @@ class Kernel:
         :param pattern_with_pound:
         :return:
         """
-
         seg_list = pattern_with_pound.split('#')
-
         now_key_list = [seg_list[0]]
         for seg in seg_list[1:]:
             new_key_list = []
             for now_key in now_key_list:
-
                 new_key_list.append(now_key+'*'+seg)
                 new_key_list.append(now_key+seg)
             now_key_list = new_key_list
-
-        for i in range(len(new_key_list)):
-            new_key_list[i] = new_key_list[i].strip()
-            if new_key_list[i].find('  ') != -1:
-                new_key_list[i] = new_key_list[i].replace('  ',' ')
-
         return now_key_list
 
     #===================================================================================================
@@ -393,11 +384,10 @@ class Kernel:
             em_ext = os.path.splitext(filename)[1]
             for key,tem in handler.categories.items():
                 new_key = key
-                #if key and key[0] and key[1] and key[2] and em_ext == '.aiml' and (not self._check_all_english(key[0])):
-                if key and key[0] and key[1] and key[2] and em_ext == '.aiml':
+                if key and key[0] and key[1] and key[2] and em_ext == '.aiml' and (not self._check_all_english(key[0])):
                     new_key = (' '.join(key[0]).upper(), key[1], key[2])
-                #elif key and key[0] and key[1] and key[2] and em_ext == '.aiml' and self._check_all_english(key[0]):
-                    #new_key=(key[0].upper(), key[1], key[2])
+                elif key and key[0] and key[1] and key[2] and em_ext == '.aiml' and self._check_all_english(key[0]):
+                    new_key=(key[0].upper(), key[1], key[2])
 
                 #print("new_key",new_key,"tem",tem)
                 self._brain.add(new_key,tem)
@@ -423,7 +413,10 @@ class Kernel:
             return u""
         # Decode the input (assumed to be an encoded string) into a unicode
         # string. Note that if encoding is False, this will be a no-op
-        try: input_ = self._cod.dec(input_)
+        try:
+            print("===")
+            input_ = self._cod.dec(input_)
+            print("input",input_)
         except UnicodeError: pass
         except AttributeError: pass
         
@@ -437,12 +430,12 @@ class Kernel:
             # split the input into discrete sentences
             #print("input_",input_)
             sentences = Utils.sentences(input_)
-            #print("sentences",sentences,"input",input_)
+
+            print("sentences",sentences,"input",input_)
             finalResponse = u""
             for index,s in enumerate(sentences):
-                #if not self._check_all_english(s):
-                s = ' '.join(s)
-                    #print(s)
+                if not self._check_all_english(s):
+                    s = ' '.join(s)
                 # Add the input to the history list before fetching the
                 # response, so that <input/> tags work properly.
                 inputHistory = self.getPredicate(self._inputHistory, sessionID)

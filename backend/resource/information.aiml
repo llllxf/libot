@@ -741,6 +741,12 @@
     </category>
     -->
     <category>
+        <pattern>RTYPE</pattern>
+        <template>
+           task_restype_describe
+        </template>
+    </category>
+    <category>
         <pattern>#RTYPE是*</pattern>
         <template>
            task_restype_describe

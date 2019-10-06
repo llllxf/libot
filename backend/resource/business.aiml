@@ -4,15 +4,80 @@
     <category>
         <pattern>#书#借#</pattern>
         <template>
-           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。具体借阅时间为各馆室借阅时间。
         </template>
     </category>
     <category>
         <pattern>#借#书#</pattern>
         <template>
-           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。具体借阅时间为各馆室借阅时间。
         </template>
     </category>
+    <!--
+    <category>
+        <pattern>#书#如何#借#</pattern>
+        <template>
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。具体借阅时间为各馆室借阅时间。
+        </template>
+    </category>
+    <category>
+        <pattern>#如何#借#书#</pattern>
+        <template>
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。具体借阅时间为各馆室借阅时间。
+        </template>
+    </category>
+    -->
+
+    <category>
+        <pattern>#文献#怎么#借#</pattern>
+        <template>
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。具体借阅时间为各馆室借阅时间。
+        </template>
+    </category>
+    <category>
+        <pattern>#怎么#借#文献#</pattern>
+        <template>
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。具体借阅时间为各馆室借阅时间。
+        </template>
+    </category>
+    <category>
+        <pattern>#文献#如何#借#</pattern>
+        <template>
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。具体借阅时间为各馆室借阅时间。
+        </template>
+    </category>
+    <category>
+        <pattern>#如何#借#文献#</pattern>
+        <template>
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。具体借阅时间为各馆室借阅时间。
+        </template>
+    </category>
+
+    <category>
+        <pattern>#资源#怎么#借#</pattern>
+        <template>
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。具体借阅时间为各馆室借阅时间。
+        </template>
+    </category>
+    <category>
+        <pattern>#怎么#借#资源#</pattern>
+        <template>
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。具体借阅时间为各馆室借阅时间。
+        </template>
+    </category>
+    <category>
+        <pattern>#资源#如何#借#</pattern>
+        <template>
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。具体借阅时间为各馆室借阅时间。
+        </template>
+    </category>
+    <category>
+        <pattern>#如何#借#资源#</pattern>
+        <template>
+           借阅国家图书馆的资源需持相关证件去资源所在馆室借阅。外借书籍需去相应的馆室柜台预约。具体借阅时间为各馆室借阅时间。
+        </template>
+    </category>
+
     <category>
         <pattern>#借#书#丢#</pattern>
         <template>
@@ -178,58 +243,58 @@
     <category>
         <pattern>#报纸*外借#</pattern>
         <template>
-           报纸包括中文报纸外文报纸数字报纸您具体说的是哪一种
+           您具体说的是哪一种报纸？中文报纸？外文报纸？还是数字报纸？
         </template>
     </category>
     <category>
         <pattern>*外借#报纸#</pattern>
         <template>
-           报纸包括中文报纸外文报纸数字报纸您具体说的是哪一种
+           您具体说的是哪一种报纸？中文报纸？外文报纸？还是数字报纸？
         </template>
     </category>
 
     <category>
         <pattern>#图书*外借#</pattern>
         <template>
-           图书包括中文图书外文图书数字图书您具体说的是哪一种
+           您具体说的是哪一种图书？中文图书？外文图书？还是数字图书？
         </template>
     </category>
     <category>
         <pattern>*外借#图书#</pattern>
         <template>
-           图书包括中文图书外文图书数字图书您具体说的是哪一种
+           您具体说的是哪一种图书？中文图书？外文图书？还是数字图书？
         </template>
     </category>
 
     <category>
         <pattern>#期刊*外借#</pattern>
         <template>
-           期刊包括中文期刊外文期刊数字期刊您具体说的是哪一种
+           您具体说的是哪一种期刊？中文期刊？外文期刊？还是数字期刊？
         </template>
     </category>
     <category>
         <pattern>*外借#期刊#</pattern>
         <template>
-           期刊包括中文期刊外文期刊数字期刊您具体说的是哪一种
+           您具体说的是哪一种期刊？中文期刊？外文期刊？还是数字期刊？
         </template>
     </category>
 
     <category>
         <pattern>#特藏专藏*外借#</pattern>
         <template>
-           特藏专藏包括实体特藏专藏数字特藏专藏您具体说的是哪一种
+           您具体说的是哪一种特藏专藏？实体特藏专藏还是数字特藏专藏？
         </template>
     </category>
     <category>
         <pattern>*外借#特藏专藏*</pattern>
         <template>
-           特藏专藏包括实体特藏专藏数字特藏专藏您具体说的是哪一种
+           您具体说的是哪一种特藏专藏？实体特藏专藏还是数字特藏专藏？
         </template>
     </category>
 
     <category>
         <pattern>#RTYPE#</pattern>
-        <that>特藏专藏包括实体特藏专藏数字特藏专藏您具体说的是哪一种</that>
+        <that>您具体说的是哪一种特藏专藏？实体特藏专藏还是数字特藏专藏？</that>
         <template>
             task_restype_borrow
         </template>
@@ -237,7 +302,7 @@
 
     <category>
         <pattern>#RTYPE#</pattern>
-        <that>期刊包括中文期刊外文期刊数字期刊您具体说的是哪一种</that>
+        <that>您具体说的是哪一种期刊？中文期刊？外文期刊？还是数字期刊？</that>
         <template>
             task_restype_borrow
         </template>
@@ -245,14 +310,14 @@
 
     <category>
         <pattern>#RTYPE#</pattern>
-        <that>报纸包括中文报纸外文报纸数字报纸您具体说的是哪一种</that>
+        <that>您具体说的是哪一种报纸？中文报纸？外文报纸？还是数字报纸？</that>
         <template>
             task_restype_borrow
         </template>
     </category>
     <category>
         <pattern>#RTYPE#</pattern>
-        <that>图书包括中文图书外文图书数字图书您具体说的是哪一种</that>
+        <that>您具体说的是哪一种图书？中文图书？外文图书？还是数字图书？</that>
         <template>
             task_restype_borrow
         </template>
@@ -263,58 +328,53 @@
     <category>
         <pattern>#报纸*借#</pattern>
         <template>
-           报纸包括中文报纸外文报纸数字报纸您具体借阅的是哪一种
+           您具体借阅的是哪一种报纸？中文报纸？外文报纸？还是数字报纸？
         </template>
     </category>
     <category>
         <pattern>*借#报纸#</pattern>
         <template>
-           报纸包括中文报纸外文报纸数字报纸您具体借阅的是哪一种
+           您具体借阅的是哪一种报纸？中文报纸？外文报纸？还是数字报纸？
         </template>
     </category>
 
     <category>
         <pattern>#图书*借#</pattern>
-        <template>
-           图书包括中文图书外文图书数字图书您具体借阅的是哪一种
-        </template>
+        <template>您具体借阅的是哪一种图书？中文图书？外文图书？还是数字图书？</template>
     </category>
     <category>
         <pattern>*借#图书#</pattern>
         <template>
-           图书包括中文图书外文图书数字图书您具体借阅的是哪一种
+           您具体借阅的是哪一种图书？中文图书？外文图书？还是数字图书？
         </template>
     </category>
 
     <category>
         <pattern>#期刊*借#</pattern>
-        <template>
-           期刊包括中文期刊外文期刊数字期刊您具体借阅的是哪一种
-        </template>
+        <template>您具体借阅的是哪一种期刊？中文期刊？外文期刊？还是数字期刊？</template>
     </category>
     <category>
         <pattern>*借#期刊#</pattern>
         <template>
-           期刊包括中文期刊外文期刊数字期刊您具体借阅的是哪一种
+           您具体借阅的是哪一种期刊？中文期刊？外文期刊？还是数字期刊？
         </template>
     </category>
 
     <category>
         <pattern>#特藏专藏*借#</pattern>
-        <template>
-           特藏专藏包括实体特藏专藏数字特藏专藏您具体借阅的是哪一种
+        <template>您具体借阅的是哪一种特藏专藏？实体特藏专藏还是数字特藏专藏？
         </template>
     </category>
     <category>
         <pattern>*借#特藏专藏#</pattern>
         <template>
-           特藏专藏包括实体特藏专藏数字特藏专藏您具体借阅的是哪一种
+           您具体借阅的是哪一种特藏专藏？实体特藏专藏还是数字特藏专藏？
         </template>
     </category>
 
     <category>
         <pattern>#RTYPE#</pattern>
-        <that>特藏专藏包括实体特藏专藏数字特藏专藏您具体借阅的是哪一种</that>
+        <that>您具体借阅的是哪一种特藏专藏？实体特藏专藏还是数字特藏专藏？</that>
         <template>
             task_restype_read
         </template>
@@ -322,7 +382,7 @@
 
     <category>
         <pattern>#RTYPE#</pattern>
-        <that>图书包括中文图书外文图书数字图书您具体借阅的是哪一种</that>
+        <that>您具体借阅的是哪一种图书？中文图书？外文图书？还是数字图书？</that>
         <template>
             task_restype_read
         </template>
@@ -330,7 +390,7 @@
 
     <category>
         <pattern>#RTYPE#</pattern>
-        <that>期刊包括中文期刊外文期刊数字期刊您具体借阅的是哪一种</that>
+        <that>您具体借阅的是哪一种期刊？中文期刊？外文期刊？还是数字期刊？</that>
         <template>
             task_restype_read
         </template>
@@ -338,7 +398,7 @@
 
     <category>
         <pattern>#RTYPE#</pattern>
-        <that>报纸包括中文报纸外文报纸数字报纸您具体借阅的是哪一种</that>
+        <that>您具体借阅的是哪一种报纸？中文报纸？外文报纸？还是数字报纸？</that>
         <template>
             task_restype_read
         </template>
@@ -499,7 +559,25 @@
     <!-- 办卡 -->
     <!-- ========================================================== -->
     <category>
-        <pattern>#办#卡#</pattern>
+        <pattern>#怎么#办#卡#</pattern>
+        <template>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </template>
+    </category>
+    <category>
+        <pattern>#想#办#卡#</pattern>
+        <template>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </template>
+    </category>
+    <category>
+        <pattern>#如何#办#卡#</pattern>
+        <template>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </template>
+    </category>
+    <category>
+        <pattern>办#卡</pattern>
         <template>
             请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
         </template>
@@ -510,8 +588,27 @@
             请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
         </template>
     </category>
+
     <category>
-        <pattern>#补#卡#</pattern>
+        <pattern>补#卡</pattern>
+        <template>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </template>
+    </category>
+    <category>
+        <pattern>#怎么#补#卡#</pattern>
+        <template>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </template>
+    </category>
+    <category>
+        <pattern>#想#补#卡#</pattern>
+        <template>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </template>
+    </category>
+    <category>
+        <pattern>#如何#补#卡#</pattern>
         <template>
             请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
         </template>
@@ -522,8 +619,21 @@
             请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
         </template>
     </category>
+
     <category>
-        <pattern>#办#证#</pattern>
+        <pattern>办#证</pattern>
+        <template>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </template>
+    </category>
+    <category>
+        <pattern>#怎么#办#证</pattern>
+        <template>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </template>
+    </category>
+    <category>
+        <pattern>#如何#办#证</pattern>
         <template>
             请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
         </template>
@@ -534,8 +644,22 @@
             请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
         </template>
     </category>
+
+
     <category>
-        <pattern>#补#证#</pattern>
+        <pattern>补#证</pattern>
+        <template>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </template>
+    </category>
+    <category>
+        <pattern>#怎么#补#证</pattern>
+        <template>
+            请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
+        </template>
+    </category>
+    <category>
+        <pattern>#如何#补#证</pattern>
         <template>
             请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
         </template>
@@ -546,6 +670,8 @@
             请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
         </template>
     </category>
+
+
     <category>
         <pattern>#A#</pattern>
         <that>

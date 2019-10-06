@@ -44,12 +44,13 @@ class Neo4jPrepare(object):
         cls.task = '业务'
         cls.multype = '资源中级类'
 
-        cls.graph.delete_all()
+        #cls.graph.delete_all()
         """建图"""
 
-        cls.create_node()
-        cls.create_relation()
+        #cls.create_node()
+        #cls.create_relation()
 
+        #cls.create()
 
 
     @classmethod
@@ -62,18 +63,14 @@ class Neo4jPrepare(object):
         cls.graph.create(weekdy_opentime)
         open_date = Node(cls.attribute, name="开放日",name2="开放日")
         cls.graph.create(open_date)
-        #workday_opentime = Node(cls.attribute, name="工作日开放时间")
-        #cls.graph.create(workday_opentime)
         phone = Node(cls.attribute, name="电话",name2="电话")
         cls.graph.create(phone)
         describe = Node(cls.attribute, name="描述",name2="描述")
         cls.graph.create(describe)
-        #weekdy_btime = Node(cls.attribute, name="周末借阅时间")
-        #cls.graph.create(weekdy_btime)
         workday_btime = Node(cls.attribute, name="借阅时间",name2="借阅时间")
         cls.graph.create(workday_btime)
-        borrow = Node(cls.attribute, name="借阅",name2="借阅")
-        cls.graph.create(borrow)
+        #borrow = Node(cls.attribute, name="借阅",name2="借阅")
+        #cls.graph.create(borrow)
         position = Node(cls.attribute, name="位置",name2="位置")
         cls.graph.create(position)
         site = Node(cls.attribute, name="坐标",name2="坐标")
@@ -99,13 +96,32 @@ class Neo4jPrepare(object):
         cls.graph.create(card)
         resource = Node(cls.resource, name="资源")
         cls.graph.create(resource)
-        type = Node(cls.restype, name="资源类型")
-        cls.graph.create(type)
+        restype = Node(cls.restype, name="资源初级类型")
+        cls.graph.create(restype)
+        multype = Node(cls.multype, name="资源中级类型")
+        cls.graph.create(multype)
+        ttype = Node(cls.res, name="资源大类")
+        cls.graph.create(ttype)
         service = Node(cls.service, name="服务")
         cls.graph.create(service)
+        task = Node(cls.task, name="业务")
+        cls.graph.create(task)
         #############################################################
         rel = Relationship(cls.graph.find_one(label=cls.library), "属性",
                            cls.graph.find_one(label=cls.attribute, property_key='name',property_value="位置"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.library), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="名称"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.library), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="别名"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.library), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="电话"))
+        cls.graph.create(rel)
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.library), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="描述"))
         cls.graph.create(rel)
 
 
@@ -113,12 +129,27 @@ class Neo4jPrepare(object):
                            cls.graph.find_one(label=cls.attribute, property_key='name',property_value="别名"))
         cls.graph.create(rel)
         rel = Relationship(cls.graph.find_one(label=cls.area), "属性",
-                           cls.graph.find_one(label=cls.attribute, property_key='name',property_value="位置"))
-
-
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="名称"))
         cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.area), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="电话"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.area), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name',property_value="位置"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.floor), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="别名"))
+        cls.graph.create(rel)
+
+
         rel = Relationship(cls.graph.find_one(label=cls.room), "属性",
                            cls.graph.find_one(label=cls.attribute, property_key='name',property_value="位置"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.room), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="别名"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.room), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="名称"))
         cls.graph.create(rel)
         rel = Relationship(cls.graph.find_one(label=cls.room), "属性",
                            cls.graph.find_one(label=cls.attribute, property_key='name',property_value="坐标"))
@@ -138,13 +169,16 @@ class Neo4jPrepare(object):
         rel = Relationship(cls.graph.find_one(label=cls.room), "属性",
                            cls.graph.find_one(label=cls.attribute, property_key='name',property_value="借阅时间"))
         cls.graph.create(rel)
-        rel = Relationship(cls.graph.find_one(label=cls.room), "属性",
-                           cls.graph.find_one(label=cls.attribute, property_key='name',property_value="借阅"))
-        cls.graph.create(rel)
+        #rel = Relationship(cls.graph.find_one(label=cls.room), "属性",
+                           #cls.graph.find_one(label=cls.attribute, property_key='name',property_value="借阅"))
+        #cls.graph.create(rel)
 
 
         rel = Relationship(cls.graph.find_one(label=cls.resource), "属性",
                            cls.graph.find_one(label=cls.attribute, property_key='name',property_value="别名"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.resource), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="名称"))
         cls.graph.create(rel)
         rel = Relationship(cls.graph.find_one(label=cls.resource), "属性",
                            cls.graph.find_one(label=cls.attribute, property_key='name',property_value="描述"))
@@ -158,15 +192,50 @@ class Neo4jPrepare(object):
                            cls.graph.find_one(label=cls.attribute, property_key='name',property_value="别名"))
         cls.graph.create(rel)
         rel = Relationship(cls.graph.find_one(label=cls.restype), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="名称"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.restype), "属性",
                            cls.graph.find_one(label=cls.attribute, property_key='name',property_value="描述"))
         cls.graph.create(rel)
         rel = Relationship(cls.graph.find_one(label=cls.restype), "属性",
                            cls.graph.find_one(label=cls.attribute, property_key='name',property_value="数量"))
+        cls.graph.create(rel)
+
+        rel = Relationship(cls.graph.find_one(label=cls.multype), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="别名"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.multype), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="名称"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.multype), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="描述"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.multype), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="数量"))
+        cls.graph.create(rel)
+
+        rel = Relationship(cls.graph.find_one(label=cls.res), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="别名"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.res), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="名称"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.res), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="描述"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.res), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="数量"))
         cls.graph.create(rel)
 
 
         rel = Relationship(cls.graph.find_one(label=cls.card), "属性",
                            cls.graph.find_one(label=cls.attribute, property_key='name',property_value="别名"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.card), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="名称"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.card), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="描述"))
         cls.graph.create(rel)
         rel = Relationship(cls.graph.find_one(label=cls.card), "属性",
                            cls.graph.find_one(label=cls.attribute, property_key='name',property_value="年龄"))
@@ -180,6 +249,25 @@ class Neo4jPrepare(object):
                            cls.graph.find_one(label=cls.attribute, property_key='name',property_value="时间"))
         cls.graph.create(rel)
         rel = Relationship(cls.graph.find_one(label=cls.service), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="名称"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.service), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="别名"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.service), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="描述"))
+        cls.graph.create(rel)
+
+        rel = Relationship(cls.graph.find_one(label=cls.task), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="时间"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.task), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="名称"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.task), "属性",
+                           cls.graph.find_one(label=cls.attribute, property_key='name', property_value="别名"))
+        cls.graph.create(rel)
+        rel = Relationship(cls.graph.find_one(label=cls.task), "属性",
                            cls.graph.find_one(label=cls.attribute, property_key='name', property_value="描述"))
         cls.graph.create(rel)
 
@@ -188,6 +276,7 @@ class Neo4jPrepare(object):
         rel = Relationship(cls.graph.find_one(label=cls.room), "位于",
                            cls.graph.find_one(label=cls.floor))
         cls.graph.create(rel)
+
         rel = Relationship(cls.graph.find_one(label=cls.area), "包括",
                            cls.graph.find_one(label=cls.library))
         cls.graph.create(rel)
@@ -195,26 +284,43 @@ class Neo4jPrepare(object):
         rel = Relationship(cls.graph.find_one(label=cls.room), "处于",
                            cls.graph.find_one(label=cls.area))
         cls.graph.create(rel)
+
         rel = Relationship(cls.graph.find_one(label=cls.floor), "处于",
                            cls.graph.find_one(label=cls.area))
         cls.graph.create(rel)
+
         rel = Relationship(cls.graph.find_one(label=cls.resource), "属于",
                            cls.graph.find_one(label=cls.restype))
         cls.graph.create(rel)
+
+        rel = Relationship(cls.graph.find_one(label=cls.restype), "属于",
+                           cls.graph.find_one(label=cls.multype))
+        cls.graph.create(rel)
+
+        rel = Relationship(cls.graph.find_one(label=cls.restype), "属于",
+                           cls.graph.find_one(label=cls.res))
+        cls.graph.create(rel)
+
         rel = Relationship(cls.graph.find_one(label=cls.resource), "存放",
                            cls.graph.find_one(label=cls.room))
         cls.graph.create(rel)
+
         rel = Relationship(cls.graph.find_one(label=cls.room), "证件",
                            cls.graph.find_one(label=cls.card))
         cls.graph.create(rel)
+
         rel = Relationship(cls.graph.find_one(label=cls.service), "发生",
                            cls.graph.find_one(label=cls.room))
         cls.graph.create(rel)
+
+        rel = Relationship(cls.graph.find_one(label=cls.task), "发生",
+                           cls.graph.find_one(label=cls.room))
+        cls.graph.create(rel)
+
         rel = Relationship(cls.graph.find_one(label=cls.service), "对象",
                            cls.graph.find_one(label=cls.resource))
         cls.graph.create(rel)
         ###################################################################
-
 
 
     '''
@@ -585,7 +691,7 @@ class Neo4jPrepare(object):
         for i in range(len(room_values)-6,len(room_values)):
 
             row = room_values[i].split(" ")
-            print(row[0])
+            #print(row[0])
             #print("selfsite", row[0], row[14])
             mark_node = Node(cls.mark, type=cls.mark,name=row[0], office_name=row[0],self_site=row[14])
             cls.graph.create(mark_node)
@@ -649,6 +755,7 @@ class Neo4jPrepare(object):
         task_values = task.split("@")
         for i in range(1, len(task_values)):
             row = task_values[i].split(" ")
+            print("row[3]",row[3],row[0])
             task_node = Node(cls.task, type=cls.task, name=row[0], office_name=row[0], variant_name=row[1],
                                 date=row[3],
                                 worktime=row[4], weektime=row[5], discribe=row[6], card=row[7])
@@ -665,7 +772,7 @@ class Neo4jPrepare(object):
         '''建立资源类型节点'''
         resType_values = resType.split("@")
         for i in range(1, len(resType_values)):
-            print(row[4],row[3])
+            #print(row[4],row[3])
             row = resType_values[i].split(" ")
             restype_node = Node(cls.restype, type=cls.restype, name=row[0], office_name=row[0], variant_name=row[1], describe=row[2], kind=row[3],
                               count=row[4],
@@ -727,7 +834,7 @@ class Neo4jPrepare(object):
                                        cls.graph.find_one(label=cls.floor, property_key='office_name',
                                                           property_value=row[11]))
                     cls.graph.create(rel)
-                print("============================")
+                #print("============================")
 
                 if row[12].find(u"，")!=-1:
 
@@ -749,18 +856,19 @@ class Neo4jPrepare(object):
                                                           property_value=row[12]))
 
                     cls.graph.create(rel)
-                print(row[0],row[18],row[13],row[17])
+                #print(row[0],row[18],row[13],row[17])
                 mark_list = row[18].split(u",")
-                print("mark_list",mark_list)
+                #print("mark_list",mark_list)
                 dis_list = str(row[13]).split("_")
                 dir_list = str(row[17]).split(u";")
                 for i in range(len(mark_list)):
                     mark = mark_list[i]
-                    print(mark)
+                    #print(mark)
                     dis = dis_list[i]
                     dir = dir_list[i]
-                    print(cls.graph.find_one(label=cls.mark, property_key='office_name',
-                                             property_value=mark))
+
+                    #print(cls.graph.find_one(label=cls.mark, property_key='office_name',
+                    #                         property_value=mark))
                     rel = Relationship(cls.graph.find_one(label=cls.room, property_key='office_name',
                                                           property_value=row[0]), "相邻",
                                        cls.graph.find_one(label=cls.mark, property_key='office_name',
@@ -769,16 +877,16 @@ class Neo4jPrepare(object):
                     cls.graph.create(rel)
 
             except AttributeError as e:
-                #print("room",e)
+                print("room",e)
 
-                print("11",row[0],e,row[10])
-                print(cls.graph.find_one(label=cls.mark, property_key='office_name',
-                                                          property_value=mark))
+                #print("11",row[0],e,row[10])
+                #print(cls.graph.find_one(label=cls.mark, property_key='office_name',
+                #                                          property_value=mark))
 
 
         for i in range(len(room_values)-6, len(room_values)):
             try:
-                print("kkk",row[0],row[13],row[15],row[16],row[17],row[18])
+                #print("kkk",row[0],row[13],row[15],row[16],row[17],row[18])
                 row = room_values[i].split(" ")
                 mark_list = row[18].split(u",")
                 dis_list = str(row[13]).split(u"_")
@@ -837,8 +945,6 @@ class Neo4jPrepare(object):
             try:
                 room_arr = []
                 row = res_values[i].split(" ")
-                #print(row[5],cls.graph.find_one(label=cls.restype, property_key='office_name',
-                #                                      property_value=row[5]))
                 rel = Relationship(cls.graph.find_one(label=cls.resource, property_key='office_name',
                                                       property_value=row[0]), "属于",
                                    cls.graph.find_one(label=cls.restype, property_key='office_name',
@@ -850,22 +956,13 @@ class Neo4jPrepare(object):
                     room_arr.append(row[4])
 
                 for sub_room in room_arr:
-                    #print(sub_room)
                     rel = Relationship(cls.graph.find_one(label=cls.resource, property_key='office_name',
                                                        property_value=row[0]), "存放",
                                    cls.graph.find_one(label=cls.room, property_key='office_name', property_value=sub_room))
                     cls.graph.create(rel)
 
             except AttributeError as e:
-                a = 0
-
                 print("3", row[0], e, row[4],row[5])
-
-                #print(cls.graph.find_one(label=cls.restype, property_key='office_name',
-                                   #property_value=row[5]))
-                #print(cls.graph.find_one(label=cls.room, property_key='office_name', property_value=row[4]))
-                #print(cls.graph.find_one(label=cls.room, property_key='room', property_value=row[4]))
-
 
         """建立资源类型联系"""
         resType_values = resType.split("@")
@@ -912,8 +1009,6 @@ class Neo4jPrepare(object):
                     room_arr = row[2].split(u"，")
                 else:
                     room_arr.append(row[2])
-
-
                 for sub_room in room_arr:
                     if sub_room == 'nan':
                         continue
@@ -941,7 +1036,6 @@ class Neo4jPrepare(object):
                 for sub_room in room_arr:
                     if sub_room == 'nan':
                         continue
-
                     rel = Relationship(cls.graph.find_one(label=cls.task, property_key='office_name',
                                                           property_value=row[0]), "办理",
                                        cls.graph.find_one(label=cls.room, property_key='office_name',
@@ -992,7 +1086,7 @@ class Neo4jPrepare(object):
                 ans.append(dict(record['b']))
         return ans
 
-
+#Neo4jPrepare()
 '''
 if __name__ == '__main__':
     Neo4jPrepare()
