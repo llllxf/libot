@@ -30,7 +30,7 @@ class GeneralHub():
     """
 
     @classmethod
-    def __init__(cls):
+    def __init__(cls,age=None,sex=None):
         """
         主控模块的初始化
         1.得到AIML工具类
@@ -39,7 +39,13 @@ class GeneralHub():
         cls.aiml_util = AIMLUtil()
         cls.nlp_util = NLPUtil('ltp_data_v3.4.0')
         cls.search_bot = similarQuestionBot()
+        cls.age = age
+        cls.sex = sex
 
+    @classmethod
+    def set_age_sex(cls, age, sex):
+        cls.age = age
+        cls.sex = sex
 
     def question_answer_hub(self, question_str):
         """
@@ -50,11 +56,10 @@ class GeneralHub():
 
         question_first,question_replaced_normal,question_replaced_spcify,entity_dict = self.nlp_util.repalce_question(question_str)
         aiml_response = self.aiml_util.response(question_first)
-        #print(aiml_response,question_first)
-        
+
         if 'task_' in aiml_response:
 
-            graph_response = Bot.task_response(aiml_response, entity_dict)
+            graph_response = Bot.task_response(aiml_response, entity_dict,self.age,self.sex)
 
         elif aiml_response != '':
             graph_response = [aiml_response]
@@ -63,7 +68,7 @@ class GeneralHub():
             #print(aiml_response_normal, question_replaced_normal)
 
             if 'task_' in aiml_response_normal:
-                graph_response = Bot.task_response(aiml_response_normal, entity_dict)
+                graph_response = Bot.task_response(aiml_response_normal, entity_dict,self.age,self.sex)
             elif aiml_response_normal != '':
                 graph_response = [aiml_response_normal]
             else:
@@ -71,7 +76,7 @@ class GeneralHub():
                 #print(aiml_response_specify, question_replaced_spcify)
 
                 if 'task_' in aiml_response_specify:
-                    graph_response = Bot.task_response(aiml_response_specify, entity_dict)
+                    graph_response = Bot.task_response(aiml_response_specify, entity_dict,self.age,self.sex)
                 elif aiml_response_specify != '':
                     graph_response = [aiml_response_specify]
                 else:
@@ -84,9 +89,7 @@ class GeneralHub():
 
                     else:
                         words, pattern, arcs_dict, postags, hed_index = NLPUtil.get_sentence_pattern(question_str)
-                        #print(words, pattern, arcs_dict, postags, hed_index)
                         aiml_reponse = AIMLUtil.response(pattern)
-                        # print(pattern,aiml_reponse)
                         answer = TaskManager.task_response(aiml_reponse, words, arcs_dict, postags, hed_index)
                         if answer != None:
                             return [answer]
@@ -157,7 +160,7 @@ import time
 if __name__ == '__main__':
 
 
-    gh = GeneralHub()
+    gh = GeneralHub('12','男')
 
     while True:
         question_str = input('User:')

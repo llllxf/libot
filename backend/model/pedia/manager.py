@@ -48,8 +48,6 @@ class TaskManager(object):
             answer = cls.answer_ADV_SBV_ADV_HED(words, arcs_dict, postags, hed_index)
         if task == 'task_SBV_ADV_HED':
             answer = cls.answer_SBV_ADV_HED(words, arcs_dict, postags, hed_index)
-
-
         return answer
 
     @classmethod

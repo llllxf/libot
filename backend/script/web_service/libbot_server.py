@@ -14,35 +14,45 @@ import tornado.web
 import tornado.ioloop
 import tornado.escape
 import json
-
+import requests
 
 from model.robot_hub.general_hub_2 import GeneralHub
-
 graph_qa_hub = GeneralHub()
 
-
 class MainHandler(tornado.web.RequestHandler):
+
+
     def post(self):
+
         target = self.get_argument("target")
-        # print(self.request.body.decode('utf-8'))
-        query_body = json.loads(self.request.body.decode('utf-8'))
-        question_str = query_body['question']
-        print(question_str)
+        post_data = json.loads(self.request.body.decode('utf-8'))
+
+
         #simpleLog.log_something('question:'+question_str)
         if target == 'graph_qa':
+            question_str = post_data['question']
+            print(question_str)
+            print(GeneralHub.age)
             graph_respons = graph_qa_hub.question_answer_hub(question_str)
-            #print(graph_respons)
+            print(graph_respons[0])
             if len(graph_respons)>1:
                 #print(graph_respons)
                 res_dict = {'graph_answer': graph_respons[0],'img':graph_respons[1]}
             elif len(graph_respons)==1:
                 res_dict = {'graph_answer': graph_respons[0]}
             res_json = json.dumps(res_dict)
+            print(res_json)
             self.write(res_json)
             #simpleLog.log_something('graph_answer:'+graph_respons)
             #simpleLog.log_something('graph_answer:' + graph_respons)
             #simpleLog.log_something('search_answer:' + str(answer_list))
-        #elif target == 'chat':
+        elif target == 'recognition':
+            print(post_data)
+            age = post_data['age']
+            sex = post_data['sex']
+            GeneralHub.set_age_sex(age,sex)
+
+            print(age,sex)
 
 
 
