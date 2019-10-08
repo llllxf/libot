@@ -54,6 +54,9 @@ class GeneralHub():
         :return:
         """
 
+        question_str = self.nlp_util.clear_question(question_str)
+        print(question_str)
+
         question_first,question_replaced_normal,question_replaced_spcify,entity_dict = self.nlp_util.repalce_question(question_str)
         aiml_response = self.aiml_util.response(question_first)
 
@@ -82,14 +85,16 @@ class GeneralHub():
                 else:
                     response = dict(self.search_bot.answer_question(question_str)[0])
                     #print(response['answer'], response['score'], question_str, "===")
+                    print(response['score'], response['question'])
+                    if float(response['score']) > 0.7:
 
-                    if float(response['score']) > 0.68:
-                        #print(response['score'])
                         graph_response = [response['answer']]
 
                     else:
                         words, pattern, arcs_dict, postags, hed_index = NLPUtil.get_sentence_pattern(question_str)
+                        print(words, pattern, arcs_dict, postags, hed_index)
                         aiml_reponse = AIMLUtil.response(pattern)
+                        print(aiml_reponse)
                         answer = TaskManager.task_response(aiml_reponse, words, arcs_dict, postags, hed_index)
                         if answer != None:
                             return [answer]

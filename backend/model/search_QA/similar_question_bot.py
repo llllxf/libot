@@ -34,6 +34,7 @@ class similarQuestionBot():
                 #print(q_str,"====",a_str)
                 cls.q_list.append(q_str)
                 cls.qa_pair_dict[q_str] = a_str
+        """
         with open('../../resource/pair_for_banzheng.txt', 'r', encoding='utf8') as in_file:
         #with open('../resource/pair_for_reading_qa.txt', 'r', encoding='utf8') as in_file:
             for line in in_file.readlines():
@@ -50,6 +51,7 @@ class similarQuestionBot():
                 #print(q_str,"====",a_str)
                 cls.q_list.append(q_str)
                 cls.qa_pair_dict[q_str] = a_str
+        """
 
         zhcn_seg = zhcnSeg()
         cls.sent_sim = SentenceSimilarity(zhcn_seg)

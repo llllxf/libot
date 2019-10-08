@@ -46,6 +46,13 @@
             task_ATT_SBV_VOB
         </template>
     </category>
+    <!-- 主语及其依附对象，代词和动词宾语 -->
+    <category>
+        <pattern>#ATT#HED#VOB#</pattern>
+        <template>
+            task_ATT_ADV_VOB
+        </template>
+    </category>
 
     <!-- 主语，疑问代词和动词宾语，以及宾语的依附对象 -->
     <category>
@@ -88,12 +95,14 @@
     </category>
 
     <!--主语，状语和核心词汇（主语状态） -->
+    <!--
     <category>
         <pattern>#SBV#ADV#HED#</pattern>
         <template>
             task_SBV_ADV_HED
         </template>
     </category>
+    -->
 
 
 

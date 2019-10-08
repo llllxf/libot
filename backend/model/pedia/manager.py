@@ -38,6 +38,8 @@ class TaskManager(object):
             answer = cls.answer_ATT_SBV_POB(words, arcs_dict,postags,hed_index)
         if task == 'task_ATT_SBV_VOB':
             answer = cls.answer_ATT_SBV_VOB(words, arcs_dict,postags,hed_index)
+        if task == 'task_ATT_ADV_VOB':
+            answer = cls.answer_ATT_ADV_VOB(words, arcs_dict, postags, hed_index)
         if task == 'task_SBV_HED_SBV_VOB':
             answer = cls.answer_SBV_HED_SBV_VOB(words, arcs_dict, postags, hed_index)
         if task == 'task_ADV_SBV_HED':
@@ -71,9 +73,15 @@ class TaskManager(object):
     @classmethod
     def answer_SBV_ADV_HED(cls, words, arcs_dict, postags, hed_index):
         hed = words[hed_index]
-
+        if 'SBV' not in arcs_dict[hed_index].keys():
+            return None
         subj_index = arcs_dict[hed_index]['SBV'][0]
+
         subj = words[subj_index]
+        if subj in ['你','你们','我们','我']:
+            return None
+        if 'ADV' not in arcs_dict[hed_index].keys():
+            return None
         adv_idnex = arcs_dict[hed_index]['ADV'][0]
         adv = words[adv_idnex]
 
@@ -115,10 +123,16 @@ class TaskManager(object):
     @classmethod
     def answer_SBV_HED_SBV_VOB(cls,words, arcs_dict, postags, hed_index):
         hed = words[hed_index]
+        if 'SBV' not in arcs_dict[hed_index].keys():
+            return None
         sbv_index = arcs_dict[hed_index]['SBV'][0]
         sbv = words[sbv_index]
+        if 'VOB' not in arcs_dict[hed_index].keys():
+            return None
         vob_index = arcs_dict[hed_index]['VOB'][0]
         vob = words[vob_index]
+        if 'SBV' not in arcs_dict[vob_index].keys():
+            return None
         subj_index = arcs_dict[vob_index]['SBV'][0]
         subj = words[subj_index]
         if subj == '谁':
@@ -144,10 +158,16 @@ class TaskManager(object):
     @classmethod
     def answer_ATT_SBV_VOB(cls, words, arcs_dict, postags, hed_index):
         verb = words[hed_index]
+        if 'VOB' not in arcs_dict[hed_index].keys():
+            return None
         obj_index = arcs_dict[hed_index]['VOB'][0]
         obj = words[obj_index]
+        if 'SBV' not in arcs_dict[hed_index].keys():
+            return None
         subj_index = arcs_dict[hed_index]['SBV'][0]
         subj = words[subj_index]
+        if 'ATT' not in arcs_dict[subj_index].keys():
+            return None
         att_index = arcs_dict[subj_index]['ATT'][0]
         att = words[att_index]
 
@@ -155,6 +175,31 @@ class TaskManager(object):
             return cls.get_attr(att,subj)
         else:
             return cls.get_desc(subj)
+
+    """
+    问句仅提取出代词，主语，动宾
+    询问代词的主语属性
+    eg.世界上有什么**
+    """
+
+    @classmethod
+    def answer_ATT_ADV_VOB(cls, words, arcs_dict, postags, hed_index):
+        verb = words[hed_index]
+        if 'VOB' not in arcs_dict[hed_index].keys():
+            return None
+        obj_index = arcs_dict[hed_index]['VOB'][0]
+        obj = words[obj_index]
+        if 'ADV' not in arcs_dict[hed_index].keys():
+            return None
+        subj_index = arcs_dict[hed_index]['ADV'][0]
+        subj = words[subj_index]
+        if 'ATT' not in arcs_dict[subj_index].keys():
+            return None
+        att_index = arcs_dict[subj_index]['ATT'][0]
+        att = words[att_index]
+
+
+        return cls.get_desc(obj)
 
 
 
@@ -167,10 +212,16 @@ class TaskManager(object):
     @classmethod
     def answer_ATT_SBV_POB(cls, words, arcs_dict, postags, hed_index):
         prep = words[hed_index]
+        if 'POB' not in arcs_dict[hed_index].keys():
+            return None
         obj_index = arcs_dict[hed_index]['POB'][0]
         obj = words[obj_index]
+        if 'SBV' not in arcs_dict[hed_index].keys():
+            return None
         subj_index = arcs_dict[hed_index]['SBV'][0]
         subj = words[subj_index]
+        if 'ATT' not in arcs_dict[subj_index].keys():
+            return None
         att_index = arcs_dict[subj_index]['ATT'][0]
         att = words[att_index]
 
@@ -190,8 +241,13 @@ class TaskManager(object):
 
     @classmethod
     def answer_ATT_HED(cls, words, arcs_dict, postags, hed_index):
+        print(words, arcs_dict, postags, hed_index)
         word = words[hed_index]
+        print(arcs_dict[hed_index].keys())
+        if 'ATT' not in arcs_dict[hed_index].keys():
+            return None
         att_index = arcs_dict[hed_index]['ATT'][0]
+
         att = words[att_index]
         if postags[att_index] in NLPUtil.noun_for_pedia:
             ans = cls.get_attr(att,word)
@@ -227,8 +283,12 @@ class TaskManager(object):
     @classmethod
     def answer_SBV_VOB(cls, words, arcs_dict, postags, hed_index):
         verb = words[hed_index]
+        if 'VOB' not in arcs_dict[hed_index].keys():
+            return None
         obj_index = arcs_dict[hed_index]['VOB'][0]
         obj = words[obj_index]
+        if 'SBV' not in arcs_dict[hed_index].keys():
+            return None
         subj_index = arcs_dict[hed_index]['SBV'][0]
         subj = words[subj_index]
         if postags[obj_index] == 'r':
@@ -251,8 +311,12 @@ class TaskManager(object):
     @classmethod
     def answer_SBV_POB(cls, words, arcs_dict, postags, hed_index):
         prep = words[hed_index]
+        if 'POB' not in arcs_dict[hed_index].keys():
+            return None
         obj_index = arcs_dict[hed_index]['POB'][0]
         obj = words[obj_index]
+        if 'SBV' not in arcs_dict[hed_index].keys():
+            return None
         subj_index = arcs_dict[hed_index]['SBV'][0]
         subj = words[subj_index]
         if postags[obj_index] == 'r':
@@ -272,10 +336,16 @@ class TaskManager(object):
     @classmethod
     def answer_SBV_ATT_VOB(cls, words, arcs_dict, postags, hed_index):
         verb = words[hed_index]
+        if 'VOB' not in arcs_dict[hed_index].keys():
+            return None
         obj_index = arcs_dict[hed_index]['VOB'][0]
         obj = words[obj_index]
+        if 'SBV' not in arcs_dict[hed_index].keys():
+            return None
         subj_index = arcs_dict[hed_index]['SBV'][0]
         subj = words[subj_index]
+        if 'ATT' not in arcs_dict[obj_index].keys():
+            return None
         att_index = arcs_dict[obj_index]['ATT'][0]
         att = words[att_index]
 
@@ -296,10 +366,16 @@ class TaskManager(object):
     @classmethod
     def answer_SBV_ATT_POB(cls, words, arcs_dict, postags, hed_index):
         pron = words[hed_index]
+        if 'POB' not in arcs_dict[hed_index].keys():
+            return None
         obj_index = arcs_dict[hed_index]['POB'][0]
         obj = words[obj_index]
+        if 'SBV' not in arcs_dict[hed_index].keys():
+            return None
         subj_index = arcs_dict[hed_index]['SBV'][0]
         subj = words[subj_index]
+        if 'ATT' not in arcs_dict[obj_index].keys():
+            return None
         att_index = arcs_dict[obj_index]['ATT'][0]
         att = words[att_index]
         if postags[att_index] == 'r':

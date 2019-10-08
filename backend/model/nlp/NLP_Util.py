@@ -55,6 +55,7 @@ class NLPUtil(object):
         """
         cls.Interrogative_pronouns = ['哪里', '什么', '怎么', '哪', '为什么', '啥']
         cls.noun_for_pedia = ['n', 'nh', 'ni', 'nl', 'ns', 'nz', 'nt']
+        cls.clear_word = ['嗯','噫','啊','哦']
         """
         for i in cls.service_list:
             print(i)
@@ -65,6 +66,24 @@ class NLPUtil(object):
 
 
         jieba.load_userdict("../../resource/guotu_dict.txt")
+
+    @classmethod
+    def clear_question(cls, question):
+
+        question = question.replace('。', '')
+        question = question.replace('.', '')
+        question = question.replace('?', '')
+        question = question.replace('？', '')
+        question = question.replace('!', '')
+        question = question.replace('！', '')
+        question = question.replace('，', '')
+        question = question.replace(',', '')
+        for c_word in cls.clear_word:
+            question = question.replace(c_word, '')
+        question = question.rstrip()
+        question = question.lstrip()
+        return question
+
 
 
 

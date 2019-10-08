@@ -14,6 +14,7 @@ import tornado.web
 import tornado.ioloop
 import tornado.escape
 import json
+from model.nlp import NLPUtil
 import requests
 
 from model.robot_hub.general_hub_2 import GeneralHub
@@ -25,17 +26,24 @@ class MainHandler(tornado.web.RequestHandler):
     def post(self):
 
         target = self.get_argument("target")
-        post_data = json.loads(self.request.body.decode('utf-8'))
+        print(self.request.body)
+        post_data = json.loads(self.request.body,strict=False)
+        #post_data = json.loads(self.request.body.decode('utf-8'))
 
 
         #simpleLog.log_something('question:'+question_str)
         if target == 'graph_qa':
             question_str = post_data['question']
+            #question_str = question_str.decode('utf-8')
+            question_str = NLPUtil.clear_question(question_str)
             print(question_str)
             print(GeneralHub.age)
             graph_respons = graph_qa_hub.question_answer_hub(question_str)
             print(graph_respons[0])
-            if len(graph_respons)>1:
+
+            if question_str == None or question_str == '':
+                res_dict = {'graph_answer':'我没听清，请您再说一遍'}
+            elif len(graph_respons)>1:
                 #print(graph_respons)
                 res_dict = {'graph_answer': graph_respons[0],'img':graph_respons[1]}
             elif len(graph_respons)==1:
@@ -47,12 +55,22 @@ class MainHandler(tornado.web.RequestHandler):
             #simpleLog.log_something('graph_answer:' + graph_respons)
             #simpleLog.log_something('search_answer:' + str(answer_list))
         elif target == 'recognition':
-            print(post_data)
+            print("post_data",post_data)
             age = post_data['age']
+            #age = age.decode('utf-8')
             sex = post_data['sex']
+            #sex = sex.decode('utf-8')
+            img = post_data['img']
+            if age == '未知':
+                age = None
+            if sex == '未知':
+                sex = None
+            if img == '未知':
+                img = None
+            print(img)
             GeneralHub.set_age_sex(age,sex)
 
-            print(age,sex)
+            print("age,sex",age,sex)
 
 
 
