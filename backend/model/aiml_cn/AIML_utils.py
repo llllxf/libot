@@ -14,15 +14,19 @@ class AIMLUtil(object):
     @classmethod
     def __init__(cls):
 
-        cls.aiml_kernal = Kernel()
+        """
 
-        cls.aiml_kernal.learn('../../resource/navi_template.aiml')
-        cls.aiml_kernal.learn('../../resource/contain_template.aiml')
-        cls.aiml_kernal.learn('../../resource/time.aiml')
-        cls.aiml_kernal.learn('../../resource/condition.aiml')
-        cls.aiml_kernal.learn('../../resource/information.aiml')
-        cls.aiml_kernal.learn('../../resource/business.aiml')
-        cls.aiml_kernal.learn('../../resource/pattern_for_cyclopedia.aiml')
+        主控aiml
+        """
+        cls.mask_aiml_kernal = Kernel()
+
+        cls.mask_aiml_kernal.learn('../../resource/navi_template.aiml')
+        cls.mask_aiml_kernal.learn('../../resource/contain_template.aiml')
+        cls.aimlmask_aiml_kernal_kernal.learn('../../resource/time.aiml')
+        cls.mask_aiml_kernal.learn('../../resource/condition.aiml')
+        cls.mask_aiml_kernal.learn('../../resource/information.aiml')
+        cls.mask_aiml_kernal.learn('../../resource/business.aiml')
+        cls.mask_aiml_kernal.learn('../../resource/pattern_for_cyclopedia.aiml')
 
         '''
         cls.aiml_kernal.learn('../resource/navi_template.aiml')

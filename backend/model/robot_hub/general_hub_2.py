@@ -18,10 +18,6 @@ from model.search_QA import similarQuestionBot
 from model.aiml_cn import AIMLUtil
 from model.nlp import NLPUtil
 from model.pedia.manager import TaskManager
-import skimage.io as io
-import scipy
-import matplotlib.pyplot as plt
-#from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
 
 
 class GeneralHub():
@@ -30,7 +26,7 @@ class GeneralHub():
     """
 
     @classmethod
-    def __init__(cls,age=None,sex=None):
+    def __init__(cls,age=None,sex=None, mtype='mask'):
         """
         主控模块的初始化
         1.得到AIML工具类
@@ -41,34 +37,51 @@ class GeneralHub():
         cls.search_bot = similarQuestionBot()
         cls.age = age
         cls.sex = sex
+        """
+        标记不同aiml
+        mask 标记主aiml
+        recommend 标记推荐aiml
+        """
+        cls.type = mtype
 
     @classmethod
     def set_age_sex(cls, age, sex):
         cls.age = age
         cls.sex = sex
 
-    def question_answer_hub(self, question_str):
+    def question_answer_hub_recommend(self, question_str):
         """
-        问答总控，基于aiml构建问题匹配器
+        推荐任务主控
+        :param question_str:
+        :return:
+        """
+        question_str = self.nlp_util.clear_question(question_str)
+
+
+    def question_answer_hub_mask(self, question_str):
+        """
+        问答总主控，基于aiml构建问题匹配器
         :param question_str:问句输入
         :return:
         """
 
         question_str = self.nlp_util.clear_question(question_str)
-        print(question_str)
+
 
         question_first,question_replaced_normal,question_replaced_spcify,entity_dict = self.nlp_util.repalce_question(question_str)
         aiml_response = self.aiml_util.response(question_first)
+        print(question_first,question_replaced_normal,question_replaced_spcify,entity_dict,aiml_response)
 
         if 'task_' in aiml_response:
 
             graph_response = Bot.task_response(aiml_response, entity_dict,self.age,self.sex)
+            print("graph_response",graph_response)
 
         elif aiml_response != '':
             graph_response = [aiml_response]
         else:
             aiml_response_normal = self.aiml_util.response(question_replaced_normal)
-            #print(aiml_response_normal, question_replaced_normal)
+            print("aiml_response_normal",aiml_response_normal, question_replaced_normal)
 
             if 'task_' in aiml_response_normal:
                 graph_response = Bot.task_response(aiml_response_normal, entity_dict,self.age,self.sex)
@@ -76,7 +89,7 @@ class GeneralHub():
                 graph_response = [aiml_response_normal]
             else:
                 aiml_response_specify = self.aiml_util.response(question_replaced_spcify)
-                #print(aiml_response_specify, question_replaced_spcify)
+                print("aiml_response_specify",aiml_response_specify, question_replaced_spcify)
 
                 if 'task_' in aiml_response_specify:
                     graph_response = Bot.task_response(aiml_response_specify, entity_dict,self.age,self.sex)
@@ -84,7 +97,7 @@ class GeneralHub():
                     graph_response = [aiml_response_specify]
                 else:
                     response = dict(self.search_bot.answer_question(question_str)[0])
-                    #print(response['answer'], response['score'], question_str, "===")
+                    print(response['answer'], response['score'], question_str, "===")
                     print(response['score'], response['question'])
                     if float(response['score']) > 0.7:
 
@@ -99,6 +112,8 @@ class GeneralHub():
                         if answer != None:
                             return [answer]
                         else:
+                            #return ['很抱歉，暂时回答不了这个问题']
+
                             import requests, json
                             github_url = "http://openapi.tuling123.com/openapi/api/v2"
                             data = json.dumps({
@@ -118,8 +133,6 @@ class GeneralHub():
                             print(r.json())
                             res_msg = r.json()['results'][0]['values']['text']
                             return [res_msg]
-
-
 
 
         '''

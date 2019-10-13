@@ -1,5 +1,26 @@
 <aiml version="1.0.1" encoding="UTF-8">
 
+    <!-- 推荐书籍 -->
+    <category>
+        <pattern>#推荐#书#</pattern>
+        <template>
+            task_recommend_book
+        </template>
+    </category>
+    <category>
+        <pattern>#找#书#</pattern>
+        <template>
+            task_recommend_book
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#有*看#</pattern>
+        <template>
+            task_recommend_book
+        </template>
+    </category>
+
+
     <!-- 借阅 -->
     <category>
         <pattern>#书#借#</pattern>
@@ -532,13 +553,49 @@
         </template>
     </category>
     <category>
-        <pattern>#解#挂#</pattern>
+        <pattern>#怎么#解#挂#</pattern>
         <template>
             请凭本人有效身份证件到办证处解除挂失。
         </template>
     </category>
     <category>
-        <pattern>#挂失#</pattern>
+        <pattern>#如何#解#挂#</pattern>
+        <template>
+            请凭本人有效身份证件到办证处解除挂失。
+        </template>
+    </category>
+    <category>
+        <pattern>#怎么#挂失#</pattern>
+        <template>
+            请到办证处挂失，少年儿童馆读者卡挂失地点在国家图书馆少年儿童馆咨询台。
+        </template>
+    </category>
+    <category>
+        <pattern>#如何#挂失#</pattern>
+        <template>
+            请到办证处挂失，少年儿童馆读者卡挂失地点在国家图书馆少年儿童馆咨询台。
+        </template>
+    </category>
+    <category>
+        <pattern>#卡#丢#怎么#挂失#</pattern>
+        <template>
+            请到办证处挂失，少年儿童馆读者卡挂失地点在国家图书馆少年儿童馆咨询台。
+        </template>
+    </category>
+    <category>
+        <pattern>#卡#丢#如何#挂失#</pattern>
+        <template>
+            请到办证处挂失，少年儿童馆读者卡挂失地点在国家图书馆少年儿童馆咨询台。
+        </template>
+    </category>
+    <category>
+        <pattern>#证#丢#怎么#挂失#</pattern>
+        <template>
+            请到办证处挂失，少年儿童馆读者卡挂失地点在国家图书馆少年儿童馆咨询台。
+        </template>
+    </category>
+    <category>
+        <pattern>#证#丢#如何#挂失#</pattern>
         <template>
             请到办证处挂失，少年儿童馆读者卡挂失地点在国家图书馆少年儿童馆咨询台。
         </template>
@@ -689,6 +746,13 @@
         </template>
     </category>
     <category>
+        <pattern>#对#</pattern>
+        <that>请问办卡人是否为中国公民？</that>
+        <template>
+            task_card_yes
+        </template>
+    </category>
+    <category>
         <pattern>#不#</pattern>
         <that>请问办卡人是否为中国公民？</that>
         <template>
@@ -799,25 +863,17 @@
         </template>
     </category>
 
-
     <category>
         <pattern>#是#</pattern>
-        <that>请问押金收据是否还在？</that>
-        <template>
-            是否本人办理退押金？
-        </template>
-    </category>
-    <category>
-        <pattern>#在#</pattern>
         <that>
-            请问押金收据是否还在？
+            是否本人办理退押金？
         </that>
         <template>
-            是否本人办理退押金？
+            task_money_back
         </template>
     </category>
     <category>
-        <pattern>#是#</pattern>
+        <pattern>#对#</pattern>
         <that>
             是否本人办理退押金？
         </that>
@@ -864,9 +920,25 @@
     </category>
     <category>
         <pattern>#不#</pattern>
-        <that>请问押金收据是否还在</that>
+        <that>请问押金收据是否还在？</that>
         <template>
             请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
+        </template>
+    </category>
+    <category>
+        <pattern>#是#</pattern>
+        <that>请问押金收据是否还在？</that>
+        <template>
+            是否本人办理退押金？
+        </template>
+    </category>
+    <category>
+        <pattern>#在#</pattern>
+        <that>
+            请问押金收据是否还在？
+        </that>
+        <template>
+            是否本人办理退押金？
         </template>
     </category>
     <!-- ========================================================== -->
@@ -1093,12 +1165,178 @@
         </template>
     </category>
 
+    <category>
+        <pattern>借#要钱吗#</pattern>
+        <template>
+            国家图书馆的资源免费借期为31天，逾期每日需付费0.3元
+        </template>
+    </category>
+    <category>
+        <pattern>借#付费吗#</pattern>
+        <template>
+            国家图书馆的资源免费借期为31天，逾期每日需付费0.3元
+        </template>
+    </category>
 
+    <category>
+        <pattern>#可以借#多久</pattern>
+        <template>
+            国家图书馆的资源借期为31天
+        </template>
+    </category>
+    <category>
+        <pattern>借书可以借#多久</pattern>
+        <template>
+            国家图书馆的资源借期为31天
+        </template>
+    </category>
+    <category>
+        <pattern>#能借#多久</pattern>
+        <template>
+            国家图书馆的资源借期为31天
+        </template>
+    </category>
+    <category>
+        <pattern>借书能借#多久</pattern>
+        <template>
+            国家图书馆的资源借期为31天
+        </template>
+    </category>
+    <category>
+        <pattern>#可以借#多少天</pattern>
+        <template>
+            国家图书馆的资源借期为31天
+        </template>
+    </category>
+    <category>
+        <pattern>借书可以借#多少天</pattern>
+        <template>
+            国家图书馆的资源借期为31天
+        </template>
+    </category>
+    <category>
+        <pattern>#能借#多少天</pattern>
+        <template>
+            国家图书馆的资源借期为31天
+        </template>
+    </category>
+    <category>
+        <pattern>借书能借#多少天</pattern>
+        <template>
+            国家图书馆的资源借期为31天
+        </template>
+    </category>
 
+    <category>
+        <pattern>可以#借#多少#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
+    <category>
+        <pattern>可以#借#几#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
 
+    <category>
+        <pattern>#每次可以#借#多少#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
+    <category>
+        <pattern>借书每次可以#借#多少#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
+    <category>
+        <pattern>#每次能#借#多少#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
+    <category>
+        <pattern>借书每次能#借#多少#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
+    <category>
+        <pattern>#一次可以#借#多少#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
+    <category>
+        <pattern>借书一次可以#借#多少#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
+    <category>
+        <pattern>#一次能#借#多少#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
+    <category>
+        <pattern>借书一次能#借#多少#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
 
-
-
+    <category>
+        <pattern>#每次可以#借#几#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
+    <category>
+        <pattern>借书每次可以#借#几#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
+    <category>
+        <pattern>#每次能#借#几#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
+    <category>
+        <pattern>借书每次能#借#几#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
+    <category>
+        <pattern>#一次可以#借#几#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
+    <category>
+        <pattern>借书一次可以#借#几#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
+    <category>
+        <pattern>#一次能#借#几#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
+    <category>
+        <pattern>借书一次能#借#几#</pattern>
+        <template>
+            书籍一次只能借阅三本
+        </template>
+    </category>
 
 </aiml>
 

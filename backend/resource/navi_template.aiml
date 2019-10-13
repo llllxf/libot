@@ -66,6 +66,77 @@
            task_res_pos
         </template>
     </category>
+
+    <!-- 精品 -->
+    <category>
+        <pattern>#GOODS#在哪#</pattern>
+
+        <template>
+            task_goods_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#去哪#GOODS#</pattern>
+
+        <template>
+            task_goods_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#GOODS#地方#</pattern>
+
+        <template>
+            task_goods_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#地方#GOODS#</pattern>
+
+        <template>
+            task_goods_pos
+        </template>
+    </category>
+    <category>
+        <pattern>GOODS#馆室#</pattern>
+
+        <template>
+            task_goods_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#馆室#GOODS#</pattern>
+
+        <template>
+            task_goods_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#附近#GOODS#</pattern>
+        <template>
+           task_goods_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#GOODS#附近#</pattern>
+        <template>
+           task_goods_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#GOODS#哪#看#</pattern>
+        <template>
+           task_goods_pos
+        </template>
+    </category>
+    <category>
+        <pattern>#GOODS*位置#</pattern>
+        <template>
+           task_goods_pos
+        </template>
+    </category>
+
+
+
     <!-- 资源类型位置 -->
     <category>
         <pattern>#RTYPE#哪#看#</pattern>
@@ -200,6 +271,12 @@
     </category>
     <category>
         <pattern>#ROOM#位置#</pattern>
+        <template>
+           task_room_pos
+        </template>
+    </category>
+    <category>
+        <pattern>ROOM</pattern>
         <template>
            task_room_pos
         </template>

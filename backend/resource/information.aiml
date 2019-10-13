@@ -612,12 +612,7 @@
            task_room_describe
         </template>
     </category>
-    <category>
-        <pattern>ROOM</pattern>
-        <template>
-           task_room_describe
-        </template>
-    </category>
+
     <category>
         <pattern>#ROOM#特色#</pattern>
         <template>
@@ -810,6 +805,12 @@
     </category>
     <category>
         <pattern>CARD#有几#</pattern>
+        <template>
+           task_card_describe
+        </template>
+    </category>
+    <category>
+        <pattern>#有几#CARD#</pattern>
         <template>
            task_card_describe
         </template>

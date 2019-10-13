@@ -6,13 +6,13 @@ project_path = os.path.abspath(os.path.join(os.getcwd(), ".."))
 sys.path.append(project_path)
 from aiml_cn import AIMLUtil
 from nlp import NLPUtil
-from pedia import TaskManager
+from pedia.manager import TaskManager
 def chat(question_str):
 
     words,pattern,arcs_dict,postags,hed_index = NLPUtil.get_sentence_pattern(question_str)
     print(words,pattern,arcs_dict,postags,hed_index)
     aiml_reponse = AIMLUtil.response(pattern)
-    #print(pattern,aiml_reponse)
+    print(pattern,aiml_reponse)
     answer = TaskManager.task_response(aiml_reponse,words,arcs_dict,postags,hed_index)
     return answer
 

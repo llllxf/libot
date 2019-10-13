@@ -279,6 +279,12 @@
         </template>
     </category>
     <category>
+        <pattern>#RES#数量#多少#</pattern>
+        <template>
+            task_count_res
+        </template>
+    </category>
+    <category>
         <pattern>#ROOM#有几#RES#</pattern>
         <template>
             task_count_res
@@ -651,12 +657,6 @@
         </template>
     </category>
     <category>
-        <pattern>#LIBRARY#有*看#</pattern>
-        <template>
-            task_library_res_a
-        </template>
-    </category>
-    <category>
         <pattern>#LIBRARY#有*书#</pattern>
         <template>
             task_library_res_a
@@ -741,6 +741,12 @@
         </template>
     </category>
     <category>
+        <pattern>#LIBRARY#有#GOODS#</pattern>
+        <template>
+            task_goods_library
+        </template>
+    </category>
+    <category>
         <pattern>#LIBRARY#有#RTYPE#</pattern>
         <template>
             task_restype_library
@@ -820,6 +826,13 @@
         </template>
     </category>
     <category>
+        <pattern>可以SERVICE#</pattern>
+
+        <template>
+           task_service_exit
+        </template>
+    </category>
+    <category>
         <pattern>#LIBRARY#提供#SERVICE#</pattern>
 
         <template>
@@ -838,6 +851,42 @@
 
         <template>
            task_service_exit
+        </template>
+    </category>
+
+    <category>
+        <pattern>#LIBRARY#可#TASK#</pattern>
+
+        <template>
+           task_task_exit
+        </template>
+    </category>
+    <category>
+        <pattern>可以TASK#</pattern>
+
+        <template>
+           task_task_exit
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#提供#TASK#</pattern>
+
+        <template>
+           task_task_exit
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#能#TASK#</pattern>
+
+        <template>
+           task_task_exit
+        </template>
+    </category>
+    <category>
+        <pattern>#LIBRARY#有#TASK#</pattern>
+
+        <template>
+           task_task_exit
         </template>
     </category>
 
@@ -1018,6 +1067,13 @@
         <pattern>#AREA#能#SERVICE#</pattern>
         <template>
            task_service_area_exit
+        </template>
+    </category>
+
+    <category>
+        <pattern>有*吗</pattern>
+        <template>
+           很抱歉，国家图书馆暂时没有
         </template>
     </category>
 

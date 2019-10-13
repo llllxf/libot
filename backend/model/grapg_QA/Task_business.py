@@ -4,9 +4,42 @@ import numpy as np
 class Task_business():
 
 
-    '''
-    作废
-    '''
+
+    """
+    书籍推荐任务，根据监测到的年龄性别信息来实现推荐算法
+    """
+    def get_kind(self, age, sex):
+        recommand_book_male = ['漫画', '武侠', '历史']
+        recommand_book_female = ['童话', '青春文学', '女性文学']
+        recommand_book_none = '名著'
+        age = int(age)
+        if sex == '男':
+            if age <= 15:
+                return recommand_book_male[0]
+            elif age <= 25:
+                return recommand_book_male[1]
+            else:
+                return recommand_book_male[2]
+        elif sex == '女':
+            if age <= 15:
+                return recommand_book_female[0]
+            elif age <= 25:
+                return recommand_book_female[1]
+            else:
+                return recommand_book_female[2]
+        else:
+            return recommand_book_none
+
+    def solve_recommend_book(self, age, sex):
+        kind = self.get_kind(age,sex)
+        ans = "猜测您可能喜欢"+kind+"类书籍,图书馆有"
+        goods = Neo4jPrepare.get_entity_for_kind('精品',kind)
+        for g in goods:
+            ans += g['office_name']+",存放在"
+            room = Neo4jPrepare.get_relation(g['office_name'],'馆室')
+            ans += room[0]['office_name']+"\n"
+        return ans
+
     """
     是否提供服务
     """
@@ -337,6 +370,17 @@ class Task_business():
         else:
             return "检测到您的年龄为"+str(age)+",性别为"+sex+",请由监护人陪同，持本人及监护人有效身份证件原件和复印件（包括身份证、户口簿、学籍卡、军人证、护照、港澳通行证、台胞回乡证），到办证处填写《国家图书馆少年儿童馆读者卡申请表》即可办理少年儿童馆读者卡\n"
 
+
+    def solve_borrow_card(self,age):
+        if age == None:
+            return "年龄满16岁的读者可以持国家图书馆读者卡或身份证借阅书籍\n年龄13-15岁的读者可以持国家图书馆读者卡借阅书籍\n年龄未满13岁的读者可以持少年儿童读者卡借阅书籍"
+        age = int(age)
+        if age>15:
+            return "年龄满16岁的读者可以持国家图书馆读者卡或身份证借阅书籍\n"
+        elif age>12:
+            return "年龄13-15岁的读者可以持国家图书馆读者卡借阅书籍\n"
+        else:
+            return "年龄未满13岁的读者可以持少年儿童读者卡借阅书籍\n"
 
 
 

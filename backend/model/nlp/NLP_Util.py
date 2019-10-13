@@ -24,10 +24,12 @@ class NLPUtil(object):
         cls.model_path = model_path
 
         cls.neo_util = Neo4jPrepare()
-        cls.room_list, cls.room_alias_list, cls.floor_list, cls.floor_alias_list, cls.area_list, cls.area_alias_list, cls.resource_list, cls.resource_alias_list, cls.restype_list, cls.restype_alias_list, cls.card_list, cls.card_alias_list, cls.library, cls.library_alias_list, cls.service_list, cls.service_alias_list,cls.task_list, cls.task_alias_list, cls.multype_list,cls.multype_alias_list,cls.ttype_list,cls.ttype_alias_list = cls.neo_util.get_all_varname()
+        cls.room_list, cls.room_alias_list, cls.floor_list, cls.floor_alias_list, cls.area_list, cls.area_alias_list, cls.resource_list, cls.resource_alias_list, cls.restype_list, cls.restype_alias_list, cls.card_list, cls.card_alias_list, cls.library, cls.library_alias_list, cls.service_list, cls.service_alias_list,cls.task_list, cls.task_alias_list, cls.multype_list,cls.multype_alias_list,cls.ttype_list,cls.ttype_alias_list,cls.goods_list,cls.goods_alias_list = cls.neo_util.get_all_varname()
+        for i in cls.goods_alias_list:
+            print(i)
         cls.stopwords = ['什么', '哪里', '怎么', '有', '走', '去', '可以', '如何', '怎样', '的', '地', '得']
         cls.cilin = CilinSimilarity()
-        #print(cls.cilin)
+
         a = cls.cilin.sim2016("作家","作者")
         #print("score",a)
 
@@ -53,7 +55,7 @@ class NLPUtil(object):
         """
         疑问代词
         """
-        cls.Interrogative_pronouns = ['哪里', '什么', '怎么', '哪', '为什么', '啥']
+        cls.Interrogative_pronouns = ['哪里', '什么', '怎么', '哪', '为什么', '啥','谁']
         cls.noun_for_pedia = ['n', 'nh', 'ni', 'nl', 'ns', 'nz', 'nt']
         cls.clear_word = ['嗯','噫','啊','哦']
         """
@@ -102,7 +104,7 @@ class NLPUtil(object):
         if '国家图书馆' in question_first:
             question_first = question_first.replace('国家图书馆','')
         if '图书馆' in question_first:
-            question_first = question_first.replace('国家图书馆','')
+            question_first = question_first.replace('图书馆','')
 
         entity_dict = {}
         word_list = jieba.cut(question_n, cut_all=False)
@@ -117,6 +119,7 @@ class NLPUtil(object):
         library_entity = []
         service_entity = []
         task_entity = []
+        goods_entity = []
 
         for word in word_list:
             #print(word)
@@ -137,6 +140,13 @@ class NLPUtil(object):
                     question_first = question_first.replace(word, 'RES')
                     question_n = question_n.replace(word, 'RES')
                     question_s = question_s.replace(word, 'RES')
+                    break
+            for (goods_alias, goods) in zip(cls.goods_alias_list, cls.goods_list):
+                if word in goods_alias:
+                    goods_entity.append(goods)
+                    question_first = question_first.replace(word, 'GOODS')
+                    question_n = question_n.replace(word, 'GOODS')
+                    question_s = question_s.replace(word, 'GOODS')
                     break
             for (floor_alias, floor) in zip(cls.floor_alias_list, cls.floor_list):
                 if word in floor_alias:
@@ -235,6 +245,7 @@ class NLPUtil(object):
         entity_dict['service'] = service_entity
         entity_dict['library'] = library_entity
         entity_dict['task'] = task_entity
+        entity_dict['goods'] = goods_entity
         #print("question_first,question_n,question_s",question_first,question_n,question_s)
         #print(cls.get_score("好",'棒'))
         return question_first,question_n,question_s, entity_dict
@@ -288,6 +299,7 @@ class NLPUtil(object):
     @classmethod
     def get_similarity(cls, word, entity):
         #print(cls.__dict__)
+        #print(word, entity)
 
         for sub_attr in entity:
 

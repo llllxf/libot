@@ -28,10 +28,7 @@ class MainHandler(tornado.web.RequestHandler):
         target = self.get_argument("target")
         print(self.request.body)
         post_data = json.loads(self.request.body,strict=False)
-        #post_data = json.loads(self.request.body.decode('utf-8'))
 
-
-        #simpleLog.log_something('question:'+question_str)
         if target == 'graph_qa':
             question_str = post_data['question']
             #question_str = question_str.decode('utf-8')
@@ -51,9 +48,7 @@ class MainHandler(tornado.web.RequestHandler):
             res_json = json.dumps(res_dict)
             print(res_json)
             self.write(res_json)
-            #simpleLog.log_something('graph_answer:'+graph_respons)
-            #simpleLog.log_something('graph_answer:' + graph_respons)
-            #simpleLog.log_something('search_answer:' + str(answer_list))
+
         elif target == 'recognition':
             print("post_data",post_data)
             age = post_data['age']
@@ -69,7 +64,10 @@ class MainHandler(tornado.web.RequestHandler):
                 img = None
             print(img)
             GeneralHub.set_age_sex(age,sex)
-
+            res_dict = {'response': "已连接"}
+            res_json = json.dumps(res_dict)
+            print(res_json)
+            self.write(res_json)
             print("age,sex",age,sex)
 
 

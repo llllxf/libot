@@ -4,7 +4,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import skimage.io as io
 import base64
+dir_dict={'北':'前','西':'左','东':'右','南':'后'}
 class Task_position():
+
+
     '''
     作废
     '''
@@ -252,10 +255,10 @@ class Task_position():
             # print(dir)
             if dis_mark[m_index].find(",") != -1:
                 arr = dis_mark[m_index].split(",")
-                responds += '先向' + dir[0] + '走' + str(int(arr[0])) + "米\n"
+                responds += '先向' + dir_dict[dir[0]] + '走' + str(int(arr[0])) + "米\n"
                 # print('先向'+dir[0]+'走'+str(int(arr[0]))+"米")
                 for i in range(1, len(arr)):
-                    responds += "接着向" + dir[i] + '走' + str(int(arr[i])) + "米\n"
+                    responds += "接着向" + dir_dict[dir[i]] + '走' + str(int(arr[i])) + "米\n"
                     # print("接着向"+dir[i]+'走'+str(int(arr[i]))+"米")
                 # print("您就能找到")
                 responds += "您就能找到" + desroom + "。\n"
@@ -335,14 +338,15 @@ class Task_position():
                 # print(dir)
                 if dis.find(",") != -1:
                     arr = dis.split(",")
-                    responds += "向" + dir[0] + "走" + arr[0] + "米\n"
+                    ####################################################
+                    responds += "向" + dir_dict[dir[0]] + "走" + arr[0] + "米\n"
                     # print("先向" + dir[0]+"走" + arr[0]+"米")
                     for arr_index in range(1, len(arr)):
-                        responds += "接着先向" + dir[arr_index] + "走" + arr[arr_index] + "米到" + \
+                        responds += "接着先向" + dir_dict[dir[arr_index]] + "走" + arr[arr_index] + "米到" + \
                                     dict(min_path_list[final_index][i])['name'] + "\n"
                         # print("接着先向" + dir[arr_index] + "走" + arr[arr_index] + "米到"+dict(min_path_list[final_index][i])['name'])
                 else:
-                    responds += "向" + min_dis_list[final_index][i - 1]['dir'] + "走" + str(
+                    responds += "向" + dir_dict[min_dis_list[final_index][i - 1]['dir']] + "走" + str(
                         int(dict(min_dis_list[final_index][i - 1])['dis'])) + "米到" + \
                                 dict(min_path_list[final_index][i])['name'] + "\n"
 
@@ -366,7 +370,7 @@ class Task_position():
                 #####################################################
             des_index = des_name.index(dict(min_path_list[final_index][i])['name'])
             # print("qqq",modify_index,final_index)
-            responds += "最后向" + dir_list[des_index] + "走" + str(int(dis_mark[des_index])) + "就能到" + ans_desroom + "\n"
+            responds += "最后向" + dir_dict[dir_list[des_index]] + "走" + str(int(dis_mark[des_index])) + "就能到" + ans_desroom + "\n"
             # print("最后向"+dir_list[des_index]+"走"+str(int(dis_mark[des_index]))+"就能到"+desroom)
             #print("x_list,y_list",x_list,y_list)
 
@@ -419,7 +423,7 @@ class Task_position():
             img = base64_data.decode()
             return img
     """
-    
+    资源位置
     """
     def solve_res_pos(self,entity):
 
@@ -432,6 +436,23 @@ class Task_position():
         #dict['room'] = [ans[0]['office_name']]
         #ans = self.solve_room_pos(dict)[0]
         #response += ans[0]
+        return response
+
+    """
+    精品位置
+    """
+
+    def solve_goods_pos(self, entity):
+
+        goods = entity['goods'][0]
+        response = "\n" + goods + "存放于"
+        res = Neo4jPrepare.get_relation(goods, '馆室')
+        for r in res:
+            response += r['office_name'] + "\n"
+        # dict = {}
+        # dict['room'] = [ans[0]['office_name']]
+        # ans = self.solve_room_pos(dict)[0]
+        # response += ans[0]
         return response
     """
     一类资源地点问询，需查出该类所有资源以及其对应的馆室

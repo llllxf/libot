@@ -123,6 +123,7 @@ class TaskManager(object):
     @classmethod
     def answer_SBV_HED_SBV_VOB(cls,words, arcs_dict, postags, hed_index):
         hed = words[hed_index]
+
         if 'SBV' not in arcs_dict[hed_index].keys():
             return None
         sbv_index = arcs_dict[hed_index]['SBV'][0]
@@ -135,12 +136,27 @@ class TaskManager(object):
             return None
         subj_index = arcs_dict[vob_index]['SBV'][0]
         subj = words[subj_index]
+
+        if sbv in ['你','你们','我们','我'] or subj in ['你','你们','我们','我']:
+            return None
         if subj == '谁':
             ans = cls.get_attr(sbv,"者")
             if ans == None:
                 ans = cls.get_attr(sbv,"手")
+                if ans == None:
+                    ans = cls.get_desc(sbv)
+                    return ans
+                else:
+                    return ans
+            else:
+                return ans
         else:
             ans = cls.get_attr(sbv,vob)
+            if ans == None:
+                ans = cls.get_desc(sbv)
+                return ans
+            else:
+                return ans
         """
         if ans == None:
             ans = "很抱歉，暂时没有相关信息\n"
@@ -171,10 +187,33 @@ class TaskManager(object):
         att_index = arcs_dict[subj_index]['ATT'][0]
         att = words[att_index]
 
+        if subj in ['你','你们','我们','我']:
+            return None
         if postags[att_index] in NLPUtil.noun_for_pedia:
-            return cls.get_attr(att,subj)
+            #print("===============1")
+            ans = cls.get_attr(att,subj)
+            print(att)
+            #print(ans)
+            if ans == None:
+                print(subj)
+                ans = cls.get_desc(att)
+                return ans
+            else:
+                return ans
         else:
+            #print("===============3")
             return cls.get_desc(subj)
+        """
+        elif postags[att_index] in NLPUtil.Interrogative_pronouns and postags[obj_index] in NLPUtil.noun_for_pedia:
+            #print("===============2")
+            ans = cls.get_attr(subj, obj)
+            if ans == None:
+                ans = cls.get_desc(subj)
+                return ans
+            else:
+                return ans
+        """
+
 
     """
     问句仅提取出代词，主语，动宾
@@ -197,8 +236,6 @@ class TaskManager(object):
             return None
         att_index = arcs_dict[subj_index]['ATT'][0]
         att = words[att_index]
-
-
         return cls.get_desc(obj)
 
 
@@ -226,7 +263,12 @@ class TaskManager(object):
         att = words[att_index]
 
         if postags[att_index] in ['n', 'nh', 'ni', 'nl', 'ns', 'nz', 'nt', 'i']:
-            return cls.get_attr(att,subj)
+            ans = cls.get_attr(att,subj)
+            if ans == None:
+                ans = cls.get_desc(att)
+                return ans
+            else:
+                return ans
         else:
             return cls.get_desc(subj)
 
@@ -241,16 +283,23 @@ class TaskManager(object):
 
     @classmethod
     def answer_ATT_HED(cls, words, arcs_dict, postags, hed_index):
-        print(words, arcs_dict, postags, hed_index)
+
         word = words[hed_index]
-        print(arcs_dict[hed_index].keys())
+
         if 'ATT' not in arcs_dict[hed_index].keys():
             return None
         att_index = arcs_dict[hed_index]['ATT'][0]
 
         att = words[att_index]
+        if word in ['你','你们','我们','我']:
+            return None
         if postags[att_index] in NLPUtil.noun_for_pedia:
             ans = cls.get_attr(att,word)
+            if ans == None:
+                ans = cls.get_desc(word)
+                return ans
+            else:
+                return ans
         else:
             ans =  cls.get_desc(word)
         """
@@ -268,7 +317,7 @@ class TaskManager(object):
     def answer_HED(cls, words, arcs_dict, postags, hed_index):
         word = words[hed_index]
         if postags[hed_index] in NLPUtil.noun_for_pedia:
-            print("postags[hed_index]",postags[hed_index])
+
             return cls.get_desc(word)
         return None
 
@@ -291,11 +340,14 @@ class TaskManager(object):
             return None
         subj_index = arcs_dict[hed_index]['SBV'][0]
         subj = words[subj_index]
-        if postags[obj_index] == 'r':
+        #print(obj,subj, postags[obj_index])
+        if obj in NLPUtil.Interrogative_pronouns:
             return cls.get_desc(subj)
         elif postags[obj_index] in NLPUtil.noun_for_pedia and postags[subj_index] in NLPUtil.noun_for_pedia:
             return cls.get_judge(subj,verb,obj)
-        elif postags[subj_index] == 'r':
+        elif postags[obj_index] == 'a' and postags[subj_index] in NLPUtil.noun_for_pedia:
+            return cls.get_judge(subj,verb,obj)
+        elif subj in NLPUtil.Interrogative_pronouns:
             return cls.get_desc(obj)
 
     """
@@ -319,11 +371,11 @@ class TaskManager(object):
             return None
         subj_index = arcs_dict[hed_index]['SBV'][0]
         subj = words[subj_index]
-        if postags[obj_index] == 'r':
+        if obj in NLPUtil.Interrogative_pronouns:
             return cls.get_desc(subj)
         elif postags[obj_index] in NLPUtil.noun_for_pedia and postags[subj_index] != 'r':
             return cls.get_judge(subj,prep,obj)
-        elif postags[subj_index] == 'r':
+        elif subj in NLPUtil.Interrogative_pronouns:
             return cls.get_desc(obj)
 
 
@@ -348,14 +400,27 @@ class TaskManager(object):
             return None
         att_index = arcs_dict[obj_index]['ATT'][0]
         att = words[att_index]
-
-        if postags[att_index] == 'r':
+        if subj in ['你', '你们', '我们', '我']:
+            return None
+        print(subj,att,obj)
+        if att in NLPUtil.Interrogative_pronouns:
             #红豆是谁的歌
-            return cls.get_attr(subj,obj)
+            ans = cls.get_attr(subj,obj)
+            """
+            凡是得不到属性的属性提问都返回描述
+            """
+            if ans == None:
+                ans = cls.get_desc(subj)
+            return ans
 
         elif postags[att_index] in NLPUtil.noun_for_pedia:
             #五星红旗是中华人民共和国国旗吗
+            print(att)
             return cls.get_judge_att(subj,verb,att,obj,att)
+        elif postags[obj_index] in NLPUtil.noun_for_pedia:
+            #五星红旗是中华人民共和国国旗吗
+            print(att)
+            return cls.get_judge(subj,verb,obj)
 
 
     """
@@ -378,8 +443,15 @@ class TaskManager(object):
             return None
         att_index = arcs_dict[obj_index]['ATT'][0]
         att = words[att_index]
-        if postags[att_index] == 'r':
-            return cls.get_attr(subj,obj)
+        print(att,subj,pron)
+        if att in NLPUtil.Interrogative_pronouns:
+            ans = cls.get_attr(subj,obj)
+            print(ans)
+            if ans == None:
+                ans = cls.get_desc(subj)
+                return ans
+            else:
+                return ans
         elif postags[att_index] in NLPUtil.noun_for_pedia:
             return cls.get_judge_att(subj,pron,att,obj,att)
 
@@ -392,6 +464,7 @@ class TaskManager(object):
             try:
                 ans_dict = dict(r.json()['data']['avp'])
                 keys = ans_dict.keys()
+                print(keys)
                 ans = NLPUtil.get_similarity(attr, keys)
                 if ans != None:
                     return target+"的"+ans+"为"+ans_dict[ans]+"\n"
@@ -418,12 +491,18 @@ class TaskManager(object):
 
     @classmethod
     def get_judge(cls, subj, hed, obj):
+        hed_arr = []
+        if len(hed) > 2 and '不' in hed:
+            hed_arr = hed.split("不")
+            hed = hed_arr[len(hed_arr)-1]
         uri = "https://api.ownthink.com/kg/knowledge?entity=" + subj
         r = requests.post(uri)
 
         if r.json()['message'] == 'success':
             try:
+
                 ans_list = list(r.json()['data']['avp'])
+                #print(ans_list)
                 values = [x[1] for x in ans_list]
                 ans = NLPUtil.get_similarity(obj, values)
                 if ans != None:

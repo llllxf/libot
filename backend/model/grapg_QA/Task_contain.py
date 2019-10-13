@@ -330,6 +330,17 @@ class Task_contain():
             ans += room_name+","
         ans += room_arr[-1]+"\n"
         return ans
+
+    def solve_goods_library(self, entity):
+
+        goods = entity['goods'][0]
+        ans = "国家图书馆有"+goods+",存放在"
+        room = Neo4jPrepare.get_relation(goods,'馆室')
+        room_arr = [x['office_name'] for x in room]
+        for room_name in room_arr[:-1]:
+            ans += room_name+","
+        ans += room_arr[-1]+"\n"
+        return ans
     """
     查出馆室是否有某种资源的（中级）
     """

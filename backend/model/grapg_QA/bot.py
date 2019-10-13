@@ -22,6 +22,8 @@ class Bot():
         answer = ""
         if task == 'task_res_pos':
             answer = cls.answer_res_pos(entity_dict)
+        elif task == 'task_goods_pos':
+            answer = cls.answer_goods_pos(entity_dict)
         elif task == 'task_room_pos':
             answer = cls.answer_room_pos(entity_dict)
         elif task == 'task_room_res':
@@ -194,8 +196,14 @@ class Bot():
             answer = cls.answer_ttype_library(entity_dict)
         elif task == 'task_res_library':
             answer = cls.answer_res_library(entity_dict)
+        elif task == 'task_goods_library':
+            answer = cls.answer_goods_library(entity_dict)
         elif task == 'task_get_card':
             answer = cls.answer_get_card(entity_dict,age,sex)
+        elif task == 'task_recommend_book':
+            answer = cls.answer_recommend_book(age,sex)
+        elif task == 'task_borrow_card':
+            answer = cls.answer_borrow_card(age)
         return answer
 
     @classmethod
@@ -203,6 +211,20 @@ class Bot():
 
         task_business = Task_business()
         res = task_business.solve_get_card(entity_dict,age,sex)
+        return [res]
+
+    @classmethod
+    def answer_borrow_card(cls,age):
+
+        task_business = Task_business()
+        res = task_business.solve_borrow_card(age)
+        return [res]
+
+    @classmethod
+    def answer_recommend_book(cls, age, sex):
+
+        task_business = Task_business()
+        res = task_business.solve_recommend_book(age, sex)
         return [res]
 
     @classmethod
@@ -300,6 +322,12 @@ class Bot():
     def answer_res_library(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_res_library(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_goods_library(cls, entity_dict):
+        task_contain = Task_contain()
+        res = task_contain.solve_goods_library(entity_dict)
         return [res]
 
     @classmethod
@@ -483,6 +511,12 @@ class Bot():
     def answer_res_pos(cls, entity_dict):
         task_position = Task_position()
         res = task_position.solve_res_pos(entity_dict)
+        return [res]
+
+    @classmethod
+    def answer_goods_pos(cls, entity_dict):
+        task_position = Task_position()
+        res = task_position.solve_goods_pos(entity_dict)
         return [res]
 
     @classmethod

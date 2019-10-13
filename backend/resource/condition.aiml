@@ -7,6 +7,42 @@
         </template>
     </category>
     <category>
+        <pattern>#借#书*证#</pattern>
+        <template>
+           task_borrow_card
+        </template>
+    </category>
+    <category>
+        <pattern>#借阅*证#</pattern>
+        <template>
+           task_borrow_card
+        </template>
+    </category>
+    <category>
+        <pattern>#借#书*卡#</pattern>
+        <template>
+           task_borrow_card
+        </template>
+    </category>
+    <category>
+        <pattern>#借阅*卡#</pattern>
+        <template>
+           task_borrow_card
+        </template>
+    </category>
+    <category>
+        <pattern>#ROOM*借阅#</pattern>
+        <template>
+           task_room_card_a
+        </template>
+    </category>
+    <category>
+        <pattern>#借阅#ROOM*</pattern>
+        <template>
+           task_room_card_a
+        </template>
+    </category>
+    <category>
         <pattern>*证*ROOM#</pattern>
         <template>
            task_room_card_a
