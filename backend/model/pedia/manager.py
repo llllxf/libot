@@ -14,7 +14,6 @@ class TaskManager(object):
     """
     给模版匹配对应的函数
     """
-
     @classmethod
     def task_response(cls, task, words, arcs_dict,postags,hed_index):
         answer = ""
@@ -22,6 +21,8 @@ class TaskManager(object):
             answer = cls.answer_SBV_ATT_POB(words, arcs_dict,postags,hed_index)
         if task == 'task_HED':
             answer = cls.answer_HED(words, arcs_dict,postags,hed_index)
+        if task == 'task_SBV':
+            answer = cls.answer_SBV(words, arcs_dict,postags,hed_index)
         if task == 'task_ATT_HED':
             answer = cls.answer_ATT_HED(words, arcs_dict,postags,hed_index)
         if task == 'task_SBV_VOB':
@@ -30,10 +31,12 @@ class TaskManager(object):
             answer = cls.answer_SBV_POB(words, arcs_dict,postags,hed_index)
         if task == 'task_SBV_ATT_VOB':
             answer = cls.answer_SBV_ATT_VOB(words, arcs_dict,postags,hed_index)
+        """
         if task == 'task_SBV_ADV':#未实现
             answer = cls.answer_SBV_ADV(words, arcs_dict,postags,hed_index)
         if task == 'task_SBV_VOB_COO':#未实现
             answer = cls.answer_SBV_VOB_COO(words, arcs_dict,postags,hed_index)
+        """
         if task == 'task_ATT_SBV_POB':
             answer = cls.answer_ATT_SBV_POB(words, arcs_dict,postags,hed_index)
         if task == 'task_ATT_SBV_VOB':
@@ -42,16 +45,25 @@ class TaskManager(object):
             answer = cls.answer_ATT_ADV_VOB(words, arcs_dict, postags, hed_index)
         if task == 'task_SBV_HED_SBV_VOB':
             answer = cls.answer_SBV_HED_SBV_VOB(words, arcs_dict, postags, hed_index)
+        """
         if task == 'task_ADV_SBV_HED':
             answer = cls.answer_ADV_SBV_HED(words, arcs_dict, postags, hed_index)
+        """
+        """
         if task == 'task_ADV_HED_DBL_VOB':
             answer = cls.answer_ADV_HED_DBL_VOB(words, arcs_dict, postags, hed_index)
+        """
+        """
         if task == 'task_ADV_SBV_ADV_HED':
             answer = cls.answer_ADV_SBV_ADV_HED(words, arcs_dict, postags, hed_index)
+        """
+        """
         if task == 'task_SBV_ADV_HED':
             answer = cls.answer_SBV_ADV_HED(words, arcs_dict, postags, hed_index)
+        """
         return answer
 
+    """
     @classmethod
     def answer_SBV_ADV(cls,words, arcs_dict,postags,hed_index):
         return None
@@ -59,6 +71,7 @@ class TaskManager(object):
     @classmethod
     def answer_SBV_VOB_COO(cls,words, arcs_dict,postags,hed_index):
         return None
+    """
 
 
     """
@@ -69,6 +82,7 @@ class TaskManager(object):
     """
     提取出主语，状语和核心词汇（主语状态）
     eg.恐龙会灭绝吗
+    """
     """
     @classmethod
     def answer_SBV_ADV_HED(cls, words, arcs_dict, postags, hed_index):
@@ -86,31 +100,38 @@ class TaskManager(object):
         adv = words[adv_idnex]
 
         return cls.get_judge(subj,adv,hed)
+    """
 
     """
     问句提取出状语（疑问代词），主语以及第二状语（表达状态）和核心词汇（主语的状态）
     eg.为什么恐龙会灭绝
     """
+    """
     @classmethod
     def answer_ADV_SBV_ADV_HED(cls, words, arcs_dict, postags, hed_index):
         pass
+    """
 
     """
     问句提取出状语（疑问代词），主语以及核心词汇（动词）和兼语（动词第一对象）宾语（动词第二对象）
     eg.怎么使恐龙灭绝
     """
+    """
     @classmethod
     def answer_ADV_HED_DBL_VOB(cls, words, arcs_dict, postags, hed_index):
         pass
+    """
 
     """
     问句提取出状语，主语和核心词汇
     问句的含义是问询主语与核心词汇之间的关系
     eg.为什么恐龙灭绝了
     """
+    """
     @classmethod
     def answer_ADV_SBV_HED(cls,words, arcs_dict, postags, hed_index):
         pass
+    """
 
     """
     提取出问句的第一主语和第二主语，以及他们之间的关系（VOB）
@@ -157,10 +178,6 @@ class TaskManager(object):
                 return ans
             else:
                 return ans
-        """
-        if ans == None:
-            ans = "很抱歉，暂时没有相关信息\n"
-        """
         return ans
 
 
@@ -201,19 +218,7 @@ class TaskManager(object):
             else:
                 return ans
         else:
-            #print("===============3")
             return cls.get_desc(subj)
-        """
-        elif postags[att_index] in NLPUtil.Interrogative_pronouns and postags[obj_index] in NLPUtil.noun_for_pedia:
-            #print("===============2")
-            ans = cls.get_attr(subj, obj)
-            if ans == None:
-                ans = cls.get_desc(subj)
-                return ans
-            else:
-                return ans
-        """
-
 
     """
     问句仅提取出代词，主语，动宾
@@ -237,8 +242,6 @@ class TaskManager(object):
         att_index = arcs_dict[subj_index]['ATT'][0]
         att = words[att_index]
         return cls.get_desc(obj)
-
-
 
     """
     问句仅提取出代词，主语，介宾
@@ -321,6 +324,19 @@ class TaskManager(object):
             return cls.get_desc(word)
         return None
 
+    @classmethod
+    def answer_SBV(cls, words, arcs_dict, postags, hed_index):
+        print(arcs_dict,hed_index)
+        if 'SBV' not in arcs_dict[hed_index].keys():
+            return None
+        subj_index = arcs_dict[hed_index]['SBV']
+        for sub_index in subj_index:
+            word = words[sub_index]
+            print(word,postags[sub_index])
+            if postags[sub_index] in NLPUtil.noun_for_pedia:
+                return cls.get_desc(word)
+        return None
+
     """
     问句提取出主语、谓语和宾语
     
@@ -342,12 +358,16 @@ class TaskManager(object):
         subj = words[subj_index]
         #print(obj,subj, postags[obj_index])
         if obj in NLPUtil.Interrogative_pronouns:
+            print("cls.get_desc(subj)")
             return cls.get_desc(subj)
         elif postags[obj_index] in NLPUtil.noun_for_pedia and postags[subj_index] in NLPUtil.noun_for_pedia:
+            print("cls.get_judge(subj,verb,obj)")
             return cls.get_judge(subj,verb,obj)
         elif postags[obj_index] == 'a' and postags[subj_index] in NLPUtil.noun_for_pedia:
+            print("cls.get_judge(subj,verb,obj)")
             return cls.get_judge(subj,verb,obj)
         elif subj in NLPUtil.Interrogative_pronouns:
+            print("cls.get_desc(obj)")
             return cls.get_desc(obj)
 
     """
@@ -495,8 +515,10 @@ class TaskManager(object):
         if len(hed) > 2 and '不' in hed:
             hed_arr = hed.split("不")
             hed = hed_arr[len(hed_arr)-1]
+        print(subj, hed, obj)
         uri = "https://api.ownthink.com/kg/knowledge?entity=" + subj
         r = requests.post(uri)
+        print(r.json())
 
         if r.json()['message'] == 'success':
             try:

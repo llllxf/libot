@@ -26,7 +26,7 @@ class GeneralHub():
     """
 
     @classmethod
-    def __init__(cls,age=None,sex=None, mtype='mask'):
+    def __init__(cls,age=None,sex=None, mtype='master'):
         """
         主控模块的初始化
         1.得到AIML工具类
@@ -41,6 +41,7 @@ class GeneralHub():
         标记不同aiml
         mask 标记主aiml
         recommend 标记推荐aiml
+        deposit 标记退押金aiml
         """
         cls.type = mtype
 
@@ -49,56 +50,126 @@ class GeneralHub():
         cls.age = age
         cls.sex = sex
 
+    @classmethod
+    def set_type_by_response(cls, aiml_response):
+        if 'task_mul_recommend_book' in aiml_response:
+            cls.type = 'recommend'
+            print("set type recommend")
+        elif 'task_mul_deposit_refunding' in aiml_response:
+            print("set type deposit")
+            cls.type = 'deposit'
+        else:
+            print("set type master")
+            cls.type = 'master'
+
+    @classmethod
+    def set_type(cls,mtype):
+        cls.type = mtype
+
+    def question_answer_hub(self, question_str):
+        print("self.type",self.type,self)
+        if self.type == 'recommend':
+            return self.question_answer_hub_recommend(question_str)
+        elif self.type == 'deposit':
+            return self.question_answer_hub_deposit(question_str)
+        else:
+            return self.question_answer_hub_master(question_str)
+
+
     def question_answer_hub_recommend(self, question_str):
         """
-        推荐任务主控
+        推荐任务总控
         :param question_str:
         :return:
         """
         question_str = self.nlp_util.clear_question(question_str)
+        question_first, question_replaced_normal, question_replaced_spcify, entity_dict = self.nlp_util.repalce_question(
+            question_str)
+        if question_first == '':
+            question_first = 'NULL'
+        aiml_response = self.aiml_util.response(question_first, self.type)
+        print(question_first, question_replaced_normal, question_replaced_spcify, entity_dict, aiml_response)
 
+        if 'task_end_multiple' == aiml_response:
+            self.set_type('master')
+            print("set matser",self)
+            return ['repeat',question_str]
 
-    def question_answer_hub_mask(self, question_str):
+        if 'task_' in aiml_response:
+            graph_response = Bot.task_response(aiml_response, entity_dict, question_str,self.age, self.sex)
+            print("graph_response", graph_response)
+        elif aiml_response != '':
+            graph_response = [aiml_response]
+
+        return graph_response
+
+    def question_answer_hub_deposit(self, question_str):
         """
-        问答总主控，基于aiml构建问题匹配器
+        退押金任务总控
+        :param question_str:
+        :return:
+        """
+        question_str = self.nlp_util.clear_question(question_str)
+        question_first, question_replaced_normal, question_replaced_spcify, entity_dict = self.nlp_util.repalce_question(
+            question_str)
+        if question_first == '':
+            question_first = 'NULL'
+        aiml_response = self.aiml_util.response(question_first, self.type)
+
+        if 'task_end_multiple' == aiml_response:
+            self.set_type("master")
+            return ['repeat',question_str]
+
+        if 'task_' in aiml_response:
+            graph_response = Bot.task_response(aiml_response, entity_dict, question_str,self.age, self.sex)
+        elif aiml_response != '':
+            graph_response = [aiml_response]
+
+        return graph_response
+
+
+    def question_answer_hub_master(self, question_str):
+        """
+        问答主总控，基于aiml构建问题匹配器
         :param question_str:问句输入
         :return:
         """
 
         question_str = self.nlp_util.clear_question(question_str)
-
+        aiml_response = ''
+        aiml_response_normal = ''
+        aiml_response_specify = ''
 
         question_first,question_replaced_normal,question_replaced_spcify,entity_dict = self.nlp_util.repalce_question(question_str)
-        aiml_response = self.aiml_util.response(question_first)
-        print(question_first,question_replaced_normal,question_replaced_spcify,entity_dict,aiml_response)
+        aiml_response = self.aiml_util.response(question_first,self.type)
+        #print(question_first,question_replaced_normal,question_replaced_spcify,entity_dict,aiml_response)
 
         if 'task_' in aiml_response:
 
-            graph_response = Bot.task_response(aiml_response, entity_dict,self.age,self.sex)
-            print("graph_response",graph_response)
+            graph_response = Bot.task_response(aiml_response, entity_dict,question_str,self.age,self.sex)
+            #print("graph_response",graph_response)
 
         elif aiml_response != '':
             graph_response = [aiml_response]
         else:
-            aiml_response_normal = self.aiml_util.response(question_replaced_normal)
-            print("aiml_response_normal",aiml_response_normal, question_replaced_normal)
+            aiml_response_normal = self.aiml_util.response(question_replaced_normal,self.type)
+
+            #print("aiml_response_normal",aiml_response_normal, question_replaced_normal)
 
             if 'task_' in aiml_response_normal:
-                graph_response = Bot.task_response(aiml_response_normal, entity_dict,self.age,self.sex)
+                graph_response = Bot.task_response(aiml_response_normal, entity_dict,question_str,self.age,self.sex)
             elif aiml_response_normal != '':
                 graph_response = [aiml_response_normal]
             else:
-                aiml_response_specify = self.aiml_util.response(question_replaced_spcify)
-                print("aiml_response_specify",aiml_response_specify, question_replaced_spcify)
-
+                aiml_response_specify = self.aiml_util.response(question_replaced_spcify,self.type)
                 if 'task_' in aiml_response_specify:
-                    graph_response = Bot.task_response(aiml_response_specify, entity_dict,self.age,self.sex)
+                    graph_response = Bot.task_response(aiml_response_specify, entity_dict,question_str,self.age,self.sex)
                 elif aiml_response_specify != '':
                     graph_response = [aiml_response_specify]
                 else:
                     response = dict(self.search_bot.answer_question(question_str)[0])
-                    print(response['answer'], response['score'], question_str, "===")
-                    print(response['score'], response['question'])
+                    #print(response['answer'], response['score'], question_str, "===")
+                    #print(response['score'], response['question'])
                     if float(response['score']) > 0.7:
 
                         graph_response = [response['answer']]
@@ -106,7 +177,7 @@ class GeneralHub():
                     else:
                         words, pattern, arcs_dict, postags, hed_index = NLPUtil.get_sentence_pattern(question_str)
                         print(words, pattern, arcs_dict, postags, hed_index)
-                        aiml_reponse = AIMLUtil.response(pattern)
+                        aiml_reponse = AIMLUtil.response(pattern,self.type)
                         print(aiml_reponse)
                         answer = TaskManager.task_response(aiml_reponse, words, arcs_dict, postags, hed_index)
                         if answer != None:
@@ -168,9 +239,12 @@ class GeneralHub():
                 else:
                     graph_response = ['很抱歉，我好像不明白，请您换一种说法']
         """
+        #print("===============haiyouma")
 
-
+        self.set_type_by_response([aiml_response,aiml_response_normal,aiml_response_specify])
+        #print("===lll",self.type,self)
         return graph_response
+
 
 
 import time
@@ -187,12 +261,8 @@ if __name__ == '__main__':
         else:
             time_start = time.time()
             response = gh.question_answer_hub(question_str)
-            #print("resp",response)
+            print(response)
             print('Libot:', response[0])
-            #print(response[1])
-            #img = io.imread('../../resource/2.png')
-            #print(img)
-            #scipy.misc.imsave('meelo.png', response[1])
             time_end = time.time()
 
 

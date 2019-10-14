@@ -1,0 +1,26 @@
+<aiml version="1.0.1" encoding="UTF-8">
+    <category>
+        <pattern>#换#</pattern>
+        <template>
+            不好意思没有了
+        </template>
+    </category>
+    <category>
+        <pattern>#还有#</pattern>
+        <template>
+            不好意思没有了
+        </template>
+    </category>
+    <category>
+        <pattern>#有#别#</pattern>
+        <template>
+            不好意思没有了
+        </template>
+    </category>
+    <category>
+        <pattern>#</pattern>
+        <template>
+            task_end_multiple
+        </template>
+    </category>
+</aiml>

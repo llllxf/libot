@@ -9,7 +9,7 @@ project_path = os.path.abspath(os.path.join(os.getcwd(), "../.."))
 print("server",project_path)
 sys.path.append(project_path)
 
-
+import uuid
 import tornado.web
 import tornado.ioloop
 import tornado.escape
@@ -63,6 +63,13 @@ class MainHandler(tornado.web.RequestHandler):
             if img == '未知':
                 img = None
             print(img)
+
+            import base64,datetime
+            img_data = base64.b64decode(img)
+            id = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
+
+            with open(id+'.png', 'wb') as f:
+                f.write(img_data)
             GeneralHub.set_age_sex(age,sex)
             res_dict = {'response': "已连接"}
             res_json = json.dumps(res_dict)

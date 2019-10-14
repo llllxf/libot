@@ -12,7 +12,7 @@ from model.grapg_QA.Task_position import Task_position
 
 class Bot():
     @classmethod
-    def task_response(cls, task, entity_dict,age,sex):
+    def task_response(cls, task, entity_dict,question,age,sex):
         """
         响应hub指派的回答任务，也就是对graphQA类的问题分intent处理
         :param task:
@@ -200,11 +200,18 @@ class Bot():
             answer = cls.answer_goods_library(entity_dict)
         elif task == 'task_get_card':
             answer = cls.answer_get_card(entity_dict,age,sex)
-        elif task == 'task_recommend_book':
+        elif task == 'task_mul_recommend_book':
             answer = cls.answer_recommend_book(age,sex)
         elif task == 'task_borrow_card':
             answer = cls.answer_borrow_card(age)
+        elif task == 'task_mul_deposit_refunding':
+            answer = cls.answer_deposit_refunding()
         return answer
+
+    @classmethod
+    def answer_deposit_refunding(cls):
+
+        return ["repeat","退押金"]
 
     @classmethod
     def answer_get_card(cls, entity_dict,age,sex):

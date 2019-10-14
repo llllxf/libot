@@ -6,6 +6,12 @@
             task_HED
         </template>
     </category>
+    <category>
+        <pattern>#SBV#</pattern>
+        <template>
+            task_SBV
+        </template>
+    </category>
 
     <!-- 核心词汇及其依附对象 -->
     <category>
@@ -71,28 +77,34 @@
     </category>
 
     <!-- 状语（疑问代词），主语和核心词汇 -->
+    <!--
     <category>
         <pattern>#ADV#SBV#HED#</pattern>
         <template>
             task_ADV_SBV_HED
         </template>
     </category>
+    -->
 
     <!-- 状语（疑问代词），核心词汇，兼语（动词的第一对象）和宾语 -->
+    <!--
     <category>
         <pattern>#ADV#HED#DBL#VOB#</pattern>
         <template>
             task_ADV_HED_DBL_VOB
         </template>
     </category>
+    -->
 
     <!-- 状语（疑问代词），主语，状语和核心词汇（主语状态） -->
+    <!--
     <category>
         <pattern>#ADV#SBV#ADV#HED#</pattern>
         <template>
             task_ADV_SBV_ADV_HED
         </template>
     </category>
+    -->
 
     <!--主语，状语和核心词汇（主语状态） -->
     <!--
@@ -104,11 +116,8 @@
     </category>
     -->
 
-
-
-
-
     <!-- 主语（被动），状语（疑问代词）和核心词汇（动词） -->
+    <!--
     <category>
         <pattern>#SBV#ADV#HED</pattern>
         <template>
@@ -122,12 +131,14 @@
             task_SBV_VOB_COO
         </template>
     </category>
+    -->
     <category>
         <pattern>#SBV#HED#SBV#VOB#</pattern>
         <template>
             task_SBV_HED_SBV_VOB
         </template>
     </category>
+
 
 
 
