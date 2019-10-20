@@ -18,6 +18,8 @@ from model.search_QA import similarQuestionBot
 from model.aiml_cn import AIMLUtil
 from model.nlp import NLPUtil
 from model.pedia.manager import TaskManager
+from model.open_chat.chatterbot_chat import ChatterPolite
+import random
 
 
 class GeneralHub():
@@ -35,6 +37,7 @@ class GeneralHub():
         cls.aiml_util = AIMLUtil()
         cls.nlp_util = NLPUtil('ltp_data_v3.4.0')
         cls.search_bot = similarQuestionBot()
+        cls.chat = ChatterPolite.create_chatterbot()
         cls.age = age
         cls.sex = sex
         """
@@ -142,7 +145,7 @@ class GeneralHub():
 
         question_first,question_replaced_normal,question_replaced_spcify,entity_dict = self.nlp_util.repalce_question(question_str)
         aiml_response = self.aiml_util.response(question_first,self.type)
-        #print(question_first,question_replaced_normal,question_replaced_spcify,entity_dict,aiml_response)
+        print(question_first,question_replaced_normal,question_replaced_spcify,entity_dict,aiml_response)
 
         if 'task_' in aiml_response:
 
@@ -183,8 +186,10 @@ class GeneralHub():
                         if answer != None:
                             return [answer]
                         else:
-                            #return ['很抱歉，暂时回答不了这个问题']
+                            graph_response = [self.chat.get_response(question_str)]
 
+
+                            """
                             import requests, json
                             github_url = "http://openapi.tuling123.com/openapi/api/v2"
                             data = json.dumps({
@@ -204,6 +209,7 @@ class GeneralHub():
                             print(r.json())
                             res_msg = r.json()['results'][0]['values']['text']
                             return [res_msg]
+                            """
 
 
         '''

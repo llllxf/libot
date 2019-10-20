@@ -264,6 +264,8 @@ class TaskManager(object):
             return None
         att_index = arcs_dict[subj_index]['ATT'][0]
         att = words[att_index]
+        if subj in ['你', '你们', '我们', '我'] or obj in ['你', '你们', '我们', '我']:
+            return None
 
         if postags[att_index] in ['n', 'nh', 'ni', 'nl', 'ns', 'nz', 'nt', 'i']:
             ans = cls.get_attr(att,subj)
@@ -324,6 +326,11 @@ class TaskManager(object):
             return cls.get_desc(word)
         return None
 
+
+    """
+    解释存在的名词主语成分
+    """
+
     @classmethod
     def answer_SBV(cls, words, arcs_dict, postags, hed_index):
         print(arcs_dict,hed_index)
@@ -356,6 +363,8 @@ class TaskManager(object):
             return None
         subj_index = arcs_dict[hed_index]['SBV'][0]
         subj = words[subj_index]
+        if subj in ['你', '你们', '我们', '我'] or obj in ['你', '你们', '我们', '我']:
+            return None
         #print(obj,subj, postags[obj_index])
         if obj in NLPUtil.Interrogative_pronouns:
             print("cls.get_desc(subj)")
@@ -391,6 +400,8 @@ class TaskManager(object):
             return None
         subj_index = arcs_dict[hed_index]['SBV'][0]
         subj = words[subj_index]
+        if subj in ['你', '你们', '我们', '我'] or obj in ['你', '你们', '我们', '我']:
+            return None
         if obj in NLPUtil.Interrogative_pronouns:
             return cls.get_desc(subj)
         elif postags[obj_index] in NLPUtil.noun_for_pedia and postags[subj_index] != 'r':

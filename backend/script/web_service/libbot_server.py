@@ -42,9 +42,9 @@ class MainHandler(tornado.web.RequestHandler):
                 res_dict = {'graph_answer':'我没听清，请您再说一遍'}
             elif len(graph_respons)>1:
                 #print(graph_respons)
-                res_dict = {'graph_answer': graph_respons[0],'img':graph_respons[1]}
+                res_dict = {'first': graph_respons[0],'second':graph_respons[1]}
             elif len(graph_respons)==1:
-                res_dict = {'graph_answer': graph_respons[0]}
+                res_dict = {'first': graph_respons[0]}
             res_json = json.dumps(res_dict)
             print(res_json)
             self.write(res_json)
@@ -68,7 +68,7 @@ class MainHandler(tornado.web.RequestHandler):
             img_data = base64.b64decode(img)
             id = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
 
-            with open(id+'.png', 'wb') as f:
+            with open(id+'.jpg', 'wb') as f:
                 f.write(img_data)
             GeneralHub.set_age_sex(age,sex)
             res_dict = {'response': "已连接"}
@@ -76,9 +76,6 @@ class MainHandler(tornado.web.RequestHandler):
             print(res_json)
             self.write(res_json)
             print("age,sex",age,sex)
-
-
-
 
     def set_default_headers(self):
         self.set_header('Access-Control-Allow-Origin', '*')

@@ -56,7 +56,7 @@ class NLPUtil(object):
         疑问代词
         """
         cls.Interrogative_pronouns = ['哪里', '什么', '怎么', '哪', '为什么', '啥','谁']
-        cls.noun_for_pedia = ['n', 'nh', 'ni', 'nl', 'ns', 'nz', 'nt']
+        cls.noun_for_pedia = ['n', 'nh', 'ni', 'nl', 'ns', 'nz', 'nt','i']
         cls.clear_word = ['嗯','噫','啊','哦']
         """
         for i in cls.service_list:

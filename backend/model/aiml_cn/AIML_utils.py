@@ -33,7 +33,7 @@ class AIMLUtil(object):
         cls.recommed_aiml_kernal.learn('../../resource/multiple/recommend.aiml')
 
         """
-        推荐主控
+        退押金主控
         """
         cls.deposit_aiml_kernal = Kernel()
         cls.deposit_aiml_kernal.learn('../../resource/multiple/deposit.aiml')
