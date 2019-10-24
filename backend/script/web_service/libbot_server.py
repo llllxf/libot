@@ -15,9 +15,10 @@ import tornado.ioloop
 import tornado.escape
 import json
 from model.nlp import NLPUtil
-import requests
+from model.user import User
 
-from model.robot_hub.general_hub_2 import GeneralHub
+#from model.robot_hub.general_hub_2 import GeneralHub
+from model.robot_hub.qa_engine import GeneralHub
 graph_qa_hub = GeneralHub()
 
 class MainHandler(tornado.web.RequestHandler):
@@ -26,30 +27,30 @@ class MainHandler(tornado.web.RequestHandler):
     def post(self):
 
         target = self.get_argument("target")
-        print(self.request.body)
+        #print(self.request.body)
         post_data = json.loads(self.request.body,strict=False)
 
         if target == 'graph_qa':
             question_str = post_data['question']
             #question_str = question_str.decode('utf-8')
             question_str = NLPUtil.clear_question(question_str)
-            print(question_str)
-            print(GeneralHub.age)
+            #print(question_str)
+            #print(GeneralHub.age)
             graph_respons = graph_qa_hub.question_answer_hub(question_str)
-            print(graph_respons[0])
-
+            #print(graph_respons[0])
             if question_str == None or question_str == '':
-                res_dict = {'graph_answer':'我没听清，请您再说一遍'}
+                res_dict = {'first':'我没听清，请您再说一遍'}
             elif len(graph_respons)>1:
                 #print(graph_respons)
-                res_dict = {'first': graph_respons[0],'second':graph_respons[1]}
+                res_dict = {'first': str(graph_respons[0]),'second':graph_respons[1]}
             elif len(graph_respons)==1:
-                res_dict = {'first': graph_respons[0]}
+                res_dict = {'first': str(graph_respons[0])}
             res_json = json.dumps(res_dict)
-            print(res_json)
+            #print(res_json)
             self.write(res_json)
 
         elif target == 'recognition':
+            user = User()
             print("post_data",post_data)
             age = post_data['age']
             #age = age.decode('utf-8')
@@ -62,7 +63,7 @@ class MainHandler(tornado.web.RequestHandler):
                 sex = None
             if img == '未知':
                 img = None
-            print(img)
+            #print(img)
 
             import base64,datetime
             img_data = base64.b64decode(img)
@@ -70,7 +71,10 @@ class MainHandler(tornado.web.RequestHandler):
 
             with open(id+'.jpg', 'wb') as f:
                 f.write(img_data)
-            GeneralHub.set_age_sex(age,sex)
+            user.set_sex(sex)
+            user.set_age(age)
+            GeneralHub.set_user(user)
+            #GeneralHub.set_age_sex(age,sex)
             res_dict = {'response': "已连接"}
             res_json = json.dumps(res_dict)
             print(res_json)

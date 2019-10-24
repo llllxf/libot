@@ -395,9 +395,15 @@ class Kernel:
                 new_key = key
                 #if key and key[0] and key[1] and key[2] and em_ext == '.aiml' and (not self._check_all_english(key[0])):
                 if key and key[0] and key[1] and key[2] and em_ext == '.aiml':
-                    new_key = (' '.join(key[0]).upper(), key[1], key[2])
+
+                    l = list(key[0])
+                    l.reverse()
+                    l = "".join(l)
+
+                    new_key = (' '.join(l).upper(), key[1], key[2])
                 #elif key and key[0] and key[1] and key[2] and em_ext == '.aiml' and self._check_all_english(key[0]):
                     #new_key=(key[0].upper(), key[1], key[2])
+
 
                 #print("new_key",new_key,"tem",tem)
                 self._brain.add(new_key,tem)

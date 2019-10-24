@@ -558,27 +558,27 @@
     <category>
         <pattern>*联系#ROOM#</pattern>
         <template>
-           task_room_phone
+           task_room_phone_information
         </template>
     </category>
     <category>
         <pattern>#ROOM#联系*</pattern>
         <template>
-           task_room_phone
+           task_room_phone_information
         </template>
     </category>
 
     <category>
         <pattern>#ROOM*电话*</pattern>
         <template>
-           task_room_phone
+           task_room_phone_information
         </template>
     </category>
 
     <category>
         <pattern>#ROOM#号码*</pattern>
         <template>
-           task_room_phone
+           task_room_phone_information
         </template>
     </category>
 
@@ -586,21 +586,21 @@
     <category>
         <pattern>*联系#LIBRARY#</pattern>
         <template>
-           task_library_phone
+           task_library_phone_information
         </template>
     </category>
 
     <category>
         <pattern>#LIBRARY#电话*</pattern>
         <template>
-           task_library_phone
+           task_library_phone_information
         </template>
     </category>
 
     <category>
         <pattern>#LIBRARY#号码*</pattern>
         <template>
-           task_library_phone
+           task_library_phone_information
         </template>
     </category>
 
@@ -609,20 +609,20 @@
     <category>
         <pattern>#介绍#ROOM#</pattern>
         <template>
-           task_room_describe
+           task_room_describe_information
         </template>
     </category>
 
     <category>
         <pattern>#ROOM#特色#</pattern>
         <template>
-           task_room_describe
+           task_room_describe_information
         </template>
     </category>
     <category>
         <pattern>#ROOM是#</pattern>
         <template>
-           task_room_describe
+           task_room_describe_information
         </template>
     </category>
     <!--
@@ -643,87 +643,87 @@
     <category>
         <pattern>RES</pattern>
         <template>
-           task_res_describe
+           task_res_describe_information
         </template>
     </category>
     <category>
         <pattern>#RES#情况#</pattern>
         <template>
-           task_res_describe
+           task_res_describe_information
         </template>
     </category>
     <category>
         <pattern>#RES是*</pattern>
         <template>
-           task_res_describe
+           task_res_describe_information
         </template>
     </category>
     <category>
         <pattern>#RES#特色#</pattern>
         <template>
-           task_res_describe
+           task_res_describe_information
         </template>
     </category>
     <category>
         <pattern>*是RES#</pattern>
         <template>
-           task_res_describe
+           task_res_describe_information
         </template>
     </category>
     <category>
         <pattern>*是LIBRARY的RES#</pattern>
         <template>
-           task_res_describe
+           task_res_describe_information
         </template>
     </category>
     <category>
         <pattern>#介绍#RES#</pattern>
         <template>
-           task_res_describe
+           task_res_describe_information
         </template>
     </category>
     <category>
         <pattern>#RES#概况#</pattern>
         <template>
-           task_res_describe
+           task_res_describe_information
         </template>
     </category>
     <category>
         <pattern>#RES#RES#</pattern>
         <template>
-           task_res_describe
+           task_res_describe_information
         </template>
     </category>
     <!-- 资源形式介绍 -->
     <category>
         <pattern>#RES*形式#</pattern>
         <template>
-           task_res_form
+           task_res_form_information
         </template>
     </category>
     <category>
         <pattern>#RES#有#什么#</pattern>
         <template>
-           task_res_form
+           task_res_form_information
         </template>
     </category>
     <category>
         <pattern>#RES#有#哪些#</pattern>
         <template>
-           task_res_form
+           task_res_form_information
         </template>
     </category>
     <!-- 资源主题介绍 -->
     <category>
         <pattern>#RES*主题#</pattern>
         <template>
-           task_res_topic
+           task_res_topic_information
         </template>
     </category>
     <category>
         <pattern>#RES#内容#</pattern>
         <template>
-           task_res_topic
+           task_res_topic_information
         </template>
     </category>
     <!-- 资源类型的介绍 -->
@@ -738,138 +738,138 @@
     <category>
         <pattern>RTYPE</pattern>
         <template>
-           task_restype_describe
+           task_restype_describe_information
         </template>
     </category>
     <category>
         <pattern>#RTYPE是*</pattern>
         <template>
-           task_restype_describe
+           task_restype_describe_information
         </template>
     </category>
     <category>
         <pattern>#RTYPE#概况#</pattern>
         <template>
-           task_restype_describe
+           task_restype_describe_information
         </template>
     </category>
     <category>
         <pattern>*是RTYPE#</pattern>
         <template>
-           task_restype_describe
+           task_restype_describe_information
         </template>
     </category>
     <category>
         <pattern>#介绍#RTYPE#</pattern>
         <template>
-           task_restype_describe
+           task_restype_describe_information
         </template>
     </category>
     <!-- 资源类型的介绍 -->
     <category>
         <pattern>MTYPE</pattern>
         <template>
-           task_multype_describe
+           task_multype_describe_information
         </template>
     </category>
     <category>
         <pattern>#MTYPE是*</pattern>
         <template>
-           task_multype_describe
+           task_multype_describe_information
         </template>
     </category>
     <category>
         <pattern>#MTYPE#概况#</pattern>
         <template>
-           task_multype_describe
+           task_multype_describe_information
         </template>
     </category>
     <category>
         <pattern>*是MTYPE#</pattern>
         <template>
-           task_multype_describe
+           task_multype_describe_information
         </template>
     </category>
     <category>
         <pattern>#介绍#MTYPE#</pattern>
         <template>
-           task_multype_describe
+           task_multype_describe_information
         </template>
     </category>
     <!-- 读者卡介绍 -->
     <category>
         <pattern>介绍#CARD</pattern>
         <template>
-           task_card_describe
+           task_card_describe_information
         </template>
     </category>
     <category>
         <pattern>CARD#有几#</pattern>
         <template>
-           task_card_describe
+           task_card_describe_information
         </template>
     </category>
     <category>
         <pattern>#有几#CARD#</pattern>
         <template>
-           task_card_describe
+           task_card_describe_information
         </template>
     </category>
     <category>
         <pattern>CARD#有哪#</pattern>
         <template>
-           task_card_describe
+           task_card_describe_information
         </template>
     </category>
     <category>
         <pattern>CARD#有什么#</pattern>
         <template>
-           task_card_describe
+           task_card_describe_information
         </template>
     </category>
     <category>
         <pattern>CARD</pattern>
         <template>
-           task_card_describe
+           task_card_describe_information
         </template>
     </category>
 
     <category>
         <pattern>#CARD#金融功能#</pattern>
         <template>
-           task_finance_describe
+           task_finance_describe_information
         </template>
     </category>
     <!-- 国家图书馆 -->
     <category>
         <pattern>LIBRARY</pattern>
         <template>
-           task_library_describe
+           task_library_describe_information
         </template>
     </category>
     <category>
         <pattern>#介绍#LIBRARY#</pattern>
         <template>
-           task_library_describe
+           task_library_describe_information
         </template>
     </category>
     <category>
         <pattern>#LIBRARY是#</pattern>
         <template>
-           task_library_describe
+           task_library_describe_information
         </template>
     </category>
     <!-- 服务介绍 -->
     <category>
         <pattern>#介绍#SERVICE#</pattern>
         <template>
-           task_service_describe
+           task_service_describe_information
         </template>
     </category>
     <category>
         <pattern>#SERVICE是#</pattern>
         <template>
-           task_service_describe
+           task_service_describe_information
         </template>
     </category>
     <category>
@@ -920,13 +920,13 @@
     <category>
         <pattern>#介绍#TASK#</pattern>
         <template>
-           task_task_describe
+           task_task_describe_information
         </template>
     </category>
     <category>
         <pattern>#TASK#是#</pattern>
         <template>
-           task_task_describe
+           task_task_describe_information
         </template>
     </category>
     <category>
@@ -1036,7 +1036,7 @@
     <category>
         <pattern>#开架阅览#</pattern>
         <template>
-            task_open_room
+            task_open_room_information
         </template>
     </category>
     <category>

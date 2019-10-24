@@ -4,10 +4,17 @@
 import face_recognition
 class User(object):
 
-    def __init__(self,img):
+    def __init__(self,img = None,age = None,sex = None):
         self.img = img
-        self.id
+        self.age = age
+        self.sex = sex
 
+
+    def set_age(self,age):
+        self.age = age
+
+    def set_sex(self,sex):
+        self.sex = sex
 
     """
     人脸识别算法
@@ -29,9 +36,5 @@ class User(object):
             print("It's a picture of me!")
         else:
             print("It's not a picture of me!")
-
-
-u = User("1")
-u.recognition()
 
 

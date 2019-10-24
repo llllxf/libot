@@ -409,13 +409,13 @@
     <category>
         <pattern>#室#SERVICE#</pattern>
         <template>
-           task_task_pos
+           task_service_pos
         </template>
     </category>
     <category>
         <pattern>#SERVICE#室#</pattern>
         <template>
-           task_task_pos
+           task_service_pos
         </template>
     </category>
 

@@ -2,25 +2,31 @@
     <category>
         <pattern>#换#</pattern>
         <template>
-            不好意思没有了
+            task_book_recommend
+        </template>
+    </category>
+    <category>
+        <pattern>#不喜欢#</pattern>
+        <template>
+            task_book_other_recommend
         </template>
     </category>
     <category>
         <pattern>#还有#</pattern>
         <template>
-            不好意思没有了
+            task_book_recommend
         </template>
     </category>
     <category>
         <pattern>#有#别#</pattern>
         <template>
-            不好意思没有了
+            task_book_other_recommend
         </template>
     </category>
     <category>
-        <pattern>#</pattern>
+        <pattern>*</pattern>
         <template>
-            task_end_multiple
+            task_end_multiple_normal
         </template>
     </category>
 </aiml>

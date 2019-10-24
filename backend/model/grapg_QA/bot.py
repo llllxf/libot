@@ -12,7 +12,7 @@ from model.grapg_QA.Task_position import Task_position
 
 class Bot():
     @classmethod
-    def task_response(cls, task, entity_dict,question,age,sex):
+    def task_response(cls, task, entity_dict,question,age=20,sex='女'):
         """
         响应hub指派的回答任务，也就是对graphQA类的问题分intent处理
         :param task:
@@ -26,7 +26,7 @@ class Bot():
             answer = cls.answer_goods_pos(entity_dict)
         elif task == 'task_room_pos':
             answer = cls.answer_room_pos(entity_dict)
-        elif task == 'task_room_res':
+        elif task == 'task_room_res_a_contain':
             answer = cls.answer_room_res_a(entity_dict)
         elif task == 'task_room_time':
             answer = cls.answer_room_time(entity_dict)
@@ -34,99 +34,95 @@ class Bot():
             answer = cls.answer_room_res_time(entity_dict)
         elif task == 'task_res_time':
             answer = cls.answer_res_time(entity_dict)
-        elif task == 'task_floor_room_a':
+        elif task == 'task_floor_room_a_contain':
             answer = cls.answer_floor_room_a(entity_dict)
-        elif task == 'task_room_floor':
+        elif task == 'task_room_floor_contain':
             answer = cls.answer_floor_room(entity_dict)
-        elif task == "task_res_room":
+        elif task == "task_res_room_contain":
             answer = cls.answer_res_room(entity_dict)
-        elif task == "task_res_floor":
+        elif task == "task_res_floor_contain":
             answer = cls.answer_res_floor(entity_dict)
-        elif task == "task_floor_res_a":
+        elif task == "task_floor_res_a_contain":
             answer = cls.answer_res_floor_a(entity_dict)
-        elif task == "task_room_res_a":
+        elif task == "task_floor_res_a_contain":
             answer = cls.answer_room_res_a(entity_dict)
-        elif task == "task_room_borrow":
+        elif task == "task_room_borrow_business":
             answer = cls.answer_room_borrow(entity_dict)
-        elif task == "task_res_borrow":
+        elif task == "task_res_borrow_business":
             answer = cls.answer_res_borrow(entity_dict)
-        elif task == "task_area_borrow":
+        elif task == "task_area_borrow_business":
             answer = cls.answer_area_borrow(entity_dict)
-        elif task == "task_room_phone":
+        elif task == "task_room_phone_information":
             answer = cls.answer_room_phone(entity_dict)
-        elif task == "task_room_describe":
+        elif task == "task_room_describe_information":
             answer = cls.answer_room_describe(entity_dict)
-        elif task == "task_res_describe":
+        elif task == "task_res_describe_information":
             answer = cls.answer_res_describe(entity_dict)
-        elif task == "task_count_res":
+        elif task == "task_count_res_contain":
             answer = cls.answer_count_res(entity_dict)
-        elif task == "task_count_restype":
+        elif task == "task_count_restype_contain":
             answer = cls.answer_count_restype(entity_dict)
-        elif task == "task_count_multype":
+        elif task == "task_count_multype_contain":
             answer = cls.answer_count_multype(entity_dict)
-        elif task == "task_res_res_h":
+        elif task == "task_res_res_h_contain":
             answer = cls.answer_res_res_h(entity_dict)
-        elif task == "task_res_res_a":
+        elif task == "task_res_res_a_contain":
             answer = cls.answer_res_res_a(entity_dict)
-        elif task == "task_mul_res_h":
+        elif task == "task_mul_res_h_contain":
             answer = cls.answer_mul_res_h(entity_dict)
-        elif task == "task_mul_res_a":
+        elif task == "task_mul_res_a_contain":
             answer = cls.answer_mul_res_a(entity_dict)
-        elif task == "task_mul_res_a2":
-            answer = cls.answer_mul_res_a2(entity_dict)
-        elif task == "task_res_res_t":
+        elif task == "task_res_res_t_contain":
             answer = cls.answer_res_res_t(entity_dict)
-        elif task == "task_room_card_a":
+        elif task == "task_room_card_a_condition":
             answer = cls.answer_room_card_a(entity_dict)
-        elif task == "task_card_yes":
+        elif task == "task_card_yes_business":
             answer = cls.answer_card_yes()
-        elif task == "task_card_no":
+        elif task == "task_card_no_business":
             answer = cls.answer_card_no()
-        elif task == "task_card_thirteen":
+        elif task == "task_card_thirteen_business":
             answer = cls.answer_card_thirteen()
-        elif task == "task_card_twelve":
+        elif task == "task_card_twelve_business":
             answer = cls.answer_card_twelve()
-        elif task == "task_restype_borrow":
+        elif task == "task_restype_borrow_business":
             answer = cls.answer_restype_borrow(entity_dict)
-        elif task == "task_multype_borrow":
+        ###################################################
+        elif task == "task_multype_borrow_business":
             answer = cls.answer_multype_borrow(entity_dict)
-        elif task == "task_restype_describe":
+        ###################################################
+        elif task == "task_restype_describe_information":
             answer = cls.answer_restype_describe(entity_dict)
-        elif task == "task_multype_describe":
+        elif task == "task_multype_describe_information":
             answer = cls.answer_multype_describe(entity_dict)
-        elif task == "task_count_floor":
+        elif task == "task_count_floor_contain":
             answer = cls.answer_count_floor(entity_dict)
-        elif task == "task_floor_count_room":
+        elif task == "task_floor_count_room_contain":
             answer = cls.answer_floor_count_room(entity_dict)
         elif task == "task_room_pos":
             answer = cls.answer_room_pos(entity_dict)
         elif task == 'task_res_pos':
             answer = cls.answer_res_pos(entity_dict)
-        elif task == "task_card_describe":
+        elif task == "task_card_describe_information":
             answer = cls.answer_card_describe(entity_dict)
-        elif task == "task_finance_describe":
+        elif task == "task_finance_describe_information":
             answer = cls.answer_finance_describe()
-        elif task == "task_money_back":
-            answer = cls.answer_money_back()
-        elif task == "task_money_back_no":
-            answer = cls.answer_money_back_no()
         elif task == "task_restype_pos":
             answer = cls.answer_restype_pos(entity_dict)
         elif task == "task_multype_pos":
             answer = cls.answer_multype_pos(entity_dict)
-        elif task == "task_music_or_movie":
+        elif task == "task_music_or_movie_contain":
             answer = cls.answer_music_or_movie()
-        elif task == "task_library_describe":
+        elif task == "task_library_describe_information":
             answer = cls.answer_library_describe()
-        elif task == "task_library_area":
+        elif task == "task_library_area_contain":
             answer = cls.answer_library_area()
-        elif task == "task_res_read":
+        elif task == "task_res_read_business":
             answer = cls.answer_res_read(entity_dict)
-        elif task == "task_restype_read":
+        elif task == "task_restype_read_business":
             answer = cls.answer_restype_read(entity_dict)
-        elif task == 'task_service_describe':
+        elif task == 'task_service_describe_information':
             answer = cls.answer_service_describe(entity_dict)
-        elif task == 'task_task_describe':
+        elif task == 'task_task_describe_information':
             answer = cls.answer_task_describe(entity_dict)
         elif task == 'task_service_pos':
             answer = cls.answer_service_pos(entity_dict)
@@ -140,78 +136,82 @@ class Bot():
             answer = cls.answer_library_time(entity_dict)
         elif task == 'task_area_time':
             answer = cls.answer_area_time(entity_dict)
-        elif task == 'task_floor_borrow':
+        elif task == 'task_floor_borrow_business':
             answer = cls.answer_floor_borrow(entity_dict)
-        elif task == 'task_library_res_a':
+        elif task == 'task_library_res_a_contain':
             answer = cls.answer_library_res_a()
-        elif task == 'task_library_res':
+        elif task == 'task_library_res_contain':
             answer = cls.answer_library_res()
-        elif task == 'task_area_res_a':
+        elif task == 'task_area_res_a_contain':
             answer = cls.answer_area_res_a(entity_dict)
-        elif task == 'task_library_phone':
+        elif task == 'task_library_phone_information':
             answer = cls.answer_library_phone()
-        elif task == 'task_service_exit':
+        elif task == 'task_service_exit_contain':
             answer = cls.answer_service_exit(entity_dict)
-        elif task == 'task_task_exit':
+        elif task == 'task_task_exit_contain':
             answer = cls.answer_task_exit(entity_dict)
-        elif task == 'task_res_form':
+        elif task == 'task_res_form_information':
             answer = cls.answer_res_form(entity_dict)
-        elif task == 'task_res_topic':
+        elif task == 'task_res_topic_information':
             answer = cls.answer_res_topic(entity_dict)
+        ################################################
         elif task == 'task_service_room_all':
             answer = cls.answer_service_room_all(entity_dict)
         elif task == "task_area_pos":
             answer = cls.answer_area_pos(entity_dict)
-        elif task == 'task_return_back_res':
+        elif task == 'task_return_back_res_business':
             answer = cls.answer_return_back_res(entity_dict)
-        elif task == 'task_service_exit_all':
+        elif task == 'task_service_exit_all_contain':
             answer = cls.answer_service_exit_all()
-        elif task == 'task_service_area_all':
+        elif task == 'task_service_area_all_contain':
             answer = cls.answer_service_area_all(entity_dict)
-        elif task == 'task_service_room_exit':
+        elif task == 'task_service_room_exit_contain':
             answer = cls.answer_service_room_exit(entity_dict)
-        elif task == 'task_service_area_exit':
+        elif task == 'task_service_area_exit_contain':
             answer = cls.answer_service_area_exit(entity_dict)
-        elif task == 'task_open_room':
+        elif task == 'task_open_room_information':
             answer = cls.answer_open_room()
-        elif task == 'task_res_search':
+        elif task == 'task_res_search_business':
             answer = cls.answer_res_search(entity_dict)
-        elif task == 'task_restype_room':
+        elif task == 'task_restype_room_contain':
             answer = cls.answer_restype_room(entity_dict)
-        elif task == 'task_restype_area':
+        elif task == 'task_restype_area_contain':
             answer = cls.answer_restype_area(entity_dict)
-        elif task == 'task_restype_area':
-            answer = cls.answer_restype_library(entity_dict)
-        elif task == 'task_multype_room':
+        elif task == 'task_multype_room_contain':
             answer = cls.answer_multype_room(entity_dict)
-        elif task == 'task_multype_area':
+        elif task == 'task_multype_area_contain':
             answer = cls.answer_multype_area(entity_dict)
-        elif task == 'task_multype_library':
+        elif task == 'task_multype_library_contain':
             answer = cls.answer_multype_library(entity_dict)
-        elif task == 'task_restype_library':
+        elif task == 'task_restype_library_contain':
             answer = cls.answer_restype_library(entity_dict)
-        elif task == 'task_ttype_area':
+        elif task == 'task_ttype_area_contain':
             answer = cls.answer_ttype_area(entity_dict)
-        elif task == 'task_ttype_library':
+        elif task == 'task_ttype_library_contain':
             answer = cls.answer_ttype_library(entity_dict)
-        elif task == 'task_res_library':
+        elif task == 'task_res_library_contain':
             answer = cls.answer_res_library(entity_dict)
-        elif task == 'task_goods_library':
+        elif task == 'task_goods_library_contain':
             answer = cls.answer_goods_library(entity_dict)
-        elif task == 'task_get_card':
+        elif task == 'task_get_card_business':
             answer = cls.answer_get_card(entity_dict,age,sex)
-        elif task == 'task_mul_recommend_book':
+        elif task == 'task_book_recommend':
             answer = cls.answer_recommend_book(age,sex)
-        elif task == 'task_borrow_card':
+        elif task == 'task_book_other_recommend':
+            answer = cls.answer_recommend_book_other()
+        elif task == 'task_borrow_card_condition':
             answer = cls.answer_borrow_card(age)
-        elif task == 'task_mul_deposit_refunding':
-            answer = cls.answer_deposit_refunding()
+        elif task == 'task_end_multiple_normal':
+            answer = cls.answer_end_multiple_normal(question)
+        elif task == 'task_money_back_no_business':
+            answer = cls.answer_money_back_no()
+        elif task == 'task_money_back_business':
+            answer = cls.answer_money_back()
         return answer
 
     @classmethod
-    def answer_deposit_refunding(cls):
-
-        return ["repeat","退押金"]
+    def answer_end_multiple_normal(cls, question):
+        return ['repeat',question]
 
     @classmethod
     def answer_get_card(cls, entity_dict,age,sex):
@@ -232,6 +232,13 @@ class Bot():
 
         task_business = Task_business()
         res = task_business.solve_recommend_book(age, sex)
+        return [res]
+
+    @classmethod
+    def answer_recommend_book_other(cls):
+
+        task_business = Task_business()
+        res = task_business.solve_recommend_book_other()
         return [res]
 
     @classmethod
@@ -425,16 +432,6 @@ class Bot():
     def answer_mul_res_a(cls, entity_dict):
         task_contain = Task_contain()
         res = task_contain.solve_mul_res_a(entity_dict)
-        return [res]
-
-    @classmethod
-    def answer_mul_res_a2(cls, entity_dict):
-        task_contain = Task_contain()
-        print("==========",entity_dict)
-        res = task_contain.solve_mul_res_a(entity_dict)
-        print(res[:-1])
-        res += ",您具体说的是哪一种"
-        print(res)
         return [res]
 
     @classmethod
@@ -766,51 +763,3 @@ class Bot():
         task_business = Task_business()
         res = task_business.solve_res_search(entity_dict)
         return [res]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

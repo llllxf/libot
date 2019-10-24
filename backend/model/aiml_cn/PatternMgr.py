@@ -300,10 +300,16 @@ class PatternMgr:
             pattern = []
             template = None
             if len(thatWords) > 0:
+                #print("22222222222")
                 # If thatWords isn't empty, recursively
                 # pattern-match on the _THAT node with thatWords as words.
                 try:
+
                     pattern, template = self._match(thatWords, [], topicWords, root[self._THAT])
+                    #print("top,pattern,template", pattern, thatWords)
+                    #print("root[self._THAT]===========", root[self._THAT])
+                    #print(root)
+
                     if pattern != None:
                         pattern = [self._THAT] + pattern
                         #print("pattern1",pattern)
@@ -313,9 +319,12 @@ class PatternMgr:
             elif len(topicWords) > 0:
                 # If thatWords is empty and topicWords isn't, recursively pattern
                 # on the _TOPIC node with topicWords as words.
+                #print("111111111111")
                 try:
                     pattern, template = self._match(topicWords, [], [], root[self._TOPIC])
-                    #print("top,pattern,template",pattern,template)
+                    #print("top,pattern,template",pattern,topicWords)
+                    #print("root[self._TOPIC]",root[self._TOPIC])
+                    #print(root)
                     if pattern != None:
                         pattern = [self._TOPIC] + pattern
                         #print("pattern2", pattern)
@@ -331,6 +340,7 @@ class PatternMgr:
 
         first = words[0]
         suffix = words[1:]
+
         #print("first,suffix",first,suffix,self._UNDERSCORE,root)
         
         # Check underscore.

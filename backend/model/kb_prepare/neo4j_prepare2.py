@@ -54,7 +54,6 @@ class Neo4jPrepare(object):
 
         #cls.create()
 
-
     @classmethod
     def create(cls):
         name = Node(cls.attribute, name="名称",name2="名称")
@@ -1193,7 +1192,7 @@ class Neo4jPrepare(object):
                 ans.append(dict(record['b']))
         return ans
 
-Neo4jPrepare()
+#Neo4jPrepare()
 '''
 if __name__ == '__main__':
     Neo4jPrepare()

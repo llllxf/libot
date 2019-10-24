@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.kb_prepare.neo4j_prepare2 import Neo4jPrepare
 import numpy as np
+import random
 class Task_business():
 
 
@@ -11,7 +12,7 @@ class Task_business():
     def get_kind(self, age, sex):
         recommand_book_male = ['漫画', '武侠', '历史']
         recommand_book_female = ['童话', '青春文学', '女性文学']
-        recommand_book_none = '名著'
+        recommand_book_none = '其他'
         age = int(age)
         if sex == '男':
             if age <= 15:
@@ -30,7 +31,7 @@ class Task_business():
         else:
             return recommand_book_none
 
-    def solve_recommend_book(self, age, sex):
+    def solve_recommend_book2(self, age, sex):
         kind = self.get_kind(age,sex)
         ans = "猜测您可能喜欢"+kind+"类书籍,图书馆有"
         goods = Neo4jPrepare.get_entity_for_kind('精品',kind)
@@ -38,6 +39,29 @@ class Task_business():
             ans += g['office_name']+",存放在"
             room = Neo4jPrepare.get_relation(g['office_name'],'馆室')
             ans += room[0]['office_name']+"\n"
+        return ans
+
+    def solve_recommend_book(self, age, sex):
+        kind = self.get_kind(age,sex)
+        ans = "猜测您可能喜欢"+kind+"类书籍,图书馆有"
+        goods = Neo4jPrepare.get_entity_for_kind('精品', kind)
+        good_index = random.randint(0, len(goods) - 1)
+        g = goods[good_index]
+        ans += g['office_name'] + ",存放在"
+        room = Neo4jPrepare.get_relation(g['office_name'], '馆室')
+        ans += room[0]['office_name'] + "\n"
+        return ans
+
+
+    def solve_recommend_book_other(self):
+
+        ans = "推荐你借阅图书馆的"
+        goods = Neo4jPrepare.get_entity_for_kind('精品','其他')
+        good_index = random.randint(0, len(goods)-1)
+        g = goods[good_index]
+        ans += g['office_name']+",存放在"
+        room = Neo4jPrepare.get_relation(g['office_name'],'馆室')
+        ans += room[0]['office_name']+"\n"
         return ans
 
     """

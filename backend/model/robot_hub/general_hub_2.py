@@ -19,6 +19,7 @@ from model.aiml_cn import AIMLUtil
 from model.nlp import NLPUtil
 from model.pedia.manager import TaskManager
 from model.open_chat.chatterbot_chat import ChatterPolite
+
 import random
 
 
@@ -247,7 +248,7 @@ class GeneralHub():
         """
         #print("===============haiyouma")
 
-        self.set_type_by_response([aiml_response,aiml_response_normal,aiml_response_specify])
+        #self.set_type_by_response([aiml_response,aiml_response_normal,aiml_response_specify])
         #print("===lll",self.type,self)
         return graph_response
 

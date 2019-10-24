@@ -5,6 +5,7 @@ import sys
 project_path = os.path.abspath(os.path.join(os.getcwd(), "../.."))
 sys.path.append(project_path)
 from model.aiml_cn import  Kernel
+from model.aiml_cn import kernel
 
 """
 AIML工具类
@@ -24,20 +25,18 @@ class AIMLUtil(object):
         cls.master_aiml_kernal.learn('../../resource/condition.aiml')
         cls.master_aiml_kernal.learn('../../resource/information.aiml')
         cls.master_aiml_kernal.learn('../../resource/business.aiml')
-        cls.master_aiml_kernal.learn('../../resource/pattern_for_cyclopedia.aiml')
+
+        """
+        百科aiml
+        """
+        cls.pedia_aiml_kernal = kernel()
+        cls.pedia_aiml_kernal.learn('../../resource/pattern_for_cyclopedia.aiml')
 
         """
         推荐主控
         """
         cls.recommed_aiml_kernal = Kernel()
         cls.recommed_aiml_kernal.learn('../../resource/multiple/recommend.aiml')
-
-        """
-        退押金主控
-        """
-        cls.deposit_aiml_kernal = Kernel()
-        cls.deposit_aiml_kernal.learn('../../resource/multiple/deposit.aiml')
-
 
         '''
         cls.aiml_kernal.learn('../resource/navi_template.aiml')
@@ -48,29 +47,27 @@ class AIMLUtil(object):
         cls.aiml_kernal.learn('../resource/business.aiml')
         '''
 
-
     @classmethod
-    def response(cls, question, type):
+    def response(cls, question, intent):
         """
         :param question:
         :param mtype:
         :return:
         """
-        if type == 'recommend':
+        #print("intent",intent)
+        if intent == 'recommend':
             recommed_aiml_response = cls.recommed_aiml_kernal.respond(question)
             return recommed_aiml_response
-        elif type == 'deposit':
-            #print("======================")
-            deposit_aiml_response = cls.deposit_aiml_kernal.respond(question)
-            return deposit_aiml_response
         master_aiml_response = cls.master_aiml_kernal.respond(question)
         return master_aiml_response
+
+    @classmethod
+    def pedia_response(cls, question):
+        return cls.pedia_aiml_kernal.respond(question)
 
 
 if __name__ == '__main__':
     AIMLUtil()
     ans = AIMLUtil.response("HED")
-    #ans = AIMLUtil.response("SBVHEDPOB")
-
     print(ans)
 

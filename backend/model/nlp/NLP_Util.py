@@ -9,6 +9,7 @@ from model.kb_prepare import Neo4jPrepare
 from model.pedia import CilinSimilarity
 from pyltp import Segmentor, Postagger, Parser
 import jieba
+
 """
 NLP工具类
 """
@@ -25,13 +26,9 @@ class NLPUtil(object):
 
         cls.neo_util = Neo4jPrepare()
         cls.room_list, cls.room_alias_list, cls.floor_list, cls.floor_alias_list, cls.area_list, cls.area_alias_list, cls.resource_list, cls.resource_alias_list, cls.restype_list, cls.restype_alias_list, cls.card_list, cls.card_alias_list, cls.library, cls.library_alias_list, cls.service_list, cls.service_alias_list,cls.task_list, cls.task_alias_list, cls.multype_list,cls.multype_alias_list,cls.ttype_list,cls.ttype_alias_list,cls.goods_list,cls.goods_alias_list = cls.neo_util.get_all_varname()
-        for i in cls.goods_alias_list:
-            print(i)
+
         cls.stopwords = ['什么', '哪里', '怎么', '有', '走', '去', '可以', '如何', '怎样', '的', '地', '得']
         cls.cilin = CilinSimilarity()
-
-        a = cls.cilin.sim2016("作家","作者")
-        #print("score",a)
 
         """
         分词
@@ -51,21 +48,12 @@ class NLPUtil(object):
         cls.parser = Parser()
         cls.parser.load(os.path.join(path_for_model+"/"+cls.model_path+"/parser.model"))
 
-
         """
         疑问代词
         """
         cls.Interrogative_pronouns = ['哪里', '什么', '怎么', '哪', '为什么', '啥','谁']
         cls.noun_for_pedia = ['n', 'nh', 'ni', 'nl', 'ns', 'nz', 'nt','i']
         cls.clear_word = ['嗯','噫','啊','哦']
-        """
-        for i in cls.service_list:
-            print(i)
-        for i in cls.service_alias_list:
-            for j in i:
-                print(j)
-        """
-
 
         jieba.load_userdict("../../resource/guotu_dict.txt")
 
@@ -96,7 +84,6 @@ class NLPUtil(object):
     '''
     @classmethod
     def repalce_question(cls, question_n):
-        #print(cls.__dict__)
         question_s = question_n
         question_first = question_n
         if '国图' in question_first:
@@ -246,8 +233,19 @@ class NLPUtil(object):
         entity_dict['library'] = library_entity
         entity_dict['task'] = task_entity
         entity_dict['goods'] = goods_entity
-        #print("question_first,question_n,question_s",question_first,question_n,question_s)
-        #print(cls.get_score("好",'棒'))
+
+        origin_question = list(question_first)
+        origin_question.reverse()
+        question_first = "".join(origin_question)
+
+        origin_question = list(question_n)
+        origin_question.reverse()
+        question_n = "".join(origin_question)
+
+        origin_question = list(question_s)
+        origin_question.reverse()
+        question_s = "".join(origin_question)
+
         return question_first,question_n,question_s, entity_dict
 
     """
@@ -298,8 +296,6 @@ class NLPUtil(object):
 
     @classmethod
     def get_similarity(cls, word, entity):
-        #print(cls.__dict__)
-        #print(word, entity)
 
         for sub_attr in entity:
 

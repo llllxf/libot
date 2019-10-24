@@ -8,8 +8,6 @@ import sys
 project_path = os.path.abspath(os.path.join(os.getcwd(), "../.."))
 sys.path.append(project_path)
 
-
-
 class DataUtill():
     """
     一些常用数据处理工具类

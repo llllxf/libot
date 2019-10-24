@@ -4,19 +4,19 @@
     <category>
         <pattern>#推荐#书#</pattern>
         <template>
-            task_mul_recommend_book
+            task_book_recommend
         </template>
     </category>
     <category>
         <pattern>#找#书#</pattern>
         <template>
-            task_mul_recommend_book
+            task_book_recommend
         </template>
     </category>
     <category>
         <pattern>#LIBRARY#有*看#</pattern>
         <template>
-            task_mul_recommend_book
+            task_book_recommend
         </template>
     </category>
 
@@ -115,49 +115,49 @@
     <category>
         <pattern>#RES#借#</pattern>
         <template>
-           task_res_read
+           task_res_read_business
         </template>
     </category>
     <category>
         <pattern>#借#RES#</pattern>
         <template>
-           task_res_read
+           task_res_read_business
         </template>
     </category>
     <category>
         <pattern>#RES#查#</pattern>
         <template>
-           task_res_search
+           task_res_search_business
         </template>
     </category>
     <category>
         <pattern>#查#RES#</pattern>
         <template>
-           task_res_search
+           task_res_search_business
         </template>
     </category>
     <category>
         <pattern>#RES#阅览#</pattern>
         <template>
-           task_res_read
+           task_res_read_business
         </template>
     </category>
     <category>
         <pattern>#阅览#RES#</pattern>
         <template>
-           task_res_read
+           task_res_read_business
         </template>
     </category>
     <category>
         <pattern>#RES#看#</pattern>
         <template>
-           task_res_read
+           task_res_read_business
         </template>
     </category>
     <category>
         <pattern>#看#RES#</pattern>
         <template>
-           task_res_read
+           task_res_read_business
         </template>
     </category>
 
@@ -165,13 +165,13 @@
     <category>
         <pattern>#RTYPE#借#</pattern>
         <template>
-           task_restype_read
+           task_restype_read_business
         </template>
     </category>
     <category>
         <pattern>#借#RTYPE#</pattern>
         <template>
-           task_restype_read
+           task_restype_read_business
         </template>
     </category>
 
@@ -191,25 +191,25 @@
     <category>
         <pattern>#RTYPE#阅览#</pattern>
         <template>
-           task_restype_read
+           task_restype_read_business
         </template>
     </category>
     <category>
         <pattern>#阅览#RTYPE#</pattern>
         <template>
-           task_restype_read
+           task_restype_read_business
         </template>
     </category>
     <category>
         <pattern>#RTYPE#看#</pattern>
         <template>
-           task_restype_read
+           task_restype_read_business
         </template>
     </category>
     <category>
         <pattern>#看#RTYPE#</pattern>
         <template>
-           task_restype_read
+           task_restype_read_business
         </template>
     </category>
 
@@ -218,28 +218,28 @@
     <category>
         <pattern>#ROOM*外借#</pattern>
         <template>
-           task_room_borrow
+           task_room_borrow_business
         </template>
     </category>
 
     <category>
         <pattern>*外借#ROOM*</pattern>
         <template>
-           task_room_borrow
+           task_room_borrow_business
         </template>
     </category>
 
     <category>
         <pattern>#RES*外借#</pattern>
         <template>
-           task_res_borrow
+           task_res_borrow_business
         </template>
     </category>
 
     <category>
         <pattern>*外借#RES*</pattern>
         <template>
-           task_res_borrow
+           task_res_borrow_business
         </template>
     </category>
 
@@ -247,14 +247,14 @@
     <category>
         <pattern>#RTYPE*外借#</pattern>
         <template>
-           task_restype_borrow
+           task_restype_borrow_business
         </template>
     </category>
 
     <category>
         <pattern>*外借#RTYPE*</pattern>
         <template>
-           task_restype_borrow
+           task_restype_borrow_business
         </template>
     </category>
 
@@ -316,7 +316,7 @@
         <pattern>#RTYPE#</pattern>
         <that>您具体说的是哪一种特藏专藏？实体特藏专藏还是数字特藏专藏？</that>
         <template>
-            task_restype_borrow
+            task_restype_borrow_business
         </template>
     </category>
 
@@ -324,7 +324,7 @@
         <pattern>#RTYPE#</pattern>
         <that>您具体说的是哪一种期刊？中文期刊？外文期刊？还是数字期刊？</that>
         <template>
-            task_restype_borrow
+            task_restype_borrow_business
         </template>
     </category>
 
@@ -332,14 +332,14 @@
         <pattern>#RTYPE#</pattern>
         <that>您具体说的是哪一种报纸？中文报纸？外文报纸？还是数字报纸？</that>
         <template>
-            task_restype_borrow
+            task_restype_borrow_business
         </template>
     </category>
     <category>
         <pattern>#RTYPE#</pattern>
         <that>您具体说的是哪一种图书？中文图书？外文图书？还是数字图书？</that>
         <template>
-            task_restype_borrow
+            task_restype_borrow_business
         </template>
     </category>
 
@@ -396,7 +396,7 @@
         <pattern>#RTYPE#</pattern>
         <that>您具体借阅的是哪一种特藏专藏？实体特藏专藏还是数字特藏专藏？</that>
         <template>
-            task_restype_read
+            task_restype_read_business
         </template>
     </category>
 
@@ -404,7 +404,7 @@
         <pattern>#RTYPE#</pattern>
         <that>您具体借阅的是哪一种图书？中文图书？外文图书？还是数字图书？</that>
         <template>
-            task_restype_read
+            task_restype_read_business
         </template>
     </category>
 
@@ -412,7 +412,7 @@
         <pattern>#RTYPE#</pattern>
         <that>您具体借阅的是哪一种期刊？中文期刊？外文期刊？还是数字期刊？</that>
         <template>
-            task_restype_read
+            task_restype_read_business
         </template>
     </category>
 
@@ -420,7 +420,7 @@
         <pattern>#RTYPE#</pattern>
         <that>您具体借阅的是哪一种报纸？中文报纸？外文报纸？还是数字报纸？</that>
         <template>
-            task_restype_read
+            task_restype_read_business
         </template>
     </category>
 
@@ -429,13 +429,13 @@
     <category>
         <pattern>#AREA*外借#</pattern>
         <template>
-           task_area_borrow
+           task_area_borrow_business
         </template>
     </category>
     <category>
         <pattern>*外借#AREA*</pattern>
         <template>
-           task_area_borrow
+           task_area_borrow_business
         </template>
     </category>
 
@@ -443,14 +443,14 @@
     <category>
         <pattern>#FLOOR*外借#</pattern>
         <template>
-           task_floor_borrow
+           task_floor_borrow_business
         </template>
     </category>
 
     <category>
         <pattern>*外借#FLOOR*</pattern>
         <template>
-           task_floor_borrow
+           task_floor_borrow_business
         </template>
     </category>
     <!-- 补卡 -->
@@ -558,6 +558,18 @@
         </template>
     </category>
     <category>
+        <pattern>#解除#挂失#</pattern>
+        <template>
+            请凭本人有效身份证件到办证处解除挂失。
+        </template>
+    </category>
+    <category>
+        <pattern>#我想#挂失#</pattern>
+        <template>
+            请到办证处挂失，少年儿童馆读者卡挂失地点在国家图书馆少年儿童馆咨询台。
+        </template>
+    </category>
+    <category>
         <pattern>#如何#解#挂#</pattern>
         <template>
             请凭本人有效身份证件到办证处解除挂失。
@@ -617,7 +629,7 @@
     <category>
         <pattern>#怎么#办#卡#</pattern>
         <template>
-            task_get_card
+            task_get_card_business
         </template>
     </category>
     <category>
@@ -741,21 +753,21 @@
         <pattern>#是#</pattern>
         <that>请问办卡人是否为中国公民？</that>
         <template>
-            task_card_yes
+            task_card_yes_business
         </template>
     </category>
     <category>
         <pattern>#对#</pattern>
         <that>请问办卡人是否为中国公民？</that>
         <template>
-            task_card_yes
+            task_card_yes_business
         </template>
     </category>
     <category>
         <pattern>#不#</pattern>
         <that>请问办卡人是否为中国公民？</that>
         <template>
-            task_card_no
+            task_card_no_business
         </template>
     </category>
     <category>
@@ -764,7 +776,7 @@
             请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
         </that>
         <template>
-            task_card_thirteen
+            task_card_thirteen_business
         </template>
     </category>
     <category>
@@ -773,7 +785,7 @@
             请问办卡人的具体年龄是几岁？A已满十六岁 B十三到十五岁 C未满十三岁
         </that>
         <template>
-            task_card_twelve
+            task_card_twelve_business
         </template>
     </category>
     <!-- ========================================================== -->
@@ -782,83 +794,200 @@
     <category>
         <pattern>退押金</pattern>
         <template>
-            task_mul_deposit_refunding
+            请问押金收据是否还在？
         </template>
     </category>
     <category>
+        <pattern>#是#</pattern>
+        <that>是否本人办理退押金？</that>
+        <template>
+            task_money_back_business
+        </template>
+    </category>
+    <category>
+        <pattern>#是#</pattern>
+        <that>是否本人办理退押金？</that>
+        <template>
+            task_money_back_business
+        </template>
+    </category>
+    <category>
+        <pattern>#对#</pattern>
+        <that>
+            是否本人办理退押金？
+        </that>
+        <template>
+            task_money_back_business
+        </template>
+    </category>
+    <category>
+        <pattern>#否#</pattern>
+        <that>
+            是否本人办理退押金？
+        </that>
+        <template>
+            请到相应阅览室/服务点还清所借图书，确认无欠款后，持读者卡,身份证原件,押金收据,代理人的有效身份证原件到办证处办理退押金手续
+        </template>
+    </category>
+    <category>
+        <pattern>#不#</pattern>
+        <that>
+            是否本人办理退押金？
+        </that>
+        <template>
+            请到相应阅览室/服务点还清所借图书，确认无欠款后，持读者卡,身份证原件,押金收据,代理人的有效身份证原件到办证处办理退押金手续
+        </template>
+    </category>
+    <category>
+        <pattern>#否#</pattern>
+        <that>
+            请问押金收据是否还在？
+        </that>
+        <template>
+            请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
+        </template>
+    </category>
+    <category>
+        <pattern>#没#</pattern>
+        <that>
+            请问押金收据是否还在？
+        </that>
+        <template>
+            请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
+        </template>
+    </category>
+    <category>
+        <pattern>#不#</pattern>
+        <that>请问押金收据是否还在？</that>
+        <template>
+            请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
+        </template>
+    </category>
+    <category>
+        <pattern>#是#</pattern>
+        <that>请问押金收据是否还在？</that>
+        <template>
+            是否本人办理退押金？
+        </template>
+    </category>
+    <category>
+        <pattern>#在#</pattern>
+        <that>
+            请问押金收据是否还在？
+        </that>
+        <template>
+            是否本人办理退押金？
+        </template>
+    </category>
+    <category>
+        <pattern>#不#</pattern>
+        <that>
+            是否本人办理退押金？
+        </that>
+        <template>
+            task_money_back_no_business
+        </template>
+    </category>
+    <category>
+        <pattern>#否#</pattern>
+        <that>
+            请问押金收据是否还在？
+        </that>
+        <template>
+            请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
+        </template>
+    </category>
+
+    <category>
+        <pattern>#没#</pattern>
+        <that>
+            请问押金收据是否还在？
+        </that>
+        <template>
+            请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
+        </template>
+    </category>
+    <category>
+        <pattern>#不#</pattern>
+        <that>请问押金收据是否还在</that>
+        <template>
+            请先挂失。在履行相应的手续后，由本人持有效身份证件原件及复印件取回押金；若委托他人办理无押金收据退押金时，还需同时提交代理人的有效身份证原件及复印件。是否需要咨询办证处在哪？
+        </template>
+    </category>
+
+    <category>
         <pattern>我*退押金</pattern>
         <template>
-            task_mul_deposit_refunding
+            请问押金收据是否还在？
         </template>
     </category>
     <category>
         <pattern>#押金#退#</pattern>
         <template>
-            task_mul_deposit_refunding
+            请问押金收据是否还在？
         </template>
     </category>
     <category>
         <pattern>#怎么#退押金#</pattern>
         <template>
-            task_mul_deposit_refunding
+            请问押金收据是否还在？
         </template>
     </category>
     <category>
         <pattern>#如何#退押金#</pattern>
         <template>
-            task_mul_deposit_refunding
+            请问押金收据是否还在？
         </template>
     </category>
     <category>
         <pattern>#退押金#怎么#</pattern>
         <template>
-            task_mul_deposit_refunding
+            请问押金收据是否还在？
         </template>
     </category>
     <category>
         <pattern>#退押金#如何#</pattern>
         <template>
-            task_mul_deposit_refunding
+            请问押金收据是否还在？
         </template>
     </category>
-
 
     <category>
         <pattern>#怎么#退#卡#押金#</pattern>
         <template>
-            task_mul_deposit_refunding
+            请问押金收据是否还在？
         </template>
     </category>
     <category>
         <pattern>#如何#退#卡#押金#</pattern>
         <template>
-            task_mul_deposit_refunding
+            请问押金收据是否还在？
         </template>
     </category>
 
     <category>
         <pattern>#卡#押金#退#</pattern>
         <template>
-            task_mul_deposit_refunding
+            请问押金收据是否还在？
         </template>
     </category>
     <category>
         <pattern>#怎么#退#卡#押金#</pattern>
         <template>
-            task_mul_deposit_refunding
+            请问押金收据是否还在？
         </template>
     </category>
     <category>
         <pattern>#如何#退#卡#押金#</pattern>
         <template>
-            task_mul_deposit_refunding
+            请问押金收据是否还在？
         </template>
     </category>
 
     <category>
         <pattern>#办#卡#押金#</pattern>
         <template>
-            task_mul_deposit_refunding
+            请问押金收据是否还在？
         </template>
     </category>
 
@@ -929,13 +1058,13 @@
     <category>
         <pattern>#还#RES#</pattern>
         <template>
-            task_return_back_res
+            task_return_back_res_business
         </template>
     </category>
     <category>
         <pattern>#RES#还#</pattern>
         <template>
-            task_return_back_res
+            task_return_back_res_business
         </template>
     </category>
     <category>
@@ -956,6 +1085,13 @@
         </template>
     </category>
     <category>
+        <pattern>#借阅#</pattern>
+        <that>请问您想修改借阅密码还是金融交易密码？A借阅密码 B金融交易密码 C都修改</that>
+        <template>
+            请到办证处由工作人员办理或登录国图主页右侧“馆藏目录检索”或在馆内提供的联机公共目录查询系统（OPAC），用读者卡登录后，选定“更改口令”，按提示修改既可。
+        </template>
+    </category>
+    <category>
         <pattern>#B#</pattern>
         <that>请问您想修改借阅密码还是金融交易密码？A借阅密码 B金融交易密码 C都修改</that>
         <template>
@@ -963,7 +1099,21 @@
         </template>
     </category>
     <category>
+        <pattern>#金融交易#</pattern>
+        <that>请问您想修改借阅密码还是金融交易密码？A借阅密码 B金融交易密码 C都修改</that>
+        <template>
+            请在国家图书馆局域网内登录“中国国家图书馆一卡通系统”修改金融密码，如遗忘金融交易密码，读者需持读者卡、身份证原件到办证处办理密码重置。
+        </template>
+    </category>
+    <category>
         <pattern>#C#</pattern>
+        <that>请问您想修改借阅密码还是金融交易密码？A借阅密码 B金融交易密码 C都修改</that>
+        <template>
+            密码均可前往办证处修改。借阅密码可登录国图主页右侧“馆藏目录检索”或在馆内提供的联机公共目录查询系统（OPAC），用读者卡登录后，选定“更改口令”，按提示修改既可。金融密码可在国家图书馆局域网内登录“中国国家图书馆一卡通系统”修改金融密码。
+        </template>
+    </category>
+    <category>
+        <pattern>#都修改#</pattern>
         <that>请问您想修改借阅密码还是金融交易密码？A借阅密码 B金融交易密码 C都修改</that>
         <template>
             密码均可前往办证处修改。借阅密码可登录国图主页右侧“馆藏目录检索”或在馆内提供的联机公共目录查询系统（OPAC），用读者卡登录后，选定“更改口令”，按提示修改既可。金融密码可在国家图书馆局域网内登录“中国国家图书馆一卡通系统”修改金融密码。
